@@ -46,6 +46,47 @@
   .glyph svg{width:24px;height:24px;transform:rotate(45deg)}
   .title h1{font-size:19px;font-weight:800;letter-spacing:-.2px}
   .title p{font-size:12.5px;color:var(--mist);font-weight:500;margin-top:1px}
+  .info-btn{margin-inline-start:auto;flex:0 0 auto;background:none;border:none;cursor:pointer;
+    color:var(--mist);padding:6px;border-radius:8px;line-height:0}
+  .info-btn svg{width:22px;height:22px}
+  .info-btn:hover{color:var(--paper);background:var(--panel-2)}
+
+  /* ---------- Step progress bar ---------- */
+  .stepbar{
+    position:sticky;top:0;z-index:18;
+    background:var(--panel);border-bottom:1px solid var(--line);
+    box-shadow:0 4px 14px rgba(0,0,0,.28);
+  }
+  .stepbar .rail{max-width:760px;margin:0 auto;display:flex;padding:0 10px}
+  .step{
+    flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;
+    padding:9px 4px 8px;background:none;border:none;cursor:pointer;
+    border-bottom:2.5px solid transparent;transition:.15s;font-family:'Heebo';
+  }
+  .step .step-dot{
+    width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+    font-size:11px;font-weight:800;font-family:'Rubik';
+    background:var(--panel-2);border:1.5px solid var(--line);color:var(--mist);transition:.15s;
+  }
+  .step .step-lbl{font-size:10.5px;font-weight:600;color:var(--mist);transition:.15s;white-space:nowrap}
+  .step.active{border-bottom-color:var(--amber)}
+  .step.active .step-dot{background:var(--amber);border-color:var(--amber);color:#1a1206}
+  .step.active .step-lbl{color:var(--paper)}
+  .step.done .step-dot{background:rgba(63,185,132,.16);border-color:#3FB984;color:#3FB984}
+  .step.done .step-dot::after{content:'✓'}
+  .step.done .step-dot span{display:none}
+  .step.opt .step-dot{background:rgba(79,176,224,.14);border-color:rgba(79,176,224,.5);color:var(--sky)}
+  .step.opt .step-lbl{color:var(--sky)}
+  .step.opt.active .step-dot{background:var(--amber);border-color:var(--amber);color:#1a1206}
+  .step.opt.active .step-lbl{color:var(--paper)}
+  @media(max-width:420px){ .step .step-lbl{font-size:9.5px} }
+
+  /* ---------- PDF missing-fields hint ---------- */
+  .pdf-hint{
+    max-width:760px;margin:0 auto 2px;padding:0 4px;
+    font-size:11.5px;color:var(--amber);font-weight:600;text-align:center;min-height:16px;
+  }
+  .pdf-hint:empty{display:none}
 
   main{max-width:760px;margin:22px auto 0;padding:0 18px}
 
@@ -60,6 +101,7 @@
     border:1px solid var(--amber-dim);border-radius:6px;padding:2px 7px;letter-spacing:1px
   }
   .card > .head h2{font-size:15px;font-weight:700}
+  .card > .head .idx.idx-opt{color:var(--sky);border-color:rgba(79,176,224,.4)}
   .card > .head .sub{font-size:12px;color:var(--mist);margin-inline-start:auto;font-weight:500}
 
   /* ---------- Fields ---------- */
@@ -151,6 +193,15 @@
   .note-attn b{font-weight:700}
   .note-list li{position:relative;padding:2px 0;line-height:1.5}
   .note-list li::before{content:"•";position:absolute;inset-inline-start:-14px;color:#3FB984;font-weight:700}
+  .notes-tick{
+    width:56px;height:56px;border-radius:50%;margin:2px auto 4px;
+    display:flex;align-items:center;justify-content:center;
+    background:rgba(63,185,132,.12);border:1.5px solid rgba(63,185,132,.4)
+  }
+  .notes-tick svg{width:28px;height:28px}
+  .modal .note-list{margin:4px 0 0;padding:0;list-style:none}
+  .modal .note-list li{position:relative;padding:6px 0 6px 22px;line-height:1.55;font-size:13.5px;color:var(--paper)}
+  .modal .note-list li::before{content:"";position:absolute;inset-inline-start:6px;top:13px;width:6px;height:6px;border-radius:50%;background:#3FB984}
 
   /* collapsible advanced */
   .adv-toggle{background:none;border:none;color:var(--mist);font-family:'Heebo';font-size:13px;
@@ -174,6 +225,8 @@
   }
   .btn.primary{background:linear-gradient(180deg,var(--amber),var(--amber-dim));color:#1a1206;
     box-shadow:0 6px 20px rgba(242,169,59,.28)}
+  .btn.primary:disabled{background:var(--panel-2);color:var(--mist);box-shadow:none;cursor:not-allowed;opacity:.7}
+  .btn.primary:disabled svg{stroke:var(--mist)!important;fill:var(--mist)!important}
   .btn.primary:hover{filter:brightness(1.06)}
   .btn.ghost{flex:0 0 auto;background:var(--panel-2);color:var(--paper);border:1px solid var(--line)}
   .btn.ghost:hover{border-color:var(--mist)}
@@ -349,29 +402,25 @@
       <h1>תוכנית טיסת מרחב</h1>
       <p>דרומה לבאר שבע בנתיבי אז״מ - הגשה למודיעין טיס</p>
     </div>
+    <button class="info-btn" onclick="showNotes()" title="מועדי הגשה" aria-label="מועדי הגשה">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 11v5" stroke-linecap="round"/><circle cx="12" cy="7.5" r="1.1" fill="currentColor" stroke="none"/></svg>
+    </button>
+  </div>
+</div>
+
+<div class="stepbar">
+  <div class="rail">
+    <button class="step" id="stepBtn1" onclick="goStep(1)"><span class="step-dot"><span>1</span></span><span class="step-lbl">טייס ומטוס</span></button>
+    <button class="step" id="stepBtn2" onclick="goStep(2)"><span class="step-dot"><span>2</span></span><span class="step-lbl">פרטי טיסה</span></button>
+    <button class="step" id="stepBtn3" onclick="goStep(3)"><span class="step-dot"><span>3</span></span><span class="step-lbl">נתיב</span></button>
+    <button class="step opt" id="stepBtn4" onclick="goStep(4)"><span class="step-dot"><span>4</span></span><span class="step-lbl">נוסף</span></button>
   </div>
 </div>
 
 <main>
 
-  <!-- STANDARD NOTE -->
-  <div class="std-note" style="margin-bottom:16px">
-    <svg viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="9" stroke="#3FB984" stroke-width="1.4"/><path d="M6 10l2.5 2.5L14 7" stroke="#3FB984" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-    <div>
-      טופס זה מוגדר מראש לטיסה שגרתית באמצע השבוע בנתיבי אז״מ הרשמיים דרומה.
-      <div class="note-attn">
-        <svg viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="9" stroke="#3FB984" stroke-width="1.4"/><path d="M6 10l2.5 2.5L14 7" stroke="#3FB984" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        <b>שים לב:</b>
-      </div>
-      <ul class="note-list">
-        <li><b>המראה עד 11:00</b> - יש להגיש עד <b>13:00 ביום הקודם</b>.</li>
-        <li><b>המראה אחרי 11:00</b> - יש להגיש <b>לפחות שעתיים לפני</b> ההמראה.</li>
-      </ul>
-    </div>
-  </div>
-
   <!-- WHO -->
-  <section class="card">
+  <section class="card" id="sec1">
     <div class="head"><span class="idx">01</span><h2>טייס ומטוס</h2><span class="sub">נשמר להמראה הבאה</span></div>
     <div class="stack">
       <div class="field">
@@ -392,7 +441,7 @@
   </section>
 
   <!-- FLIGHT DETAILS -->
-  <section class="card">
+  <section class="card" id="sec2">
     <div class="head"><span class="idx">02</span><h2>פרטי הטיסה</h2></div>
     <div class="grid">
       <div class="field full"><label>תאריך</label><input type="date" id="fDate"></div>
@@ -412,7 +461,7 @@
   </section>
 
   <!-- ROUTE -->
-  <section class="card">
+  <section class="card" id="sec3">
     <div class="head"><span class="idx">03</span><h2>נתיב הטיסה</h2><span class="sub">בחר נתיב שמור או צור חדש</span></div>
     <div class="route-savenote">נתיבים מותאמים אישית נשמרים על המכשיר לשימוש חוזר</div>
     <select id="routeSelect" style="display:none"></select>
@@ -429,10 +478,11 @@
   </section>
 
   <!-- ADVANCED -->
-  <section class="card">
+  <section class="card" id="sec4">
+    <div class="head"><span class="idx idx-opt">04</span><h2>שדות נוספים</h2><span class="sub">אופציונלי</span></div>
     <button class="adv-toggle" id="advToggle" onclick="toggleAdv()">
       <svg class="car" width="12" height="12" viewBox="0 0 12 12" fill="#7C8DA0"><path d="M4 2l4 4-4 4z"/></svg>
-      שדות נוספים (ברירת מחדל: טיסה סטנדרטית ללא חריגות)
+      ברירת מחדל: טיסה סטנדרטית ללא חריגות
     </button>
     <div class="adv-body" id="advBody">
       <div class="grid" style="margin-bottom:12px">
@@ -456,6 +506,7 @@
 </main>
 
 <div class="actionbar">
+  <div class="pdf-hint" id="pdfHint"></div>
   <div class="rail">
     <button class="btn ghost" onclick="resetFlight()" title="נקה פרטי טיסה">נקה</button>
     <button class="btn primary" id="genBtn" onclick="generatePDF()">
@@ -465,7 +516,7 @@
   </div>
 </div>
 
-<div class="app-footer" dir="ltr">MERHAV_fpl · v1.01.020 · BUILT BY ELIGRT<br><span id="pdfCounter" class="af-count"></span></div>
+<div class="app-footer" dir="ltr">MERHAV_fpl · v1.01.024 · BUILT BY ELIGRT<br><span id="pdfCounter" class="af-count"></span></div>
 
 <!-- MODAL -->
 <div class="scrim" id="scrim" onclick="if(event.target===this)closeModal()">
@@ -593,8 +644,8 @@ function refreshSelects(){
   db.pilots.forEach((p,i)=>pl.add(new Option(`${p.name} · ${p.lic}`,i)));
   if(db.last.ac!=null && db.aircraft[db.last.ac]) ac.value=db.last.ac;
   if(db.last.pilot!=null && db.pilots[db.last.pilot]) pl.value=db.last.pilot;
-  ac.onchange=()=>{db.last.ac=ac.value;saveDB()};
-  pl.onchange=()=>{db.last.pilot=pl.value;saveDB();syncPilotPhone()};
+  ac.onchange=()=>{db.last.ac=ac.value;saveDB();refreshGate&&refreshGate()};
+  pl.onchange=()=>{db.last.pilot=pl.value;saveDB();syncPilotPhone();refreshGate&&refreshGate()};
   syncPilotPhone();
 }
 function syncPilotPhone(){
@@ -613,7 +664,7 @@ function refreshAirfields(){
     if(prev && (allowBlank?['',...list]:list).includes(prev)) sel.value=prev;
     else if(id==='fDest' && list.includes('באר שבע')) sel.value='באר שבע';
     else if(!allowBlank && list.length) sel.value = (db.last[id] && list.includes(db.last[id])) ? db.last[id] : list[0];
-    sel.onchange=()=>{db.last[id]=sel.value;saveDB()};
+    sel.onchange=()=>{db.last[id]=sel.value;saveDB();refreshGate&&refreshGate()};
   });
   // apply remembered picks
   ['fDepart','fDest'].forEach(id=>{const sel=document.getElementById(id);if(db.last[id]&&list.includes(db.last[id]))sel.value=db.last[id];});
@@ -650,7 +701,7 @@ function refreshRoutes(){
   sel.innerHTML = db.routes.length ? '' : '<option value="">- אין נתיבים, צור חדש -</option>';
   db.routes.forEach((r,i)=>sel.add(new Option(`${r.label} · ${DIR_LABEL[r.dir]||''}`,i)));
   if(db.last.route!=null && db.routes[db.last.route]) sel.value=db.last.route;
-  sel.onchange=()=>{db.last.route=sel.value;saveDB();renderRoutePreview()};
+  sel.onchange=()=>{db.last.route=sel.value;saveDB();renderRoutePreview();refreshGate();};
   renderRoutePills();
   const hasRoutes = db.routes.length ? '' : 'none';
   document.getElementById('editRouteBtn').style.display = hasRoutes;
@@ -667,7 +718,7 @@ function renderRoutePills(){
     const pill=document.createElement('button');
     pill.className='route-pill'+(on?' on':'')+(r.dir==='north'?' north':' south');
     pill.innerHTML=`<span class="rp-label">${r.label}</span>`;
-    pill.onclick=()=>{sel.value=i;db.last.route=String(i);saveDB();renderRoutePills();renderRoutePreview()};
+    pill.onclick=()=>{sel.value=i;db.last.route=String(i);saveDB();renderRoutePills();renderRoutePreview();refreshGate();};
     box.appendChild(pill);
   });
 }
@@ -714,7 +765,7 @@ function openModal(kind){
       <div class="addgrid">
         <div class="reg-input full" dir="ltr">
           <span class="reg-prefix">4X -</span>
-          <input id="in1" maxlength="3" placeholder="HYD" oninput="this.value=this.value.toUpperCase().replace(/[^A-Z]/g,'')" autocapitalize="characters" style="text-transform:uppercase">
+          <input id="in1" maxlength="3" placeholder="HHH" oninput="this.value=this.value.toUpperCase().replace(/[^A-Z]/g,'')" autocapitalize="characters" style="text-transform:uppercase">
         </div>
         <input id="in3" dir="ltr" class="full" placeholder="Aircraft type" style="text-align:left">
       </div>
@@ -805,6 +856,72 @@ function addItem(closeAfter){
 function afterListChange(){refreshSelects();refreshAirfields();refreshRoutes();}
 function closeModal(){document.getElementById('scrim').classList.remove('show');modalKind=null}
 
+/* ---------------- step bar: jump + scroll-spy ---------------- */
+function stepbarOffset(){
+  const tb=document.querySelector('.topbar'), sb=document.querySelector('.stepbar');
+  if(tb&&sb) sb.style.top=tb.offsetHeight+'px';
+}
+function goStep(n){
+  const sec=document.getElementById('sec'+n);
+  if(!sec) return;
+  setActiveStep(n);
+  _lockStep=true;
+  if(_lockTimer) clearTimeout(_lockTimer);
+  _lockTimer=setTimeout(()=>{ _lockStep=false; },800);
+  const tb=document.querySelector('.topbar'), sb=document.querySelector('.stepbar');
+  const offset=(tb?tb.offsetHeight:0)+(sb?sb.offsetHeight:0)+10;
+  const y=sec.getBoundingClientRect().top+window.pageYOffset-offset;
+  window.scrollTo({top:Math.max(0,y),behavior:'smooth'});
+}
+function setActiveStep(n){
+  for(let i=1;i<=4;i++){
+    const b=document.getElementById('stepBtn'+i);
+    if(b) b.classList.toggle('active',i===n);
+  }
+}
+let _spy, _lockStep=false, _lockTimer=null;
+function computeActiveStep(){
+  const secs=[1,2,3,4].map(i=>document.getElementById('sec'+i)).filter(Boolean);
+  const tb=document.querySelector('.topbar'), sb=document.querySelector('.stepbar');
+  const line=(tb?tb.offsetHeight:0)+(sb?sb.offsetHeight:0)+40; // just below the sticky bars
+  let active=1;
+  secs.forEach(s=>{
+    const top=s.getBoundingClientRect().top;
+    if(top-line<=0) active=+s.id.replace('sec','');
+  });
+  // near page bottom -> last section
+  if(window.innerHeight+window.pageYOffset >= document.body.scrollHeight-4){
+    active=secs.length;
+  }
+  return active;
+}
+function onScrollSpy(){
+  if(_lockStep) return;
+  setActiveStep(computeActiveStep());
+}
+function initStepSpy(){
+  stepbarOffset();
+  window.addEventListener('scroll',onScrollSpy,{passive:true});
+  setActiveStep(1);
+}
+
+/* ---------------- deadline notes (shown on load + via info button) ---------------- */
+function showNotes(){
+  const m=document.getElementById('modal');
+  m.innerHTML=`
+    <h3 style="text-align:center;margin-bottom:2px">מועדי הגשה למודיעין טיס</h3>
+    <p class="lede" style="text-align:center;margin-bottom:16px">טיסות אז״ם (מרחב) דרומית לבאר-שבע</p>
+    <ul class="note-list">
+      <li>המראה עד 11:00 - יש להגיש עד 13:00 ביום הקודם.</li>
+      <li>המראה אחרי 11:00 - יש להגיש לפחות שעתיים לפני ההמראה.</li>
+    </ul>
+    <div class="modal-actions" style="margin-top:18px">
+      <button class="btn primary" style="flex:1" onclick="closeModal()">הבנתי</button>
+    </div>`;
+  modalKind='notes';
+  document.getElementById('scrim').classList.add('show');
+}
+
 /* ---------------- dedicated route editor ---------------- */
 let editingRouteIdx=null;
 function openRouteEditor(idx,prefill){
@@ -857,7 +974,7 @@ function saveRoute(){
   if(editingRouteIdx!=null){db.routes[editingRouteIdx]=rec;}
   else{db.routes.push(rec);db.last.route=String(db.routes.length-1);}
   saveDB();closeModal();refreshRoutes();
-  if(editingRouteIdx==null){document.getElementById('routeSelect').value=db.last.route;renderRoutePills();renderRoutePreview();}
+  if(editingRouteIdx==null){document.getElementById('routeSelect').value=db.last.route;renderRoutePills();renderRoutePreview();refreshGate();}
   toast('הנתיב נשמר');
 }
 function deleteRoute(){
@@ -889,6 +1006,7 @@ function resetFlight(){
   document.getElementById('fAlt').value='';
   if([...document.getElementById('fDest').options].some(o=>o.value==='באר שבע')) document.getElementById('fDest').value='באר שבע';
   renderRoutePreview();
+  refreshGate();
   toast('פרטי הטיסה נוקו');
 }
 
@@ -896,6 +1014,58 @@ function resetFlight(){
 function val(id){return document.getElementById(id).value.trim()}
 function currentAircraft(){const i=document.getElementById('acSelect').value;return db.aircraft[i]||{call:'',reg:'',type:''}}
 function currentPilot(){const i=document.getElementById('pilotSelect').value;return db.pilots[i]||{name:'',lic:''}}
+
+/* ---------------- PDF readiness gate ---------------- */
+function refreshGate(){
+  const val=id=>{const el=document.getElementById(id);return el?el.value.trim():''};
+  const hasAircraft = document.getElementById('acSelect').value!=='' && db.aircraft.length>0;
+  const hasPilot    = document.getElementById('pilotSelect').value!=='' && db.pilots.length>0;
+  const hasDate  = !!val('fDate');
+  const hasEtd   = !!val('fEtd');
+  const hasDep   = !!val('fDepart');
+  const hasDest  = !!val('fDest');
+  const hasEta   = !!val('fEta');
+  const hasFuel  = !!val('fFuel');
+  const hasIas   = !!val('fIas');
+  const hasPurpose = !!val('fPurpose');
+  const hasSouls = !!val('fSouls');
+  const hasRoute = currentRoute()!=null;
+
+  // step completeness
+  const s1 = hasAircraft && hasPilot;
+  const s2 = hasDate && hasEtd && hasDep && hasDest && hasEta && hasFuel && hasIas && hasPurpose && hasSouls;
+  const s3 = hasRoute;
+  markStepDone(1,s1); markStepDone(2,s2); markStepDone(3,s3);
+
+  // collect what's missing, in form order
+  const miss=[];
+  if(!hasAircraft) miss.push('מטוס');
+  if(!hasPilot)    miss.push('טייס');
+  if(!hasDate)     miss.push('תאריך');
+  if(!hasDep)      miss.push('שדה יציאה');
+  if(!hasEtd)      miss.push('שעת המראה');
+  if(!hasDest)     miss.push('שדה יעד');
+  if(!hasEta)      miss.push('שעת נחיתה');
+  if(!hasFuel)     miss.push('זמן דלק');
+  if(!hasIas)      miss.push('מהירות');
+  if(!hasPurpose)  miss.push('מטרת הטיסה');
+  if(!hasSouls)    miss.push('נפשות');
+  if(!hasRoute)    miss.push('נתיב');
+
+  const btn=document.getElementById('genBtn');
+  const hint=document.getElementById('pdfHint');
+  if(miss.length){
+    btn.disabled=true;
+    hint.textContent='חסר להפקה: '+miss.join(', ');
+  }else{
+    btn.disabled=false;
+    hint.textContent='';
+  }
+}
+function markStepDone(n,done){
+  const b=document.getElementById('stepBtn'+n);
+  if(b) b.classList.toggle('done',!!done);
+}
 
 function buildSheet(){
   const a=currentAircraft(),p=currentPilot();
@@ -1034,6 +1204,17 @@ async function fetchPdfCount(){
   refreshSelects();refreshAirfields();refreshRoutes();
   try{const c=localStorage.getItem('merhav_pdf_count');if(c)renderPdfCount(c);}catch(e){}
   fetchPdfCount();
+  // step bar + gate
+  initStepSpy();
+  refreshGate();
+  // recompute gate on any relevant input
+  ['fDate','fEtd','fDepart','fDest','fEta','fFuel','fIas','fPurpose','fSouls','acSelect','pilotSelect','fRoute'].forEach(id=>{
+    const el=document.getElementById(id);
+    if(el){ el.addEventListener('change',refreshGate); el.addEventListener('input',refreshGate); }
+  });
+  window.addEventListener('resize',stepbarOffset);
+  // show deadline notes on every load
+  showNotes();
 })();
 </script>
 </body>
