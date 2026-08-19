@@ -109,21 +109,19 @@
   .reg-input input:focus{box-shadow:none}
 
   /* route pills */
-  .route-pills{display:flex;flex-wrap:wrap;gap:9px;margin-bottom:14px}
+  .route-pills{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:14px}
+  .route-savenote{font-size:11.5px;color:var(--mist);line-height:1.5;margin-bottom:14px;
+    background:var(--panel-2);border:1px solid var(--line);border-radius:9px;padding:9px 12px}
   .route-pills .pills-empty{color:var(--mist);font-size:13px;font-weight:500;padding:6px 0}
-  .route-pill{display:flex;flex-direction:column;align-items:flex-start;gap:2px;
-    background:var(--panel-2);border:1.5px solid var(--line);border-radius:12px;
-    padding:9px 14px;cursor:pointer;transition:.14s;text-align:right;min-width:120px}
+  .route-pill{display:inline-flex;align-items:center;
+    background:var(--panel-2);border:1.5px solid var(--line);border-radius:20px;
+    padding:7px 14px;cursor:pointer;transition:.14s;white-space:nowrap}
   .route-pill:hover{border-color:var(--mist)}
-  .route-pill .rp-dir{font-size:10.5px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;
-    color:var(--mist);font-family:'Rubik'}
-  .route-pill .rp-label{font-size:14px;font-weight:600;color:var(--paper)}
+  .route-pill .rp-label{font-size:13px;font-weight:600;color:var(--paper)}
   .route-pill.on{background:rgba(79,176,224,.14);border-color:var(--sky)}
-  .route-pill.on .rp-dir{color:var(--sky)}
   .route-pill.on .rp-label{color:var(--sky)}
-  .route-pill.north.on{background:rgba(79,176,224,.14);border-color:var(--sky)}
   .route-pill.south.on{background:rgba(242,169,59,.14);border-color:var(--amber)}
-  .route-pill.south.on .rp-dir,.route-pill.south.on .rp-label{color:var(--amber)}
+  .route-pill.south.on .rp-label{color:var(--amber)}
   .route-actions{display:flex;gap:10px;margin-bottom:4px}
   .route-actions .inline-add{width:auto;flex:1;padding:11px}
   .route-reset{background:none;border:none;color:var(--mist);font-family:'Heebo';font-size:12px;
@@ -187,7 +185,7 @@
     align-items:center;justify-content:center;padding:18px;backdrop-filter:blur(3px)}
   .scrim.show{display:flex}
   .modal{background:var(--panel);border:1px solid var(--line);border-radius:16px;
-    width:100%;max-width:460px;max-height:86vh;overflow:auto;padding:22px}
+    width:100%;max-width:460px;max-height:88vh;overflow:auto;padding:22px}
   .modal h3{font-size:16px;font-weight:800;margin-bottom:4px}
   .modal .lede{font-size:12.5px;color:var(--mist);margin-bottom:16px;line-height:1.5}
   .list{display:flex;flex-direction:column;gap:8px;margin-bottom:14px}
@@ -209,13 +207,19 @@
     font-family:'IBM Plex Mono',monospace;
     color:var(--mist);font-size:11px;
   }
+  .app-footer .af-count{font-size:9.5px;opacity:.7;display:inline-block;margin-top:3px}
   /* modal extras */
   .modal{position:relative}
   .close-x{position:absolute;top:16px;left:16px;background:none;border:none;color:var(--mist);
     font-size:18px;cursor:pointer;line-height:1;padding:4px 8px;border-radius:6px}
   .close-x:hover{color:var(--paper);background:var(--panel-2)}
   .ms-label{font-size:12px;color:var(--mist);font-weight:600;margin-bottom:8px}
-  .ms-rows{display:flex;flex-direction:column;gap:8px;margin-bottom:10px}
+  .ms-rows{display:flex;flex-direction:column;gap:8px;margin-bottom:10px;
+    max-height:230px;overflow-y:auto;padding:4px;
+    border:1px solid var(--line);border-radius:9px;background:rgba(0,0,0,.12)}
+  .ms-rows:empty{border:none;padding:0}
+  .ms-rows::-webkit-scrollbar{width:6px}
+  .ms-rows::-webkit-scrollbar-thumb{background:var(--line);border-radius:3px}
   .ms-row{display:flex;gap:8px;align-items:center}
   .ms-row .ms-name{flex:2}
   .ms-row .ms-alt{flex:1}
@@ -401,8 +405,8 @@
         <div class="pick-row"><select id="fDest"></select><button class="pick-manage" onclick="openModal('field')" title="ניהול שדות">＋</button></div>
       </div>
       <div class="field"><label>נחיתה סופית <span class="hint">ETA</span></label><input type="time" id="fEta"></div>
-      <div class="field"><label>זמן דלק</label><input type="text" id="fFuel" placeholder="למשל 3:30"></div>
-      <div class="field"><label>מהירות בקשר <span class="hint">IAS</span></label><input type="text" id="fIas" value="90"></div>
+      <div class="field"><label>זמן דלק <span class="hint">(בשעות)</span></label><input type="text" id="fFuel" inputmode="decimal" placeholder="למשל 2.5"></div>
+      <div class="field"><label>מהירות בקשר <span class="hint">IAS</span></label><input type="text" id="fIas" inputmode="numeric" value="90"></div>
       <div class="field"><label>מטרת הטיסה</label><input type="text" id="fPurpose" value="פנאי"></div>
       <div class="field"><label>נפשות במטוס</label><select id="fSouls"><option value="1">1</option><option value="2">2</option></select></div>
     </div>
@@ -411,6 +415,7 @@
   <!-- ROUTE -->
   <section class="card">
     <div class="head"><span class="idx">03</span><h2>נתיב הטיסה</h2><span class="sub">בחר נתיב שמור או צור חדש</span></div>
+    <div class="route-savenote">💾 נתיבים שתיצור נשמרים במכשיר לשימוש חוזר - אין צורך להזין מחדש בכל טיסה.</div>
     <select id="routeSelect" style="display:none"></select>
     <div class="route-pills" id="routePills"></div>
     <div class="route-actions">
@@ -461,7 +466,7 @@
   </div>
 </div>
 
-<div class="app-footer" dir="ltr">MERHAV_fpl · v1.01.013 · built by eligrt</div>
+<div class="app-footer" dir="ltr">MERHAV_fpl · v1.01.017 · built by eligrt<br><span id="pdfCounter" class="af-count"></span></div>
 
 <!-- MODAL -->
 <div class="scrim" id="scrim" onclick="if(event.target===this)closeModal()">
@@ -480,22 +485,32 @@
 /* ---------------- storage ---------------- */
 const DB_KEY='azm_flightplan_v1';
 const DEFAULT_ROUTES=[
-  {label:'ברירת מחדל - צפוני',dir:'north',legs:[
+  {label:'דיפולט צפוני',dir:'north',legs:[
+    {name:'נשרים',alt:'800'},
+    {name:'בית שמש',alt:'1700'},
+    {name:'זכריה',alt:'1700'},
+    {name:'קרית גת',alt:'1200'},
     {name:'בית קמה',alt:'1200'},
     {name:'צ. שוקת',alt:'2200'},
     {name:'צ. ערד',alt:'2300'},
     {name:'נווה זוהר',alt:'2300'},
     {name:'צ. הערבה',alt:'500'},
-    {name:'צופר',alt:'1400'}
+    {name:'צופר',alt:'1400'},
+    {name:'ביצוע 180 וחזרה באותו נתיב',alt:''}
   ]},
-  {label:'ברירת מחדל - דרומי',dir:'south',legs:[
+  {label:'דיפולט דרומי',dir:'south',legs:[
+    {name:'נשרים',alt:'800'},
+    {name:'בית שמש',alt:'1700'},
+    {name:'זכריה',alt:'1700'},
+    {name:'קרית גת',alt:'1200'},
     {name:'בית קמה',alt:'1200'},
     {name:'צומת שרה',alt:'1700'},
     {name:'טללים',alt:'2200'},
     {name:'שדה בוקר',alt:'2700'},
     {name:'צ. הרוחות',alt:'3200'},
     {name:'הר גבס',alt:'3200'},
-    {name:'צופר',alt:'2600'}
+    {name:'צופר',alt:'2600'},
+    {name:'ביצוע 180 וחזרה באותו נתיב',alt:''}
   ]}
 ];
 const seed={
@@ -524,17 +539,25 @@ function migrate(d){
   });
   // shared airfields list (point d)
   if(!Array.isArray(d.airfields)) d.airfields=['באר שבע'];
-  // upgrade old placeholder default routes to the real waypoint sets
+  // migrate old default routes to the new naming + content
+  const OLD_TO_NEW={'ברירת מחדל - צפוני':'דיפולט צפוני','ברירת מחדל - דרומי':'דיפולט דרומי'};
   (d.routes||[]).forEach(r=>{
-    const isOldPlaceholder = r.label && r.label.indexOf('ברירת מחדל')===0 &&
-      (r.legs||[]).length<=2 &&
-      (r.legs||[]).some(l=>['נקודת כניסה','המשך צפונה','המשך דרומה'].includes(l.name));
-    if(isOldPlaceholder){
-      const def=DEFAULT_ROUTES.find(x=>x.label===r.label);
-      if(def) r.legs=JSON.parse(JSON.stringify(def.legs));
-    }
-    // one-time fix: typo צ. עד -> צ. ערד
+    // typo fix first
     (r.legs||[]).forEach(l=>{ if(l.name==='צ. עד') l.name='צ. ערד'; });
+    // was this a default route (old or new naming)?
+    const newLabel = OLD_TO_NEW[r.label] || r.label;
+    const def = DEFAULT_ROUTES.find(x=>x.label===newLabel);
+    if(def){
+      // it's a default: rename to new label
+      r.label = newLabel;
+      const wasOldPlaceholder = (r.legs||[]).length<=2 &&
+        (r.legs||[]).some(l=>['נקודת כניסה','המשך צפונה','המשך דרומה'].includes(l.name));
+      // refresh content if it was a stale placeholder OR is missing the return-180 waypoint
+      const hasReturn=(r.legs||[]).some(l=>l.name && l.name.indexOf('ביצוע 180')===0);
+      if(wasOldPlaceholder || !hasReturn){
+        r.legs=JSON.parse(JSON.stringify(def.legs));
+      }
+    }
   });
   return d;
 }
@@ -644,7 +667,7 @@ function renderRoutePills(){
     const on = String(sel.value)===String(i);
     const pill=document.createElement('button');
     pill.className='route-pill'+(on?' on':'')+(r.dir==='north'?' north':' south');
-    pill.innerHTML=`<span class="rp-dir">${r.dir==='north'?'צפוני':'דרומי'}</span><span class="rp-label">${r.label}</span>`;
+    pill.innerHTML=`<span class="rp-label">${r.label}</span>`;
     pill.onclick=()=>{sel.value=i;db.last.route=String(i);saveDB();renderRoutePills();renderRoutePreview()};
     box.appendChild(pill);
   });
@@ -979,14 +1002,39 @@ async function generatePDF(){
     db.last.ac=document.getElementById('acSelect').value;
     db.last.pilot=document.getElementById('pilotSelect').value;
     saveDB();
+    trackPdf();
   }catch(e){console.error(e);toast('שגיאה ביצירת ה-PDF',true)}
   btn.disabled=false;btn.innerHTML=`<svg width="18" height="18" viewBox="0 0 20 20" fill="#1a1206"><path d="M10 2v9m0 0l-3.5-3.5M10 11l3.5-3.5M3 15v2a1 1 0 001 1h12a1 1 0 001-1v-2" stroke="#1a1206" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg> הפק ופתח PDF`;
+}
+
+/* ---------------- PDF counter (global, via dedicated worker) ---------------- */
+const PDF_COUNTER_BASE='https://merhav-counter.eligrt.workers.dev';
+const PDF_COUNTER_KEY='merhav_fpl';
+function renderPdfCount(n){
+  const el=document.getElementById('pdfCounter');
+  if(el && n!=null && n!==undefined) el.textContent=`(${n} PDF)`;
+}
+async function trackPdf(){
+  try{
+    const r=await fetch(`${PDF_COUNTER_BASE}/increment?ac=${PDF_COUNTER_KEY}`);
+    const d=await r.json();
+    if(d && d.value!==undefined){ renderPdfCount(d.value); try{localStorage.setItem('merhav_pdf_count',String(d.value));}catch(e){} }
+  }catch(e){ /* silent - offline or worker down */ }
+}
+async function fetchPdfCount(){
+  try{
+    const r=await fetch(`${PDF_COUNTER_BASE}/get?ac=${PDF_COUNTER_KEY}`);
+    const d=await r.json();
+    if(d && d.value!==undefined){ renderPdfCount(d.value); try{localStorage.setItem('merhav_pdf_count',String(d.value));}catch(e){} }
+  }catch(e){ /* silent */ }
 }
 
 /* ---------------- init ---------------- */
 (function init(){
   const t=new Date();document.getElementById('fDate').value=t.toISOString().slice(0,10);
   refreshSelects();refreshAirfields();refreshRoutes();
+  try{const c=localStorage.getItem('merhav_pdf_count');if(c)renderPdfCount(c);}catch(e){}
+  fetchPdfCount();
 })();
 </script>
 </body>
