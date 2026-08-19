@@ -110,8 +110,7 @@
 
   /* route pills */
   .route-pills{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:14px}
-  .route-savenote{font-size:11.5px;color:var(--mist);line-height:1.5;margin-bottom:14px;
-    background:var(--panel-2);border:1px solid var(--line);border-radius:9px;padding:9px 12px}
+  .route-savenote{font-size:12px;color:var(--mist);line-height:1.5;margin-bottom:14px}
   .route-pills .pills-empty{color:var(--mist);font-size:13px;font-weight:500;padding:6px 0}
   .route-pill{display:inline-flex;align-items:center;
     background:var(--panel-2);border:1.5px solid var(--line);border-radius:20px;
@@ -207,7 +206,7 @@
     font-family:'IBM Plex Mono',monospace;
     color:var(--mist);font-size:11px;
   }
-  .app-footer .af-count{font-size:9.5px;opacity:.7;display:inline-block;margin-top:3px}
+  .app-footer .af-count{font-size:11px;color:var(--mist);font-style:italic;display:block;margin-top:6px;letter-spacing:.05em}
   /* modal extras */
   .modal{position:relative}
   .close-x{position:absolute;top:16px;left:16px;background:none;border:none;color:var(--mist);
@@ -415,7 +414,7 @@
   <!-- ROUTE -->
   <section class="card">
     <div class="head"><span class="idx">03</span><h2>נתיב הטיסה</h2><span class="sub">בחר נתיב שמור או צור חדש</span></div>
-    <div class="route-savenote">💾 נתיבים שתיצור נשמרים במכשיר לשימוש חוזר - אין צורך להזין מחדש בכל טיסה.</div>
+    <div class="route-savenote">נתיבים מותאמים אישית נשמרים על המכשיר לשימוש חוזר</div>
     <select id="routeSelect" style="display:none"></select>
     <div class="route-pills" id="routePills"></div>
     <div class="route-actions">
@@ -466,7 +465,7 @@
   </div>
 </div>
 
-<div class="app-footer" dir="ltr">MERHAV_fpl · v1.01.017 · built by eligrt<br><span id="pdfCounter" class="af-count"></span></div>
+<div class="app-footer" dir="ltr">MERHAV_fpl · v1.01.020 · BUILT BY ELIGRT<br><span id="pdfCounter" class="af-count"></span></div>
 
 <!-- MODAL -->
 <div class="scrim" id="scrim" onclick="if(event.target===this)closeModal()">
@@ -688,7 +687,7 @@ function renderRoutePreview(){
   const r=currentRoute();
   if(!r){box.innerHTML='<div class="rp-empty">לא נבחר נתיב</div>';document.getElementById('fRoute').value='';document.getElementById('fRouteDir').value='';return}
   const legs=r.legs||[];
-  box.innerHTML=`<div class="rp-head">מבוסס על: <b>${DIR_LABEL[r.dir]||''}</b></div>`+
+  box.innerHTML=`<div class="rp-head">מבוסס על: <b>"${DIR_LABEL[r.dir]||''}"</b></div>`+
     `<div class="wp-line">`+legs.map((m,i)=>
       `<div class="wp-node${i===0?' first':''}${i===legs.length-1?' last':''}">
          <span class="wp-dot"></span>
@@ -908,7 +907,7 @@ function buildSheet(){
   // subway-style waypoint list (point c)
   let routeHtml='';
   if(r){
-    routeHtml=`<div class="fs-routehdr">מבוסס על: <span class="v">${esc(DIR_LABEL[r.dir]||'')}</span></div>`+
+    routeHtml=`<div class="fs-routehdr">מבוסס על: <span class="v">"${esc(DIR_LABEL[r.dir]||'')}"</span></div>`+
       `<div class="wp-line">`+(r.legs||[]).map((m,i,arr)=>
         `<div class="wp-node${i===0?' first':''}${i===arr.length-1?' last':''}">
            <span class="wp-dot"></span>
