@@ -90,6 +90,46 @@
   }
   .inline-add:hover{border-color:var(--sky);background:rgba(79,176,224,.06)}
 
+  /* stacked fields (mobile-friendly) */
+  .stack{display:flex;flex-direction:column;gap:14px}
+  .pick-row{display:flex;gap:8px;align-items:stretch}
+  .pick-row select{flex:1}
+  .pick-manage{flex:0 0 auto;width:46px;background:var(--panel-2);border:1px solid var(--line);
+    color:var(--sky);border-radius:9px;font-size:20px;font-weight:600;cursor:pointer;transition:.15s}
+  .pick-manage:hover{border-color:var(--sky);background:rgba(79,176,224,.08)}
+
+  /* registration input with fixed 4X - prefix */
+  .reg-input{display:flex;align-items:stretch;border:1px solid var(--line);border-radius:9px;
+    background:var(--panel-2);overflow:hidden}
+  .reg-input:focus-within{border-color:var(--amber);box-shadow:0 0 0 3px rgba(242,169,59,.14)}
+  .reg-prefix{display:flex;align-items:center;padding:0 12px;background:var(--panel);color:var(--mist);
+    font-family:'Rubik';font-weight:600;font-size:15px;border-inline-end:1px solid var(--line);white-space:nowrap}
+  .reg-input input{border:none;border-radius:0;background:transparent;flex:1;letter-spacing:3px;
+    font-family:'Rubik';font-weight:600;font-size:16px}
+  .reg-input input:focus{box-shadow:none}
+
+  /* route pills */
+  .route-pills{display:flex;flex-wrap:wrap;gap:9px;margin-bottom:14px}
+  .route-pills .pills-empty{color:var(--mist);font-size:13px;font-weight:500;padding:6px 0}
+  .route-pill{display:flex;flex-direction:column;align-items:flex-start;gap:2px;
+    background:var(--panel-2);border:1.5px solid var(--line);border-radius:12px;
+    padding:9px 14px;cursor:pointer;transition:.14s;text-align:right;min-width:120px}
+  .route-pill:hover{border-color:var(--mist)}
+  .route-pill .rp-dir{font-size:10.5px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;
+    color:var(--mist);font-family:'Rubik'}
+  .route-pill .rp-label{font-size:14px;font-weight:600;color:var(--paper)}
+  .route-pill.on{background:rgba(79,176,224,.14);border-color:var(--sky)}
+  .route-pill.on .rp-dir{color:var(--sky)}
+  .route-pill.on .rp-label{color:var(--sky)}
+  .route-pill.north.on{background:rgba(79,176,224,.14);border-color:var(--sky)}
+  .route-pill.south.on{background:rgba(242,169,59,.14);border-color:var(--amber)}
+  .route-pill.south.on .rp-dir,.route-pill.south.on .rp-label{color:var(--amber)}
+  .route-actions{display:flex;gap:10px;margin-bottom:4px}
+  .route-actions .inline-add{width:auto;flex:1;padding:11px}
+  .route-reset{background:none;border:none;color:var(--mist);font-family:'Heebo';font-size:12px;
+    font-weight:600;cursor:pointer;padding:8px 2px 2px;text-decoration:underline;text-underline-offset:3px;transition:.15s}
+  .route-reset:hover{color:var(--sky)}
+
   /* route chips */
   .chips{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:9px}
   .chip{
@@ -107,10 +147,10 @@
     background:rgba(63,185,132,.08);border:1px solid rgba(63,185,132,.3);
     border-radius:10px;padding:11px 13px;font-size:12.5px;color:#BFEAD6;line-height:1.5;font-weight:500
   }
-  .std-note svg{flex:0 0 16px;margin-top:1px}
+  .std-note svg{flex:0 0 16px;width:16px;height:16px;margin-top:1px}
   .note-list{margin:4px 0 0;padding-inline-start:18px;list-style:none}
-  .note-attn{display:flex;align-items:center;gap:7px;margin-top:8px}
-  .note-attn svg{flex:0 0 15px}
+  .note-attn{display:flex;align-items:center;gap:10px;margin-top:8px;margin-inline-start:-26px}
+  .note-attn svg{flex:0 0 16px;width:16px;height:16px}
   .note-attn b{font-weight:700}
   .note-list li{position:relative;padding:2px 0;line-height:1.5}
   .note-list li::before{content:"•";position:absolute;inset-inline-start:-14px;color:#3FB984;font-weight:700}
@@ -166,7 +206,7 @@
 
   .app-footer{
     text-align:center;padding:16px 10px 8px;letter-spacing:.1em;
-    font-family:'IBM Plex Mono',monospace;text-transform:uppercase;
+    font-family:'IBM Plex Mono',monospace;
     color:var(--mist);font-size:11px;
   }
   /* modal extras */
@@ -193,12 +233,15 @@
     padding-bottom:8px;border-bottom:1px solid var(--line)
   }
   .route-preview .rp-head b{color:var(--paper);font-weight:700}
-  .route-preview .rp-wp{
-    display:flex;align-items:baseline;gap:10px;padding:5px 0;font-size:14px;font-weight:500
-  }
-  .route-preview .rp-wp::before{content:"›";color:var(--amber);font-weight:700;font-size:15px}
-  .route-preview .rp-name{flex:1}
-  .route-preview .rp-alt{color:var(--mist);font-size:12.5px;font-weight:600;font-family:'Rubik'}
+  /* subway-style line in the UI preview (matches PDF) */
+  .route-preview .wp-line{position:relative}
+  .route-preview .wp-line::before{content:"";position:absolute;z-index:1;width:2.5px;
+    right:5.25px;top:18px;bottom:18px;background:var(--sky)}
+  .route-preview .wp-node{position:relative;display:flex;align-items:center;gap:12px;min-height:36px}
+  .route-preview .wp-dot{position:relative;z-index:2;flex:0 0 13px;width:13px;height:13px;border-radius:50%;
+    background:var(--panel-2);border:3px solid var(--sky);box-sizing:border-box}
+  .route-preview .wp-text{font-size:14px;font-weight:500;color:var(--paper)}
+  .route-preview .wp-alt{color:var(--mist);font-size:12.5px;font-weight:600;font-family:'Rubik'}
 
   /* direction toggle */
   .dir-toggle{display:flex;gap:10px;margin-bottom:16px}
@@ -216,6 +259,22 @@
 
   .btn.line.danger{color:#E3695F;border-color:rgba(227,105,95,.4)}
   .btn.line.danger:hover{border-color:#E3695F;background:rgba(227,105,95,.08)}
+  /* danger confirm dialog */
+  .modal h3.cf-danger{color:#F27171;display:flex;align-items:center;gap:8px}
+  .modal h3 .cf-warn{font-size:20px;line-height:1}
+  .cf-body{font-size:13.5px;color:var(--paper);line-height:1.55;margin-bottom:18px}
+  .cf-body .cf-lead{margin:0 0 10px}
+  .cf-body .cf-lead:last-child{margin-bottom:0}
+  .cf-body b{color:#F27171;font-weight:700}
+  .cf-list{list-style:none;margin:0 0 12px;padding:10px 12px;
+    background:rgba(227,105,95,.08);border:1px solid rgba(227,105,95,.3);border-radius:9px;
+    max-height:180px;overflow:auto}
+  .cf-list li{font-size:13.5px;font-weight:600;color:var(--paper);padding:4px 0;
+    display:flex;align-items:center;gap:8px}
+  .cf-list li::before{content:"•";color:#F27171;font-weight:700}
+  .btn.danger-solid{background:linear-gradient(180deg,#E3695F,#C1483F);color:#fff;
+    box-shadow:0 6px 20px rgba(227,105,95,.28)}
+  .btn.danger-solid:hover{filter:brightness(1.06)}
 
   .toast{position:fixed;bottom:22px;right:22px;background:var(--go);color:#062a1c;
     padding:13px 18px;border-radius:11px;font-weight:700;font-size:14px;z-index:60;
@@ -231,29 +290,49 @@
   /* ============ PDF TEMPLATE (rendered off-screen, snapshotted) ============ */
   #pdfArea{position:fixed;left:-4000px;top:0}
   .form-sheet{
-    width:1000px;background:#fff;color:#111;font-family:'Heebo',sans-serif;padding:26px 30px;
+    width:1000px;min-height:1414px;background:#fff;color:#111;font-family:'Heebo',sans-serif;
+    padding:40px 44px;display:flex;flex-direction:column;
   }
-  .fs-head{display:flex;justify-content:space-between;align-items:flex-start;font-size:14px;font-weight:700;margin-bottom:2px}
+  /* blue + bold filled-in values (point f) - slightly larger */
+  .form-sheet .v{color:#1350C4;font-weight:700;font-size:1.08em}
+  .fs-head{display:flex;justify-content:space-between;align-items:flex-start;font-size:16px;font-weight:700;margin-bottom:2px}
   .fs-head .l{text-align:left}
-  .fs-title{text-align:center;font-size:18px;font-weight:800;margin:2px 0 4px}
-  .fs-sub{text-align:center;font-size:13px;font-weight:600;color:#333;margin-bottom:10px}
-  .fs-date{font-size:14px;font-weight:700;margin-bottom:8px}
-  table.fs{width:100%;border-collapse:collapse;font-size:12.5px}
-  table.fs th,table.fs td{border:1.2px solid #222;padding:7px 6px;text-align:center;vertical-align:middle}
-  table.fs th{background:#EDEDED;font-weight:700;font-size:11.5px;line-height:1.25}
-  table.fs td{height:34px;font-weight:600}
-  .fs-routebox{border:1.2px solid #222;border-top:none;padding:0}
-  .fs-routebox table{width:100%;border-collapse:collapse}
-  .fs-routebox th{background:#EDEDED;font-weight:700;font-size:11.5px;border:1.2px solid #222;padding:6px}
-  .fs-routebox td{border:1.2px solid #222;padding:8px;font-size:12.5px;font-weight:600;vertical-align:top}
-  .fs-routebox .detail{text-align:right;line-height:1.9;min-height:90px;white-space:pre-wrap}
-  .fs-routehdr{font-weight:800;margin-bottom:6px;padding-bottom:5px;border-bottom:1px solid #bbb;white-space:normal}
-  .fs-lines{margin-top:10px;font-size:12.5px}
-  .fs-lines .ln{display:flex;border-bottom:1px solid #999;padding:7px 2px;gap:8px}
+  .fs-title{text-align:center;font-size:22px;font-weight:800;margin:4px 0 4px}
+  .fs-sub{text-align:center;font-size:15px;font-weight:600;color:#333;margin-bottom:22px}
+  .fs-date{font-size:16px;font-weight:700;margin-bottom:12px}
+  /* shared body wrapper keeps every section the exact same width */
+  .fs-body{flex:1 1 auto;display:flex;flex-direction:column}
+  .fs-body table{width:100%;box-sizing:border-box;border-collapse:collapse;table-layout:fixed}
+  table.fs{font-size:13.5px}
+  table.fs th,table.fs td{border:1.4px solid #222;padding:9px 6px;text-align:center;vertical-align:middle;word-wrap:break-word}
+  table.fs th{background:#EDEDED;font-weight:700;font-size:12.5px;line-height:1.3}
+  table.fs td{height:46px;font-weight:600}
+  .fs-routebox{flex:1 1 auto;display:flex;flex-direction:column;min-height:620px}
+  .fs-routebox table{height:100%}
+  .fs-routebox tr.route-row{height:100%}
+  .fs-routebox th{background:#EDEDED;font-weight:700;font-size:12.5px;border:1.4px solid #222;padding:8px}
+  .fs-routebox td{border:1.4px solid #222;padding:12px;font-size:13.5px;font-weight:600;vertical-align:top}
+  .fs-routebox .detail{text-align:right;line-height:1.7}
+  .fs-routehdr{font-weight:800;font-size:14px;margin-bottom:12px;padding-bottom:8px;border-bottom:1px solid #bbb;white-space:normal}
+  /* subway-style waypoint line (point c) */
+  .wp-line{position:relative}
+  .wp-line::before{content:"";position:absolute;z-index:1;width:2.5px;
+    right:5.75px;top:20px;bottom:20px;background:#1350C4}
+  .wp-node{position:relative;display:flex;align-items:center;gap:12px;min-height:40px}
+  .wp-dot{position:relative;z-index:2;flex:0 0 14px;width:14px;height:14px;border-radius:50%;
+    background:#fff;border:3px solid #1350C4;box-sizing:border-box}
+  .wp-text{font-size:14px}
+  .wp-alt{color:#555;font-weight:600;font-size:12.5px}
+  .fs-lines{margin-top:14px;font-size:13.5px}
+  .fs-lines .ln{display:flex;border-bottom:1px solid #999;padding:9px 2px;gap:8px;min-height:20px}
   .fs-lines .ln b{font-weight:700;white-space:nowrap}
-  .fs-lines .ln span{font-weight:600;color:#222}
-  .fs-sign{display:flex;justify-content:space-between;margin-top:20px;font-size:13px;font-weight:700}
-  .fs-foot{display:flex;justify-content:space-between;margin-top:18px;font-size:11.5px;font-weight:600;color:#333;border-top:1px solid #bbb;padding-top:6px}
+  .fs-lines .ln span{font-weight:600;color:#222;padding-inline-start:6px}
+  .fs-sign{display:flex;justify-content:space-between;margin-top:40px;font-size:15px;font-weight:700}
+  .fs-sign .sig{display:flex;flex-direction:column;align-items:center;width:230px}
+  .fs-sign .sig-name{font-size:16px;min-height:22px;margin-bottom:3px}
+  .fs-sign .sig-line{width:100%;border-top:1.4px solid #222;height:0}
+  .fs-sign .sig-label{margin-top:6px;font-weight:700}
+  .fs-foot{display:flex;justify-content:space-between;margin-top:20px;font-size:12.5px;font-weight:600;color:#333;border-top:1px solid #bbb;padding-top:8px}
 </style>
 </head>
 <body>
@@ -290,45 +369,56 @@
 
   <!-- WHO -->
   <section class="card">
-    <div class="head"><span class="idx">01</span><h2>מטוס וטייס</h2><span class="sub">נשמר להמראה הבאה</span></div>
-    <div class="grid">
-      <div class="field">
-        <label>אות קריאה / מטוס</label>
-        <select id="acSelect"></select>
-      </div>
+    <div class="head"><span class="idx">01</span><h2>טייס ומטוס</h2><span class="sub">נשמר להמראה הבאה</span></div>
+    <div class="stack">
       <div class="field">
         <label>טייס</label>
-        <select id="pilotSelect"></select>
+        <div class="pick-row">
+          <select id="pilotSelect"></select>
+          <button class="pick-manage" onclick="openModal('pilot')" title="ניהול טייסים">＋</button>
+        </div>
       </div>
-      <div class="field"><button class="inline-add" onclick="openModal('ac')">＋ ניהול מטוסים</button></div>
-      <div class="field"><button class="inline-add" onclick="openModal('pilot')">＋ ניהול טייסים</button></div>
+      <div class="field">
+        <label>אות קריאה / מטוס</label>
+        <div class="pick-row">
+          <select id="acSelect" dir="ltr" style="text-align:left"></select>
+          <button class="pick-manage" onclick="openModal('ac')" title="ניהול מטוסים">＋</button>
+        </div>
+      </div>
     </div>
   </section>
 
   <!-- FLIGHT DETAILS -->
   <section class="card">
     <div class="head"><span class="idx">02</span><h2>פרטי הטיסה</h2></div>
-    <div class="grid three">
-      <div class="field"><label>תאריך</label><input type="date" id="fDate"></div>
+    <div class="grid">
+      <div class="field full"><label>תאריך</label><input type="date" id="fDate"></div>
+      <div class="field"><label>שדה יציאה</label>
+        <div class="pick-row"><select id="fDepart"></select><button class="pick-manage" onclick="openModal('field')" title="ניהול שדות">＋</button></div>
+      </div>
       <div class="field"><label>המראה משוער <span class="hint">ETD</span></label><input type="time" id="fEtd"></div>
+      <div class="field"><label>שדה יעד סופי</label>
+        <div class="pick-row"><select id="fDest"></select><button class="pick-manage" onclick="openModal('field')" title="ניהול שדות">＋</button></div>
+      </div>
       <div class="field"><label>נחיתה סופית <span class="hint">ETA</span></label><input type="time" id="fEta"></div>
-      <div class="field"><label>נפשות במטוס</label><select id="fSouls"><option value="1">1</option><option value="2">2</option></select></div>
       <div class="field"><label>זמן דלק</label><input type="text" id="fFuel" placeholder="למשל 3:30"></div>
-      <div class="field"><label>מהירות בקשר <span class="hint">IAS</span></label><input type="text" id="fIas" value="87"></div>
-      <div class="field"><label>שדה יעד סופי</label><input type="text" id="fDest" value="באר שבע"></div>
-      <div class="field"><label>שדה משנה</label><input type="text" id="fAlt" placeholder="-"></div>
+      <div class="field"><label>מהירות בקשר <span class="hint">IAS</span></label><input type="text" id="fIas" value="90"></div>
       <div class="field"><label>מטרת הטיסה</label><input type="text" id="fPurpose" value="פנאי"></div>
+      <div class="field"><label>נפשות במטוס</label><select id="fSouls"><option value="1">1</option><option value="2">2</option></select></div>
     </div>
   </section>
 
   <!-- ROUTE -->
   <section class="card">
     <div class="head"><span class="idx">03</span><h2>נתיב הטיסה</h2><span class="sub">בחר נתיב שמור או צור חדש</span></div>
-    <div class="grid" style="grid-template-columns:1fr auto auto;align-items:end;gap:10px">
-      <div class="field"><label>נתיב שמור</label><select id="routeSelect"></select></div>
-      <button class="inline-add" style="width:auto;padding:11px 14px" onclick="openRouteEditor(null)">＋ חדש</button>
-      <button class="inline-add" id="editRouteBtn" style="width:auto;padding:11px 14px" onclick="editSelectedRoute()">✎ ערוך</button>
+    <select id="routeSelect" style="display:none"></select>
+    <div class="route-pills" id="routePills"></div>
+    <div class="route-actions">
+      <button class="inline-add" onclick="openRouteEditor(null)">＋ חדש</button>
+      <button class="inline-add" id="dupRouteBtn" onclick="duplicateSelectedRoute()">⧉ שכפל</button>
+      <button class="inline-add" id="editRouteBtn" onclick="editSelectedRoute()">✎ ערוך</button>
     </div>
+    <button class="route-reset" onclick="restoreDefaultRoutes()">↺ שחזר נתיבי ברירת מחדל</button>
     <div class="route-preview" id="routePreview"></div>
     <input type="hidden" id="fRoute">
     <input type="hidden" id="fRouteDir">
@@ -342,14 +432,16 @@
     </button>
     <div class="adv-body" id="advBody">
       <div class="grid" style="margin-bottom:12px">
+        <div class="field"><label>שדה משנה <span class="hint">אופציונלי</span></label>
+          <div class="pick-row"><select id="fAlt"></select><button class="pick-manage" onclick="openModal('field')" title="ניהול שדות">＋</button></div>
+        </div>
         <div class="field"><label>שם החברה / מפעיל</label><input type="text" id="fOperator" placeholder="שם המועדון / בית ספר"></div>
-        <div class="field"><label>שדה יציאה / אתר</label><input type="text" id="fDepart" placeholder="שדה המראה"></div>
         <div class="field"><label>יש חריגה מהפמ״ת</label><select id="fDev"><option value="לא">לא</option><option value="כן">כן</option></select></div>
         <div class="field"><label>יש אישור רת״א</label><select id="fRtaa"><option value="">-</option><option value="לא">לא</option><option value="כן">כן</option></select></div>
         <div class="field"><label>עבודות אוויר</label><select id="fAirwork"><option value="לא">לא</option><option value="כן">כן</option></select></div>
       </div>
       <div class="grid">
-        <div class="field full"><label>כללי טיסה</label><input type="text" id="fRules" value="CVFR"></div>
+        <div class="field full"><label>כללי טיסה</label><input type="text" id="fRules" value="CVFR, טיסה בנתיבים עצמם - תעופה ספורטיבית (אז״מ)"></div>
         <div class="field full"><label>אישורים מצורפים</label><input type="text" id="fApprovals" placeholder="-"></div>
         <div class="field full"><label>תיאומים שבוצעו ע״י המפעיל/טייס</label><input type="text" id="fCoord" placeholder="-"></div>
         <div class="field full"><label>הערות מודיעין טיס והגבלות</label><input type="text" id="fNotes" placeholder="-"></div>
@@ -369,7 +461,7 @@
   </div>
 </div>
 
-<div class="app-footer" dir="ltr">AZAM Routes · v1.0 · built by eligrt</div>
+<div class="app-footer" dir="ltr">MERHAV_fpl · v1.01.013 · built by eligrt</div>
 
 <!-- MODAL -->
 <div class="scrim" id="scrim" onclick="if(event.target===this)closeModal()">
@@ -387,13 +479,30 @@
 <script>
 /* ---------------- storage ---------------- */
 const DB_KEY='azm_flightplan_v1';
+const DEFAULT_ROUTES=[
+  {label:'ברירת מחדל - צפוני',dir:'north',legs:[
+    {name:'בית קמה',alt:'1200'},
+    {name:'צ. שוקת',alt:'2200'},
+    {name:'צ. ערד',alt:'2300'},
+    {name:'נווה זוהר',alt:'2300'},
+    {name:'צ. הערבה',alt:'500'},
+    {name:'צופר',alt:'1400'}
+  ]},
+  {label:'ברירת מחדל - דרומי',dir:'south',legs:[
+    {name:'בית קמה',alt:'1200'},
+    {name:'צומת שרה',alt:'1700'},
+    {name:'טללים',alt:'2200'},
+    {name:'שדה בוקר',alt:'2700'},
+    {name:'צ. הרוחות',alt:'3200'},
+    {name:'הר גבס',alt:'3200'},
+    {name:'צופר',alt:'2600'}
+  ]}
+];
 const seed={
   aircraft:[],
   pilots:[],
-  routes:[
-    {label:'ברירת מחדל - צפוני',dir:'north',legs:[{name:'נקודת כניסה',alt:'1200'},{name:'המשך צפונה',alt:'1200'}]},
-    {label:'ברירת מחדל - דרומי',dir:'south',legs:[{name:'נקודת כניסה',alt:'1200'},{name:'המשך דרומה',alt:'1200'}]}
-  ],
+  airfields:['באר שבע'],
+  routes:JSON.parse(JSON.stringify(DEFAULT_ROUTES)),
   last:{}
 };
 function clone(o){return JSON.parse(JSON.stringify(o))}
@@ -404,6 +513,29 @@ function migrate(d){
     if(!r.dir) r.dir='south';
   });
   (d.pilots||[]).forEach(p=>{ if(p.phone===undefined) p.phone=''; });
+  // aircraft: new model uses call=3 letters, reg fixed "4X"
+  (d.aircraft||[]).forEach(a=>{
+    if(a.reg && a.reg!=='4X'){
+      // legacy reg like "4X - HYD" -> pull the letters into call, if call looks non-3-letter
+      const m=(a.reg.match(/([A-Za-z]{3})\s*$/)||[])[1];
+      if(m && (!a.call || a.call.length!==3 || /[^A-Za-z]/.test(a.call))) a.call=m.toUpperCase();
+    }
+    a.reg='4X';
+  });
+  // shared airfields list (point d)
+  if(!Array.isArray(d.airfields)) d.airfields=['באר שבע'];
+  // upgrade old placeholder default routes to the real waypoint sets
+  (d.routes||[]).forEach(r=>{
+    const isOldPlaceholder = r.label && r.label.indexOf('ברירת מחדל')===0 &&
+      (r.legs||[]).length<=2 &&
+      (r.legs||[]).some(l=>['נקודת כניסה','המשך צפונה','המשך דרומה'].includes(l.name));
+    if(isOldPlaceholder){
+      const def=DEFAULT_ROUTES.find(x=>x.label===r.label);
+      if(def) r.legs=JSON.parse(JSON.stringify(def.legs));
+    }
+    // one-time fix: typo צ. עד -> צ. ערד
+    (r.legs||[]).forEach(l=>{ if(l.name==='צ. עד') l.name='צ. ערד'; });
+  });
   return d;
 }
 function loadDB(){try{const d=JSON.parse(localStorage.getItem(DB_KEY));return d?migrate(d):clone(seed)}catch(e){return clone(seed)}}
@@ -412,13 +544,29 @@ let db=loadDB();
 
 /* ---------------- toast ---------------- */
 function toast(msg,err){const t=document.getElementById('toast');t.textContent=msg;t.className='toast show'+(err?' err':'');setTimeout(()=>t.className='toast',2600)}
+function showConfirm(title,message,onYes,opts){
+  opts=opts||{};
+  const danger=opts.danger;
+  const yesLabel=opts.yesLabel||'אישור';
+  const noLabel=opts.noLabel||'ביטול';
+  const m=document.getElementById('modal');
+  m.innerHTML=`<h3 class="${danger?'cf-danger':''}">${danger?'<span class="cf-warn">⚠</span> ':''}${title}</h3>
+    <div class="cf-body">${message}</div>
+    <div class="modal-actions">
+      <button class="btn primary" id="cfNo">${noLabel}</button>
+      <button class="btn ${danger?'danger-solid':'line'}" id="cfYes">${yesLabel}</button>
+    </div>`;
+  document.getElementById('scrim').classList.add('show');
+  document.getElementById('cfNo').onclick=()=>closeModal();
+  document.getElementById('cfYes').onclick=()=>{closeModal();onYes();};
+}
 
 /* ---------------- populate selects ---------------- */
 function refreshSelects(){
   const ac=document.getElementById('acSelect');
   const pl=document.getElementById('pilotSelect');
   ac.innerHTML = db.aircraft.length ? '' : '<option value="">- אין מטוסים, הוסף -</option>';
-  db.aircraft.forEach((a,i)=>ac.add(new Option(`${a.call} · ${a.reg} · ${a.type}`,i)));
+  db.aircraft.forEach((a,i)=>ac.add(new Option(`4X - ${a.call}${a.type?' · '+a.type:''}`,i)));
   pl.innerHTML = db.pilots.length ? '' : '<option value="">- אין טייסים, הוסף -</option>';
   db.pilots.forEach((p,i)=>pl.add(new Option(`${p.name} · ${p.lic}`,i)));
   if(db.last.ac!=null && db.aircraft[db.last.ac]) ac.value=db.last.ac;
@@ -431,16 +579,75 @@ function syncPilotPhone(){
   const p=currentPilot();
   document.getElementById('fPhone').value = p.phone || '';
 }
+function refreshAirfields(){
+  const list=db.airfields||[];
+  // fDest and fDepart are required-style; fAlt allows a blank "none" option
+  [['fDepart',false],['fDest',false],['fAlt',true]].forEach(([id,allowBlank])=>{
+    const sel=document.getElementById(id); if(!sel)return;
+    const prev=sel.value;
+    sel.innerHTML = allowBlank ? '<option value="">- ללא -</option>' : '';
+    list.forEach(name=>sel.add(new Option(name,name)));
+    // restore selection if still valid, else sensible default
+    if(prev && (allowBlank?['',...list]:list).includes(prev)) sel.value=prev;
+    else if(id==='fDest' && list.includes('באר שבע')) sel.value='באר שבע';
+    else if(!allowBlank && list.length) sel.value = (db.last[id] && list.includes(db.last[id])) ? db.last[id] : list[0];
+    sel.onchange=()=>{db.last[id]=sel.value;saveDB()};
+  });
+  // apply remembered picks
+  ['fDepart','fDest'].forEach(id=>{const sel=document.getElementById(id);if(db.last[id]&&list.includes(db.last[id]))sel.value=db.last[id];});
+}
 const DIR_LABEL={north:'נתיב צפוני',south:'נתיב דרומי'};
 
+function restoreDefaultRoutes(){
+  const esc=s=>(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  const customRoutes = db.routes.filter(r=>!DEFAULT_ROUTES.some(dr=>dr.label===r.label));
+  const doReset=()=>{
+    db.routes = JSON.parse(JSON.stringify(DEFAULT_ROUTES));
+    db.last.route = '0';
+    saveDB();refreshRoutes();
+    toast('נתיבי ברירת המחדל שוחזרו');
+  };
+  if(!customRoutes.length){
+    // nothing custom to lose - light confirm
+    showConfirm('שחזור נתיבי ברירת מחדל',
+      '<p style="margin:0 0 8px">הנתיבים שמורים במכשיר זה בלבד.</p><p style="margin:0">הפעולה תחזיר את שני נתיבי ברירת המחדל (צפוני ודרומי) למצבם המקורי.</p>',
+      doReset,{yesLabel:'שחזר'});
+    return;
+  }
+  // there ARE custom routes -> strong danger warning, list them by name
+  const list = customRoutes.map(r=>`<li>${esc(r.label)}</li>`).join('');
+  const msg = `
+    <p class="cf-lead">פעולה זו תמחק לצמיתות את ${customRoutes.length} הנתיבים שיצרת ושמורים במכשיר זה:</p>
+    <ul class="cf-list">${list}</ul>
+    <p class="cf-lead">הם יוחלפו בשני נתיבי ברירת המחדל בלבד. <b>לא ניתן לשחזר את הנתיבים שנמחקו.</b></p>`;
+  showConfirm('מחיקת הנתיבים השמורים', msg, doReset,
+    {danger:true, yesLabel:`מחק ${customRoutes.length} נתיבים ושחזר`, noLabel:'ביטול — השאר כפי שהם'});
+}
 function refreshRoutes(){
   const sel=document.getElementById('routeSelect');
   sel.innerHTML = db.routes.length ? '' : '<option value="">- אין נתיבים, צור חדש -</option>';
   db.routes.forEach((r,i)=>sel.add(new Option(`${r.label} · ${DIR_LABEL[r.dir]||''}`,i)));
   if(db.last.route!=null && db.routes[db.last.route]) sel.value=db.last.route;
   sel.onchange=()=>{db.last.route=sel.value;saveDB();renderRoutePreview()};
-  document.getElementById('editRouteBtn').style.display = db.routes.length ? '' : 'none';
+  renderRoutePills();
+  const hasRoutes = db.routes.length ? '' : 'none';
+  document.getElementById('editRouteBtn').style.display = hasRoutes;
+  document.getElementById('dupRouteBtn').style.display = hasRoutes;
   renderRoutePreview();
+}
+function renderRoutePills(){
+  const box=document.getElementById('routePills');
+  const sel=document.getElementById('routeSelect');
+  if(!db.routes.length){box.innerHTML='<div class="pills-empty">אין נתיבים שמורים - צור נתיב חדש</div>';return}
+  box.innerHTML='';
+  db.routes.forEach((r,i)=>{
+    const on = String(sel.value)===String(i);
+    const pill=document.createElement('button');
+    pill.className='route-pill'+(on?' on':'')+(r.dir==='north'?' north':' south');
+    pill.innerHTML=`<span class="rp-dir">${r.dir==='north'?'צפוני':'דרומי'}</span><span class="rp-label">${r.label}</span>`;
+    pill.onclick=()=>{sel.value=i;db.last.route=String(i);saveDB();renderRoutePills();renderRoutePreview()};
+    box.appendChild(pill);
+  });
 }
 
 // waypoint bullets, each "name (altitude)" on its own line
@@ -457,9 +664,13 @@ function renderRoutePreview(){
   const box=document.getElementById('routePreview');
   const r=currentRoute();
   if(!r){box.innerHTML='<div class="rp-empty">לא נבחר נתיב</div>';document.getElementById('fRoute').value='';document.getElementById('fRouteDir').value='';return}
+  const legs=r.legs||[];
   box.innerHTML=`<div class="rp-head">מבוסס על: <b>${DIR_LABEL[r.dir]||''}</b></div>`+
-    (r.legs||[]).map(m=>`<div class="rp-wp"><span class="rp-name">${m.name}</span>${m.alt?`<span class="rp-alt">${m.alt} רגל</span>`:''}</div>`).join('');
-  // hidden fields feed the PDF
+    `<div class="wp-line">`+legs.map((m,i)=>
+      `<div class="wp-node${i===0?' first':''}${i===legs.length-1?' last':''}">
+         <span class="wp-dot"></span>
+         <span class="wp-text">${m.name}${m.alt?` <span class="wp-alt">(${m.alt} רגל)</span>`:''}</span>
+       </div>`).join('')+`</div>`;
   document.getElementById('fRoute').value=legsToText(r.legs);
   document.getElementById('fRouteDir').value=DIR_LABEL[r.dir]||'';
 }
@@ -479,8 +690,11 @@ function openModal(kind){
     m.innerHTML=`<h3>מטוסים</h3><p class="lede">נשמרים במכשיר זה. כל מטוס שתוסיף יופיע ברשימה למעלה - לחיצה על ״הוסף״ מרוקנת את השדות למטוס הבא.</p>
       <div class="list" id="mList"></div>
       <div class="addgrid">
-        <input id="in1" placeholder="אות קריאה"><input id="in2" placeholder="רישום (4X-...)">
-        <input id="in3" class="full" placeholder="סוג מטוס">
+        <div class="reg-input full" dir="ltr">
+          <span class="reg-prefix">4X -</span>
+          <input id="in1" maxlength="3" placeholder="HYD" oninput="this.value=this.value.toUpperCase().replace(/[^A-Z]/g,'')" autocapitalize="characters" style="text-transform:uppercase">
+        </div>
+        <input id="in3" dir="ltr" class="full" placeholder="Aircraft type" style="text-align:left">
       </div>
       <div class="modal-actions">
         <button class="btn line" onclick="addItem(false)">הוסף עוד מטוס</button>
@@ -499,11 +713,20 @@ function openModal(kind){
         <button class="btn primary" onclick="addItem(true)">הוסף וסגור</button>
       </div>
       <button class="close-x" onclick="closeModal()" title="סגור">✕</button>`;
+  }else if(kind==='field'){
+    m.innerHTML=`<h3>שדות תעופה</h3><p class="lede">רשימה משותפת לשדה יציאה, שדה יעד ושדה משנה. נשמרת במכשיר זה.</p>
+      <div class="list" id="mList"></div>
+      <div class="addgrid"><input id="in1" class="full" placeholder="שם השדה (למשל: הרצליה)"></div>
+      <div class="modal-actions">
+        <button class="btn line" onclick="addItem(false)">הוסף עוד</button>
+        <button class="btn primary" onclick="addItem(true)">הוסף וסגור</button>
+      </div>
+      <button class="close-x" onclick="closeModal()" title="סגור">✕</button>`;
   }
   renderModalList();
   document.getElementById('scrim').classList.add('show');
 }
-function addMsRow(name,alt){
+function addMsRow(name,alt,focus){
   const wrap=document.getElementById('msRows');
   const row=document.createElement('div');row.className='ms-row';
   row.innerHTML=`<input class="ms-name" placeholder="שם ציון דרך" value="${(name||'').replace(/"/g,'&quot;')}">
@@ -511,6 +734,7 @@ function addMsRow(name,alt){
     <button class="x" title="הסר">✕</button>`;
   row.querySelector('.x').onclick=()=>row.remove();
   wrap.appendChild(row);
+  if(focus){const n=row.querySelector('.ms-name');n.focus();if(row.scrollIntoView)row.scrollIntoView({block:'nearest'});}
 }
 function collectMs(){
   return [...document.querySelectorAll('#msRows .ms-row')].map(r=>({
@@ -524,21 +748,27 @@ function renderModalList(){
   list.innerHTML='';
   arr.forEach((it,i)=>{
     const row=document.createElement('div');row.className='row';
-    let txt = modalKind==='ac' ? `${it.call} <small>· ${it.reg} · ${it.type}</small>`
+    let txt = modalKind==='ac' ? `<span dir="ltr" style="text-align:left;display:block">4X - ${it.call}${it.type?' <small>· '+it.type+'</small>':''}</span>`
+           : modalKind==='field' ? `${it}`
            : `${it.name} <small>· ${it.lic||'-'}${it.phone?' · '+it.phone:''}</small>`;
     row.innerHTML=`<div class="m">${txt}</div><button class="x" title="מחק">✕</button>`;
     row.querySelector('.x').onclick=()=>{arr.splice(i,1);saveDB();renderModalList();afterListChange()};
     list.appendChild(row);
   });
 }
-function arrFor(){return modalKind==='ac'?db.aircraft:db.pilots}
+function arrFor(){return modalKind==='ac'?db.aircraft:modalKind==='field'?db.airfields:db.pilots}
 function addItem(closeAfter){
   const v1=document.getElementById('in1').value.trim();
   const v2=document.getElementById('in2')?.value.trim();
   const v3=document.getElementById('in3')?.value.trim();
   if(modalKind==='ac'){
-    if(!v1||!v2){toast('נא למלא אות קריאה ורישום',true);return}
-    db.aircraft.push({call:v1,reg:v2,type:v3||''});
+    if(!v1){toast('נא למלא אות קריאה',true);return}
+    if(v1.length!==3){toast('אות הקריאה חייבת 3 אותיות',true);return}
+    db.aircraft.push({call:v1,reg:'4X',type:v3||''});
+  }else if(modalKind==='field'){
+    if(!v1){toast('נא למלא שם שדה',true);return}
+    if(db.airfields.includes(v1)){toast('השדה כבר קיים',true);return}
+    db.airfields.push(v1);
   }else{
     if(!v1){toast('נא למלא שם טייס',true);return}
     db.pilots.push({name:v1,lic:v2||'',phone:v3||''});
@@ -550,17 +780,17 @@ function addItem(closeAfter){
   document.getElementById('in1').focus();
   toast('נשמר · אפשר להוסיף עוד');
 }
-function afterListChange(){refreshSelects();refreshRoutes();}
+function afterListChange(){refreshSelects();refreshAirfields();refreshRoutes();}
 function closeModal(){document.getElementById('scrim').classList.remove('show');modalKind=null}
 
 /* ---------------- dedicated route editor ---------------- */
 let editingRouteIdx=null;
-function openRouteEditor(idx){
+function openRouteEditor(idx,prefill){
   editingRouteIdx = idx;
-  const r = (idx!=null && db.routes[idx]) ? db.routes[idx] : {label:'',dir:'south',legs:[]};
+  const r = (idx!=null && db.routes[idx]) ? db.routes[idx] : (prefill || {label:'',dir:'south',legs:[]});
   const m=document.getElementById('modal');
-  m.innerHTML=`<h3>${idx!=null?'עריכת נתיב':'נתיב חדש'}</h3>
-    <p class="lede">שם הנתיב הוא לזיהוי בלבד. הכיוון והנקודות יופיעו ב-PDF לבקר.</p>
+  m.innerHTML=`<h3>${idx!=null?'עריכת נתיב':(prefill?'שכפול נתיב':'נתיב חדש')}</h3>
+    <p class="lede">${prefill?'הנתיב הועתק. ערוך ושמור כנתיב חדש.':'שם הנתיב הוא לזיהוי בלבד. הכיוון והנקודות יופיעו ב-PDF לבקר.'}</p>
     <div class="addgrid"><input id="rName" class="full" placeholder="שם לזיהוי (למשל: באר שבע דרך להבים)" value="${(r.label||'').replace(/"/g,'&quot;')}"></div>
     <div class="ms-label">כיוון הנתיב</div>
     <div class="dir-toggle" id="dirToggle">
@@ -569,7 +799,7 @@ function openRouteEditor(idx){
     </div>
     <div class="ms-label">ציוני דרך <span style="color:var(--line);font-weight:500">(שם + גובה)</span></div>
     <div id="msRows" class="ms-rows"></div>
-    <button class="inline-add" style="margin-bottom:14px" onclick="addMsRow()">＋ הוסף ציון דרך</button>
+    <button class="inline-add" style="margin-bottom:14px" onclick="addMsRow('','',true)">＋ הוסף ציון דרך</button>
     <div class="modal-actions">
       ${idx!=null?'<button class="btn line danger" onclick="deleteRoute()">מחק נתיב</button>':''}
       <button class="btn primary" onclick="saveRoute()">שמירה</button>
@@ -584,6 +814,17 @@ function editSelectedRoute(){
   if(i==='' ){toast('אין נתיב לעריכה',true);return}
   openRouteEditor(+i);
 }
+function duplicateSelectedRoute(){
+  const i=document.getElementById('routeSelect').value;
+  if(i==='' || !db.routes[i]){toast('אין נתיב לשכפול',true);return}
+  const src=db.routes[i];
+  const copy={
+    label:`${src.label} (עותק)`,
+    dir:src.dir,
+    legs:JSON.parse(JSON.stringify(src.legs||[]))
+  };
+  openRouteEditor(null, copy);
+}
 function saveRoute(){
   const label=document.getElementById('rName').value.trim();
   const dir=(document.querySelector('input[name="rdir"]:checked')||{}).value||'south';
@@ -594,23 +835,37 @@ function saveRoute(){
   if(editingRouteIdx!=null){db.routes[editingRouteIdx]=rec;}
   else{db.routes.push(rec);db.last.route=String(db.routes.length-1);}
   saveDB();closeModal();refreshRoutes();
-  if(editingRouteIdx==null){document.getElementById('routeSelect').value=db.last.route;renderRoutePreview();}
+  if(editingRouteIdx==null){document.getElementById('routeSelect').value=db.last.route;renderRoutePills();renderRoutePreview();}
   toast('הנתיב נשמר');
 }
 function deleteRoute(){
   if(editingRouteIdx==null)return;
-  db.routes.splice(editingRouteIdx,1);
-  if(db.last.route!=null && +db.last.route>=db.routes.length) db.last.route = db.routes.length?String(db.routes.length-1):null;
-  saveDB();closeModal();refreshRoutes();toast('הנתיב נמחק');
+  const idx=editingRouteIdx;
+  const r=db.routes[idx];
+  if(!r)return;
+  const esc=s=>(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  const isDefault=DEFAULT_ROUTES.some(dr=>dr.label===r.label);
+  const note=isDefault
+    ? '<p class="cf-lead" style="color:var(--mist)">ניתן לשחזר נתיבי ברירת מחדל בהמשך דרך ״שחזר נתיבי ברירת מחדל״.</p>'
+    : '<p class="cf-lead"><b>לא ניתן לשחזר נתיב זה לאחר המחיקה.</b></p>';
+  const msg=`<p class="cf-lead">למחוק לצמיתות את הנתיב:</p>
+    <ul class="cf-list"><li>${esc(r.label)}</li></ul>${note}`;
+  showConfirm('מחיקת נתיב', msg, ()=>{
+    db.routes.splice(idx,1);
+    if(db.last.route!=null && +db.last.route>=db.routes.length) db.last.route = db.routes.length?String(db.routes.length-1):null;
+    editingRouteIdx=null;
+    saveDB();refreshRoutes();closeModal();toast('הנתיב נמחק');
+  }, {danger:true, yesLabel:'מחק נתיב', noLabel:'ביטול'});
 }
 
 /* ---------------- reset flight (keep profiles) ---------------- */
 function resetFlight(){
-  ['fEtd','fEta','fFuel','fAlt','fApprovals','fCoord','fNotes'].forEach(id=>document.getElementById(id).value='');
-  document.getElementById('fIas').value='87';
+  ['fEtd','fEta','fFuel','fApprovals','fCoord','fNotes'].forEach(id=>document.getElementById(id).value='');
+  document.getElementById('fIas').value='90';
   document.getElementById('fSouls').value='1';
   document.getElementById('fPurpose').value='פנאי';
-  document.getElementById('fDest').value='באר שבע';
+  document.getElementById('fAlt').value='';
+  if([...document.getElementById('fDest').options].some(o=>o.value==='באר שבע')) document.getElementById('fDest').value='באר שבע';
   renderRoutePreview();
   toast('פרטי הטיסה נוקו');
 }
@@ -624,20 +879,33 @@ function buildSheet(){
   const a=currentAircraft(),p=currentPilot();
   const d=val('fDate'); const dateHe = d ? d.split('-').reverse().join('/') : '';
   const esc=s=>(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
-  const dash=s=>esc(s)|| '-';
+  // value wrapper: blue + bold; blank stays truly blank (point e + f)
+  const V=s=>{const t=esc(s);return t?`<span class="v">${t}</span>`:'';};
+  const r=currentRoute();
+  // subway-style waypoint list (point c)
+  let routeHtml='';
+  if(r){
+    routeHtml=`<div class="fs-routehdr">מבוסס על: <span class="v">${esc(DIR_LABEL[r.dir]||'')}</span></div>`+
+      `<div class="wp-line">`+(r.legs||[]).map((m,i,arr)=>
+        `<div class="wp-node${i===0?' first':''}${i===arr.length-1?' last':''}">
+           <span class="wp-dot"></span>
+           <span class="wp-text"><span class="v">${esc(m.name)}</span>${m.alt?` <span class="wp-alt">(${esc(m.alt)} רגל)</span>`:''}</span>
+         </div>`).join('')+`</div>`;
+  }
   document.getElementById('formSheet').innerHTML=`
     <div class="fs-head"><div>נספח ב'</div><div class="l">פמ"ת פנים ארצי</div></div>
     <div class="fs-title">תוכנית לטיסת מרחב</div>
     <div class="fs-sub">א' - 11</div>
-    <div class="fs-date">לתאריך: ${dash(dateHe)}</div>
+    <div class="fs-date">לתאריך: ${V(dateHe)}</div>
+    <div class="fs-body">
     <table class="fs">
       <tr>
         <th>אות קריאה</th><th>רישום מטוס</th><th>סוג מטוס</th><th>שם הטייס</th>
         <th>מס' הרישיון</th><th>שם החברה</th><th>מטרת הטיסה</th>
       </tr>
       <tr>
-        <td>${dash(a.call)}</td><td>${dash(a.reg)}</td><td>${dash(a.type)}</td><td>${dash(p.name)}</td>
-        <td>${dash(p.lic)}</td><td>${dash(val('fOperator'))}</td><td>${dash(val('fPurpose'))}</td>
+        <td>${V(a.call)}</td><td>${V(a.reg)}</td><td>${V(a.type)}</td><td>${V(p.name)}</td>
+        <td>${V(p.lic)}</td><td>${V(val('fOperator'))}</td><td>${V(val('fPurpose'))}</td>
       </tr>
     </table>
     <table class="fs" style="border-top:none">
@@ -647,29 +915,33 @@ function buildSheet(){
         <th>יש חריגה מהפמ"ת</th><th>יש אישור רת"א</th><th>עבודות אוויר</th>
       </tr>
       <tr>
-        <td>${dash(val('fEtd'))}</td><td>${dash(val('fEta'))}</td><td>${dash(val('fDest'))}</td><td>${dash(val('fAlt'))}</td>
-        <td>${dash(val('fFuel'))}</td><td>${dash(val('fIas'))}</td><td>${dash(val('fSouls'))}</td>
-        <td>${dash(val('fDev'))}</td><td>${dash(val('fRtaa'))}</td><td>${dash(val('fAirwork'))}</td>
+        <td>${V(val('fEtd'))}</td><td>${V(val('fEta'))}</td><td>${V(val('fDest'))}</td><td>${V(val('fAlt'))}</td>
+        <td>${V(val('fFuel'))}</td><td>${V(val('fIas'))}</td><td>${V(val('fSouls'))}</td>
+        <td>${V(val('fDev'))}</td><td>${V(val('fRtaa'))}</td><td>${V(val('fAirwork'))}</td>
       </tr>
     </table>
     <div class="fs-routebox">
-      <table>
+      <table style="border-top:none">
         <tr><th style="width:14%">שדה יציאה/אתר</th><th style="width:22%">זמן המראה / נחיתה</th><th>פירוט הנתיבים (מיקום, גובה, נ.צ WGS-84, שעה משוערת)</th></tr>
-        <tr>
-          <td style="text-align:center">${dash(val('fDepart'))}</td>
-          <td style="text-align:center">המראה: ${dash(val('fEtd'))}<br>נחיתה: ${dash(val('fEta'))}</td>
-          <td class="detail">${val('fRouteDir')?`<div class="fs-routehdr">מבוסס על: ${esc(val('fRouteDir'))}</div>`:''}${esc(val('fRoute'))||'-'}</td>
+        <tr class="route-row">
+          <td style="text-align:center">${V(val('fDepart'))}</td>
+          <td style="text-align:center">המראה: ${V(val('fEtd'))}<br>נחיתה: ${V(val('fEta'))}</td>
+          <td class="detail" style="height:560px">${routeHtml}</td>
         </tr>
       </table>
     </div>
-    <div class="fs-lines">
-      <div class="ln"><b>כללי טיסה:</b><span>${dash(val('fRules'))}</span></div>
-      <div class="ln"><b>אישורים מצורפים:</b><span>${dash(val('fApprovals'))}</span></div>
-      <div class="ln"><b>תיאומים שבוצעו ע"י המפעיל/טייס:</b><span>${dash(val('fCoord'))}</span></div>
-      <div class="ln"><b>הערות מודיעין טיס והגבלות:</b><span>${dash(val('fNotes'))}</span></div>
-      <div class="ln"><b>טלפון נייד לבירורים:</b><span>${dash(val('fPhone'))}</span></div>
     </div>
-    <div class="fs-sign"><div>חתימת הטייס: ____________</div><div>חתימת התדריכן: ____________</div></div>
+    <div class="fs-lines">
+      <div class="ln"><b>כללי טיסה:</b><span>${V(val('fRules'))}</span></div>
+      <div class="ln"><b>אישורים מצורפים:</b><span>${V(val('fApprovals'))}</span></div>
+      <div class="ln"><b>תיאומים שבוצעו ע"י המפעיל/טייס:</b><span>${V(val('fCoord'))}</span></div>
+      <div class="ln"><b>הערות מודיעין טיס והגבלות:</b><span>${V(val('fNotes'))}</span></div>
+      <div class="ln"><b>טלפון נייד לבירורים:</b><span>${V(val('fPhone'))}</span></div>
+    </div>
+    <div class="fs-sign">
+      <div class="sig"><span class="sig-name v">${esc(p.name||'')}</span><span class="sig-line"></span><span class="sig-label">חתימת הטייס</span></div>
+      <div class="sig"><span class="sig-name">&nbsp;</span><span class="sig-line"></span><span class="sig-label">חתימת התדריכן</span></div>
+    </div>
     <div class="fs-foot"><div>עדכון 1/23</div><div>רשות התעופה האזרחית</div><div>18 מאי 2023</div></div>
   `;
 }
@@ -686,7 +958,7 @@ async function generatePDF(){
     const img=canvas.toDataURL('image/png');
     const {jsPDF}=window.jspdf;
     const pdf=new jsPDF('p','mm','a4');
-    const pw=210, ph=297, margin=8;
+    const pw=210, ph=297, margin=6;
     const iw=pw-margin*2;
     const ih=canvas.height*iw/canvas.width;
     pdf.addImage(img,'PNG',margin,margin,iw,Math.min(ih,ph-margin*2));
@@ -714,7 +986,7 @@ async function generatePDF(){
 /* ---------------- init ---------------- */
 (function init(){
   const t=new Date();document.getElementById('fDate').value=t.toISOString().slice(0,10);
-  refreshSelects();refreshRoutes();
+  refreshSelects();refreshAirfields();refreshRoutes();
 })();
 </script>
 </body>
