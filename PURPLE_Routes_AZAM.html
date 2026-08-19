@@ -1,0 +1,721 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>תוכנית טיסת מרחב - דרומה לבאר שבע</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;800&family=Rubik:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<style>
+  :root{
+    /* Instrument-panel palette: deep slate, avionics amber, runway markings */
+    --ink:#0E1621;          /* near-black slate */
+    --panel:#16212E;        /* instrument panel */
+    --panel-2:#1E2C3C;
+    --line:#2C3D50;
+    --mist:#7C8DA0;         /* muted labels */
+    --paper:#F4F6F8;        /* form paper */
+    --paper-line:#C9D2DB;
+    --amber:#F2A93B;        /* avionics amber accent */
+    --amber-dim:#B87E27;
+    --sky:#4FB0E0;          /* cleared-to-fly cyan */
+    --go:#3FB984;           /* ready */
+    --white:#FFFFFF;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{background:var(--ink);color:var(--paper);font-family:'Heebo',sans-serif;-webkit-font-smoothing:antialiased}
+  body{min-height:100vh;padding:0 0 60px}
+
+  /* ---------- Top strip: like a heading placard on the panel ---------- */
+  .topbar{
+    background:linear-gradient(180deg,var(--panel-2),var(--panel));
+    border-bottom:1px solid var(--line);
+    padding:18px 20px 16px;
+    position:sticky;top:0;z-index:20;
+  }
+  .topbar .rail{max-width:760px;margin:0 auto;display:flex;align-items:center;gap:14px}
+  .glyph{
+    width:42px;height:42px;flex:0 0 42px;border-radius:9px;
+    background:radial-gradient(circle at 30% 30%,var(--amber),var(--amber-dim));
+    display:flex;align-items:center;justify-content:center;
+    box-shadow:0 0 0 1px rgba(242,169,59,.25),0 6px 18px rgba(0,0,0,.4);
+  }
+  .glyph svg{width:24px;height:24px;transform:rotate(45deg)}
+  .title h1{font-size:19px;font-weight:800;letter-spacing:-.2px}
+  .title p{font-size:12.5px;color:var(--mist);font-weight:500;margin-top:1px}
+
+  main{max-width:760px;margin:22px auto 0;padding:0 18px}
+
+  /* ---------- Card ---------- */
+  .card{
+    background:var(--panel);border:1px solid var(--line);border-radius:16px;
+    padding:22px 20px;margin-bottom:16px;
+  }
+  .card > .head{display:flex;align-items:baseline;gap:10px;margin-bottom:16px}
+  .card > .head .idx{
+    font-family:'Rubik';font-size:12px;font-weight:600;color:var(--amber);
+    border:1px solid var(--amber-dim);border-radius:6px;padding:2px 7px;letter-spacing:1px
+  }
+  .card > .head h2{font-size:15px;font-weight:700}
+  .card > .head .sub{font-size:12px;color:var(--mist);margin-inline-start:auto;font-weight:500}
+
+  /* ---------- Fields ---------- */
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:12px 14px}
+  .grid.three{grid-template-columns:1fr 1fr 1fr}
+  .field{display:flex;flex-direction:column;gap:6px}
+  .field.full{grid-column:1/-1}
+  label{font-size:12.5px;color:var(--mist);font-weight:600;display:flex;gap:6px;align-items:center}
+  label .hint{color:var(--line);font-weight:500}
+  input,select,textarea{
+    background:var(--panel-2);border:1px solid var(--line);color:var(--paper);
+    border-radius:9px;padding:11px 12px;font-family:'Heebo';font-size:15px;font-weight:500;
+    width:100%;transition:border-color .15s,box-shadow .15s;
+  }
+  input::placeholder,textarea::placeholder{color:#4A5A6B}
+  input:focus,select:focus,textarea:focus{
+    outline:none;border-color:var(--amber);box-shadow:0 0 0 3px rgba(242,169,59,.14)
+  }
+  select{cursor:pointer;appearance:none;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%237C8DA0'><path d='M6 8L1 3h10z'/></svg>");
+    background-repeat:no-repeat;background-position:left 12px center;padding-left:32px}
+  textarea{resize:vertical;min-height:74px;line-height:1.55}
+
+  .inline-add{
+    background:none;border:1px dashed var(--line);color:var(--sky);
+    border-radius:8px;padding:9px;font-family:'Heebo';font-size:13px;font-weight:600;
+    cursor:pointer;width:100%;transition:.15s;display:flex;align-items:center;justify-content:center;gap:6px
+  }
+  .inline-add:hover{border-color:var(--sky);background:rgba(79,176,224,.06)}
+
+  /* route chips */
+  .chips{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:9px}
+  .chip{
+    background:var(--panel-2);border:1px solid var(--line);color:var(--paper);
+    border-radius:20px;padding:6px 12px;font-size:12.5px;font-weight:500;cursor:pointer;
+    transition:.12s;white-space:nowrap
+  }
+  .chip:hover{border-color:var(--sky)}
+  .chip.on{background:rgba(79,176,224,.14);border-color:var(--sky);color:var(--sky)}
+  .chips .empty{color:var(--mist);font-size:12px;font-weight:500;padding:6px 0}
+
+  /* ---------- Default banner ---------- */
+  .std-note{
+    display:flex;gap:10px;align-items:flex-start;
+    background:rgba(63,185,132,.08);border:1px solid rgba(63,185,132,.3);
+    border-radius:10px;padding:11px 13px;font-size:12.5px;color:#BFEAD6;line-height:1.5;font-weight:500
+  }
+  .std-note svg{flex:0 0 16px;margin-top:1px}
+  .note-list{margin:4px 0 0;padding-inline-start:18px;list-style:none}
+  .note-attn{display:flex;align-items:center;gap:7px;margin-top:8px}
+  .note-attn svg{flex:0 0 15px}
+  .note-attn b{font-weight:700}
+  .note-list li{position:relative;padding:2px 0;line-height:1.5}
+  .note-list li::before{content:"•";position:absolute;inset-inline-start:-14px;color:#3FB984;font-weight:700}
+
+  /* collapsible advanced */
+  .adv-toggle{background:none;border:none;color:var(--mist);font-family:'Heebo';font-size:13px;
+    font-weight:600;cursor:pointer;display:flex;align-items:center;gap:7px;padding:4px 0}
+  .adv-toggle:hover{color:var(--paper)}
+  .adv-toggle .car{transition:transform .2s}
+  .adv-toggle.open .car{transform:rotate(90deg)}
+  .adv-body{display:none;margin-top:14px}
+  .adv-body.show{display:block}
+
+  /* ---------- Action bar ---------- */
+  .actionbar{
+    position:sticky;bottom:0;z-index:15;margin-top:22px;
+    background:linear-gradient(0deg,var(--ink) 70%,transparent);
+    padding:16px 18px 10px;
+  }
+  .actionbar .rail{max-width:760px;margin:0 auto;display:flex;gap:12px}
+  .btn{
+    flex:1;border:none;border-radius:11px;padding:15px;font-family:'Heebo';font-size:15px;
+    font-weight:700;cursor:pointer;transition:.15s;display:flex;align-items:center;justify-content:center;gap:8px
+  }
+  .btn.primary{background:linear-gradient(180deg,var(--amber),var(--amber-dim));color:#1a1206;
+    box-shadow:0 6px 20px rgba(242,169,59,.28)}
+  .btn.primary:hover{filter:brightness(1.06)}
+  .btn.ghost{flex:0 0 auto;background:var(--panel-2);color:var(--paper);border:1px solid var(--line)}
+  .btn.ghost:hover{border-color:var(--mist)}
+  .btn:disabled{opacity:.5;cursor:not-allowed}
+
+  /* ---------- Modal (manage lists) ---------- */
+  .scrim{position:fixed;inset:0;background:rgba(4,8,12,.72);z-index:40;display:none;
+    align-items:center;justify-content:center;padding:18px;backdrop-filter:blur(3px)}
+  .scrim.show{display:flex}
+  .modal{background:var(--panel);border:1px solid var(--line);border-radius:16px;
+    width:100%;max-width:460px;max-height:86vh;overflow:auto;padding:22px}
+  .modal h3{font-size:16px;font-weight:800;margin-bottom:4px}
+  .modal .lede{font-size:12.5px;color:var(--mist);margin-bottom:16px;line-height:1.5}
+  .list{display:flex;flex-direction:column;gap:8px;margin-bottom:14px}
+  .row{display:flex;align-items:center;gap:10px;background:var(--panel-2);border:1px solid var(--line);
+    border-radius:9px;padding:10px 12px}
+  .row .m{flex:1;font-size:13.5px;font-weight:500;line-height:1.4}
+  .row .m small{color:var(--mist);font-weight:500}
+  .row .x{background:none;border:none;color:var(--mist);cursor:pointer;font-size:18px;line-height:1;padding:2px 6px;border-radius:6px}
+  .row .x:hover{color:#F27171;background:rgba(242,113,113,.1)}
+  .modal .addgrid{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-bottom:12px}
+  .modal .addgrid .full{grid-column:1/-1}
+  .modal-actions{display:flex;gap:10px;margin-top:6px}
+  .modal-actions .btn{padding:12px;font-size:14px}
+  .btn.line{background:none;border:1px solid var(--line);color:var(--paper)}
+  .btn.line:hover{border-color:var(--mist)}
+
+  .app-footer{
+    text-align:center;padding:16px 10px 8px;letter-spacing:.1em;
+    font-family:'IBM Plex Mono',monospace;text-transform:uppercase;
+    color:var(--mist);font-size:11px;
+  }
+  /* modal extras */
+  .modal{position:relative}
+  .close-x{position:absolute;top:16px;left:16px;background:none;border:none;color:var(--mist);
+    font-size:18px;cursor:pointer;line-height:1;padding:4px 8px;border-radius:6px}
+  .close-x:hover{color:var(--paper);background:var(--panel-2)}
+  .ms-label{font-size:12px;color:var(--mist);font-weight:600;margin-bottom:8px}
+  .ms-rows{display:flex;flex-direction:column;gap:8px;margin-bottom:10px}
+  .ms-row{display:flex;gap:8px;align-items:center}
+  .ms-row .ms-name{flex:2}
+  .ms-row .ms-alt{flex:1}
+  .ms-row .x{flex:0 0 auto;background:none;border:none;color:var(--mist);cursor:pointer;font-size:15px;padding:4px 6px;border-radius:6px}
+  .ms-row .x:hover{color:#F27171;background:rgba(242,113,113,.1)}
+
+  /* route preview (read-only) */
+  .route-preview{
+    margin-top:14px;background:var(--panel-2);border:1px solid var(--line);border-radius:11px;
+    padding:14px 16px;min-height:56px;
+  }
+  .route-preview .rp-empty{color:var(--mist);font-size:13px;font-weight:500}
+  .route-preview .rp-head{
+    font-size:12.5px;color:var(--sky);font-weight:600;margin-bottom:10px;
+    padding-bottom:8px;border-bottom:1px solid var(--line)
+  }
+  .route-preview .rp-head b{color:var(--paper);font-weight:700}
+  .route-preview .rp-wp{
+    display:flex;align-items:baseline;gap:10px;padding:5px 0;font-size:14px;font-weight:500
+  }
+  .route-preview .rp-wp::before{content:"›";color:var(--amber);font-weight:700;font-size:15px}
+  .route-preview .rp-name{flex:1}
+  .route-preview .rp-alt{color:var(--mist);font-size:12.5px;font-weight:600;font-family:'Rubik'}
+
+  /* direction toggle */
+  .dir-toggle{display:flex;gap:10px;margin-bottom:16px}
+  .dir-opt{flex:1;cursor:pointer;position:relative}
+  .dir-opt input{position:absolute;opacity:0}
+  .dir-opt span{
+    display:block;text-align:center;padding:11px;border-radius:9px;
+    background:var(--panel-2);border:1px solid var(--line);color:var(--mist);
+    font-size:14px;font-weight:600;transition:.15s
+  }
+  .dir-opt input:checked + span{
+    background:rgba(79,176,224,.14);border-color:var(--sky);color:var(--sky)
+  }
+  .dir-opt input:focus-visible + span{box-shadow:0 0 0 3px rgba(79,176,224,.25)}
+
+  .btn.line.danger{color:#E3695F;border-color:rgba(227,105,95,.4)}
+  .btn.line.danger:hover{border-color:#E3695F;background:rgba(227,105,95,.08)}
+
+  .toast{position:fixed;bottom:22px;right:22px;background:var(--go);color:#062a1c;
+    padding:13px 18px;border-radius:11px;font-weight:700;font-size:14px;z-index:60;
+    box-shadow:0 10px 30px rgba(0,0,0,.4);transform:translateY(120px);opacity:0;transition:.3s}
+  .toast.show{transform:translateY(0);opacity:1}
+  .toast.err{background:#E3695F;color:#fff}
+
+  @media(max-width:560px){
+    .grid,.grid.three{grid-template-columns:1fr 1fr}
+    .modal .addgrid{grid-template-columns:1fr}
+  }
+
+  /* ============ PDF TEMPLATE (rendered off-screen, snapshotted) ============ */
+  #pdfArea{position:fixed;left:-4000px;top:0}
+  .form-sheet{
+    width:1000px;background:#fff;color:#111;font-family:'Heebo',sans-serif;padding:26px 30px;
+  }
+  .fs-head{display:flex;justify-content:space-between;align-items:flex-start;font-size:14px;font-weight:700;margin-bottom:2px}
+  .fs-head .l{text-align:left}
+  .fs-title{text-align:center;font-size:18px;font-weight:800;margin:2px 0 4px}
+  .fs-sub{text-align:center;font-size:13px;font-weight:600;color:#333;margin-bottom:10px}
+  .fs-date{font-size:14px;font-weight:700;margin-bottom:8px}
+  table.fs{width:100%;border-collapse:collapse;font-size:12.5px}
+  table.fs th,table.fs td{border:1.2px solid #222;padding:7px 6px;text-align:center;vertical-align:middle}
+  table.fs th{background:#EDEDED;font-weight:700;font-size:11.5px;line-height:1.25}
+  table.fs td{height:34px;font-weight:600}
+  .fs-routebox{border:1.2px solid #222;border-top:none;padding:0}
+  .fs-routebox table{width:100%;border-collapse:collapse}
+  .fs-routebox th{background:#EDEDED;font-weight:700;font-size:11.5px;border:1.2px solid #222;padding:6px}
+  .fs-routebox td{border:1.2px solid #222;padding:8px;font-size:12.5px;font-weight:600;vertical-align:top}
+  .fs-routebox .detail{text-align:right;line-height:1.9;min-height:90px;white-space:pre-wrap}
+  .fs-routehdr{font-weight:800;margin-bottom:6px;padding-bottom:5px;border-bottom:1px solid #bbb;white-space:normal}
+  .fs-lines{margin-top:10px;font-size:12.5px}
+  .fs-lines .ln{display:flex;border-bottom:1px solid #999;padding:7px 2px;gap:8px}
+  .fs-lines .ln b{font-weight:700;white-space:nowrap}
+  .fs-lines .ln span{font-weight:600;color:#222}
+  .fs-sign{display:flex;justify-content:space-between;margin-top:20px;font-size:13px;font-weight:700}
+  .fs-foot{display:flex;justify-content:space-between;margin-top:18px;font-size:11.5px;font-weight:600;color:#333;border-top:1px solid #bbb;padding-top:6px}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="rail">
+    <div class="glyph" aria-hidden="true">
+      <svg viewBox="0 0 24 24" fill="#1a1206"><path d="M21 16v-2l-8-5V3.5a1.5 1.5 0 0 0-3 0V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L11 19v-5.5z"/></svg>
+    </div>
+    <div class="title">
+      <h1>תוכנית טיסת מרחב</h1>
+      <p>דרומה לבאר שבע בנתיבי אז״מ - הגשה למודיעין טיס</p>
+    </div>
+  </div>
+</div>
+
+<main>
+
+  <!-- STANDARD NOTE -->
+  <div class="std-note" style="margin-bottom:16px">
+    <svg viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="9" stroke="#3FB984" stroke-width="1.4"/><path d="M6 10l2.5 2.5L14 7" stroke="#3FB984" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    <div>
+      טופס זה מוגדר מראש לטיסה שגרתית באמצע השבוע בנתיבי אז״מ הרשמיים דרומה.
+      <div class="note-attn">
+        <svg viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="9" stroke="#3FB984" stroke-width="1.4"/><path d="M6 10l2.5 2.5L14 7" stroke="#3FB984" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <b>שים לב:</b>
+      </div>
+      <ul class="note-list">
+        <li><b>המראה עד 11:00</b> - יש להגיש עד <b>13:00 ביום הקודם</b>.</li>
+        <li><b>המראה אחרי 11:00</b> - יש להגיש <b>לפחות שעתיים לפני</b> ההמראה.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- WHO -->
+  <section class="card">
+    <div class="head"><span class="idx">01</span><h2>מטוס וטייס</h2><span class="sub">נשמר להמראה הבאה</span></div>
+    <div class="grid">
+      <div class="field">
+        <label>אות קריאה / מטוס</label>
+        <select id="acSelect"></select>
+      </div>
+      <div class="field">
+        <label>טייס</label>
+        <select id="pilotSelect"></select>
+      </div>
+      <div class="field"><button class="inline-add" onclick="openModal('ac')">＋ ניהול מטוסים</button></div>
+      <div class="field"><button class="inline-add" onclick="openModal('pilot')">＋ ניהול טייסים</button></div>
+    </div>
+  </section>
+
+  <!-- FLIGHT DETAILS -->
+  <section class="card">
+    <div class="head"><span class="idx">02</span><h2>פרטי הטיסה</h2></div>
+    <div class="grid three">
+      <div class="field"><label>תאריך</label><input type="date" id="fDate"></div>
+      <div class="field"><label>המראה משוער <span class="hint">ETD</span></label><input type="time" id="fEtd"></div>
+      <div class="field"><label>נחיתה סופית <span class="hint">ETA</span></label><input type="time" id="fEta"></div>
+      <div class="field"><label>נפשות במטוס</label><select id="fSouls"><option value="1">1</option><option value="2">2</option></select></div>
+      <div class="field"><label>זמן דלק</label><input type="text" id="fFuel" placeholder="למשל 3:30"></div>
+      <div class="field"><label>מהירות בקשר <span class="hint">IAS</span></label><input type="text" id="fIas" value="87"></div>
+      <div class="field"><label>שדה יעד סופי</label><input type="text" id="fDest" value="באר שבע"></div>
+      <div class="field"><label>שדה משנה</label><input type="text" id="fAlt" placeholder="-"></div>
+      <div class="field"><label>מטרת הטיסה</label><input type="text" id="fPurpose" value="פנאי"></div>
+    </div>
+  </section>
+
+  <!-- ROUTE -->
+  <section class="card">
+    <div class="head"><span class="idx">03</span><h2>נתיב הטיסה</h2><span class="sub">בחר נתיב שמור או צור חדש</span></div>
+    <div class="grid" style="grid-template-columns:1fr auto auto;align-items:end;gap:10px">
+      <div class="field"><label>נתיב שמור</label><select id="routeSelect"></select></div>
+      <button class="inline-add" style="width:auto;padding:11px 14px" onclick="openRouteEditor(null)">＋ חדש</button>
+      <button class="inline-add" id="editRouteBtn" style="width:auto;padding:11px 14px" onclick="editSelectedRoute()">✎ ערוך</button>
+    </div>
+    <div class="route-preview" id="routePreview"></div>
+    <input type="hidden" id="fRoute">
+    <input type="hidden" id="fRouteDir">
+  </section>
+
+  <!-- ADVANCED -->
+  <section class="card">
+    <button class="adv-toggle" id="advToggle" onclick="toggleAdv()">
+      <svg class="car" width="12" height="12" viewBox="0 0 12 12" fill="#7C8DA0"><path d="M4 2l4 4-4 4z"/></svg>
+      שדות נוספים (ברירת מחדל: טיסה סטנדרטית ללא חריגות)
+    </button>
+    <div class="adv-body" id="advBody">
+      <div class="grid" style="margin-bottom:12px">
+        <div class="field"><label>שם החברה / מפעיל</label><input type="text" id="fOperator" placeholder="שם המועדון / בית ספר"></div>
+        <div class="field"><label>שדה יציאה / אתר</label><input type="text" id="fDepart" placeholder="שדה המראה"></div>
+        <div class="field"><label>יש חריגה מהפמ״ת</label><select id="fDev"><option value="לא">לא</option><option value="כן">כן</option></select></div>
+        <div class="field"><label>יש אישור רת״א</label><select id="fRtaa"><option value="">-</option><option value="לא">לא</option><option value="כן">כן</option></select></div>
+        <div class="field"><label>עבודות אוויר</label><select id="fAirwork"><option value="לא">לא</option><option value="כן">כן</option></select></div>
+      </div>
+      <div class="grid">
+        <div class="field full"><label>כללי טיסה</label><input type="text" id="fRules" value="CVFR"></div>
+        <div class="field full"><label>אישורים מצורפים</label><input type="text" id="fApprovals" placeholder="-"></div>
+        <div class="field full"><label>תיאומים שבוצעו ע״י המפעיל/טייס</label><input type="text" id="fCoord" placeholder="-"></div>
+        <div class="field full"><label>הערות מודיעין טיס והגבלות</label><input type="text" id="fNotes" placeholder="-"></div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<div class="actionbar">
+  <div class="rail">
+    <button class="btn ghost" onclick="resetFlight()" title="נקה פרטי טיסה">נקה</button>
+    <button class="btn primary" id="genBtn" onclick="generatePDF()">
+      <svg width="18" height="18" viewBox="0 0 20 20" fill="#1a1206"><path d="M10 2v9m0 0l-3.5-3.5M10 11l3.5-3.5M3 15v2a1 1 0 001 1h12a1 1 0 001-1v-2" stroke="#1a1206" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      הפק ופתח PDF
+    </button>
+  </div>
+</div>
+
+<div class="app-footer" dir="ltr">AZAM Routes · v1.0 · built by eligrt</div>
+
+<!-- MODAL -->
+<div class="scrim" id="scrim" onclick="if(event.target===this)closeModal()">
+  <div class="modal" id="modal"></div>
+</div>
+
+<!-- carried from selected pilot profile -->
+<input type="hidden" id="fPhone">
+
+<!-- OFF-SCREEN PDF TEMPLATE -->
+<div id="pdfArea"><div class="form-sheet" id="formSheet"></div></div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+/* ---------------- storage ---------------- */
+const DB_KEY='azm_flightplan_v1';
+const seed={
+  aircraft:[],
+  pilots:[],
+  routes:[
+    {label:'ברירת מחדל - צפוני',dir:'north',legs:[{name:'נקודת כניסה',alt:'1200'},{name:'המשך צפונה',alt:'1200'}]},
+    {label:'ברירת מחדל - דרומי',dir:'south',legs:[{name:'נקודת כניסה',alt:'1200'},{name:'המשך דרומה',alt:'1200'}]}
+  ],
+  last:{}
+};
+function clone(o){return JSON.parse(JSON.stringify(o))}
+function migrate(d){
+  // legacy free-text routes -> single milestone; ensure pilot.phone exists
+  (d.routes||[]).forEach(r=>{
+    if(!r.legs){ r.legs = r.text ? [{name:r.text,alt:''}] : []; delete r.text; }
+    if(!r.dir) r.dir='south';
+  });
+  (d.pilots||[]).forEach(p=>{ if(p.phone===undefined) p.phone=''; });
+  return d;
+}
+function loadDB(){try{const d=JSON.parse(localStorage.getItem(DB_KEY));return d?migrate(d):clone(seed)}catch(e){return clone(seed)}}
+function saveDB(){localStorage.setItem(DB_KEY,JSON.stringify(db))}
+let db=loadDB();
+
+/* ---------------- toast ---------------- */
+function toast(msg,err){const t=document.getElementById('toast');t.textContent=msg;t.className='toast show'+(err?' err':'');setTimeout(()=>t.className='toast',2600)}
+
+/* ---------------- populate selects ---------------- */
+function refreshSelects(){
+  const ac=document.getElementById('acSelect');
+  const pl=document.getElementById('pilotSelect');
+  ac.innerHTML = db.aircraft.length ? '' : '<option value="">- אין מטוסים, הוסף -</option>';
+  db.aircraft.forEach((a,i)=>ac.add(new Option(`${a.call} · ${a.reg} · ${a.type}`,i)));
+  pl.innerHTML = db.pilots.length ? '' : '<option value="">- אין טייסים, הוסף -</option>';
+  db.pilots.forEach((p,i)=>pl.add(new Option(`${p.name} · ${p.lic}`,i)));
+  if(db.last.ac!=null && db.aircraft[db.last.ac]) ac.value=db.last.ac;
+  if(db.last.pilot!=null && db.pilots[db.last.pilot]) pl.value=db.last.pilot;
+  ac.onchange=()=>{db.last.ac=ac.value;saveDB()};
+  pl.onchange=()=>{db.last.pilot=pl.value;saveDB();syncPilotPhone()};
+  syncPilotPhone();
+}
+function syncPilotPhone(){
+  const p=currentPilot();
+  document.getElementById('fPhone').value = p.phone || '';
+}
+const DIR_LABEL={north:'נתיב צפוני',south:'נתיב דרומי'};
+
+function refreshRoutes(){
+  const sel=document.getElementById('routeSelect');
+  sel.innerHTML = db.routes.length ? '' : '<option value="">- אין נתיבים, צור חדש -</option>';
+  db.routes.forEach((r,i)=>sel.add(new Option(`${r.label} · ${DIR_LABEL[r.dir]||''}`,i)));
+  if(db.last.route!=null && db.routes[db.last.route]) sel.value=db.last.route;
+  sel.onchange=()=>{db.last.route=sel.value;saveDB();renderRoutePreview()};
+  document.getElementById('editRouteBtn').style.display = db.routes.length ? '' : 'none';
+  renderRoutePreview();
+}
+
+// waypoint bullets, each "name (altitude)" on its own line
+function legsToText(legs){
+  return (legs||[]).map(m=>`• ${m.name}${m.alt?` (${m.alt} רגל)`:''}`).join('\n');
+}
+
+function currentRoute(){
+  const i=document.getElementById('routeSelect').value;
+  return (i!==''&&db.routes[i]) ? db.routes[i] : null;
+}
+
+function renderRoutePreview(){
+  const box=document.getElementById('routePreview');
+  const r=currentRoute();
+  if(!r){box.innerHTML='<div class="rp-empty">לא נבחר נתיב</div>';document.getElementById('fRoute').value='';document.getElementById('fRouteDir').value='';return}
+  box.innerHTML=`<div class="rp-head">מבוסס על: <b>${DIR_LABEL[r.dir]||''}</b></div>`+
+    (r.legs||[]).map(m=>`<div class="rp-wp"><span class="rp-name">${m.name}</span>${m.alt?`<span class="rp-alt">${m.alt} רגל</span>`:''}</div>`).join('');
+  // hidden fields feed the PDF
+  document.getElementById('fRoute').value=legsToText(r.legs);
+  document.getElementById('fRouteDir').value=DIR_LABEL[r.dir]||'';
+}
+
+/* ---------------- advanced toggle ---------------- */
+function toggleAdv(){
+  document.getElementById('advBody').classList.toggle('show');
+  document.getElementById('advToggle').classList.toggle('open');
+}
+
+/* ---------------- modal (manage lists) ---------------- */
+let modalKind=null;
+function openModal(kind){
+  modalKind=kind;
+  const m=document.getElementById('modal');
+  if(kind==='ac'){
+    m.innerHTML=`<h3>מטוסים</h3><p class="lede">נשמרים במכשיר זה. כל מטוס שתוסיף יופיע ברשימה למעלה - לחיצה על ״הוסף״ מרוקנת את השדות למטוס הבא.</p>
+      <div class="list" id="mList"></div>
+      <div class="addgrid">
+        <input id="in1" placeholder="אות קריאה"><input id="in2" placeholder="רישום (4X-...)">
+        <input id="in3" class="full" placeholder="סוג מטוס">
+      </div>
+      <div class="modal-actions">
+        <button class="btn line" onclick="addItem(false)">הוסף עוד מטוס</button>
+        <button class="btn primary" onclick="addItem(true)">הוסף וסגור</button>
+      </div>
+      <button class="close-x" onclick="closeModal()" title="סגור">✕</button>`;
+  }else if(kind==='pilot'){
+    m.innerHTML=`<h3>טייסים</h3><p class="lede">נשמרים במכשיר זה. הטלפון נשמר עם הטייס ומתמלא אוטומטית בטופס.</p>
+      <div class="list" id="mList"></div>
+      <div class="addgrid">
+        <input id="in1" placeholder="שם הטייס"><input id="in2" placeholder="מס׳ רישיון">
+        <input id="in3" class="full" placeholder="טלפון נייד לבירורים" inputmode="tel">
+      </div>
+      <div class="modal-actions">
+        <button class="btn line" onclick="addItem(false)">הוסף עוד טייס</button>
+        <button class="btn primary" onclick="addItem(true)">הוסף וסגור</button>
+      </div>
+      <button class="close-x" onclick="closeModal()" title="סגור">✕</button>`;
+  }
+  renderModalList();
+  document.getElementById('scrim').classList.add('show');
+}
+function addMsRow(name,alt){
+  const wrap=document.getElementById('msRows');
+  const row=document.createElement('div');row.className='ms-row';
+  row.innerHTML=`<input class="ms-name" placeholder="שם ציון דרך" value="${(name||'').replace(/"/g,'&quot;')}">
+    <input class="ms-alt" placeholder="גובה (רגל)" inputmode="numeric" value="${(alt||'').replace(/"/g,'&quot;')}">
+    <button class="x" title="הסר">✕</button>`;
+  row.querySelector('.x').onclick=()=>row.remove();
+  wrap.appendChild(row);
+}
+function collectMs(){
+  return [...document.querySelectorAll('#msRows .ms-row')].map(r=>({
+    name:r.querySelector('.ms-name').value.trim(),
+    alt:r.querySelector('.ms-alt').value.trim()
+  })).filter(m=>m.name);
+}
+function renderModalList(){
+  const list=document.getElementById('mList');const arr=arrFor();
+  if(!arr.length){list.innerHTML='<div class="empty" style="color:#7C8DA0;font-size:12.5px;padding:4px">עדיין ריק</div>';return}
+  list.innerHTML='';
+  arr.forEach((it,i)=>{
+    const row=document.createElement('div');row.className='row';
+    let txt = modalKind==='ac' ? `${it.call} <small>· ${it.reg} · ${it.type}</small>`
+           : `${it.name} <small>· ${it.lic||'-'}${it.phone?' · '+it.phone:''}</small>`;
+    row.innerHTML=`<div class="m">${txt}</div><button class="x" title="מחק">✕</button>`;
+    row.querySelector('.x').onclick=()=>{arr.splice(i,1);saveDB();renderModalList();afterListChange()};
+    list.appendChild(row);
+  });
+}
+function arrFor(){return modalKind==='ac'?db.aircraft:db.pilots}
+function addItem(closeAfter){
+  const v1=document.getElementById('in1').value.trim();
+  const v2=document.getElementById('in2')?.value.trim();
+  const v3=document.getElementById('in3')?.value.trim();
+  if(modalKind==='ac'){
+    if(!v1||!v2){toast('נא למלא אות קריאה ורישום',true);return}
+    db.aircraft.push({call:v1,reg:v2,type:v3||''});
+  }else{
+    if(!v1){toast('נא למלא שם טייס',true);return}
+    db.pilots.push({name:v1,lic:v2||'',phone:v3||''});
+  }
+  saveDB();afterListChange();
+  if(closeAfter){toast('נשמר');closeModal();return}
+  ['in1','in2','in3'].forEach(id=>{const e=document.getElementById(id);if(e)e.value=''});
+  renderModalList();
+  document.getElementById('in1').focus();
+  toast('נשמר · אפשר להוסיף עוד');
+}
+function afterListChange(){refreshSelects();refreshRoutes();}
+function closeModal(){document.getElementById('scrim').classList.remove('show');modalKind=null}
+
+/* ---------------- dedicated route editor ---------------- */
+let editingRouteIdx=null;
+function openRouteEditor(idx){
+  editingRouteIdx = idx;
+  const r = (idx!=null && db.routes[idx]) ? db.routes[idx] : {label:'',dir:'south',legs:[]};
+  const m=document.getElementById('modal');
+  m.innerHTML=`<h3>${idx!=null?'עריכת נתיב':'נתיב חדש'}</h3>
+    <p class="lede">שם הנתיב הוא לזיהוי בלבד. הכיוון והנקודות יופיעו ב-PDF לבקר.</p>
+    <div class="addgrid"><input id="rName" class="full" placeholder="שם לזיהוי (למשל: באר שבע דרך להבים)" value="${(r.label||'').replace(/"/g,'&quot;')}"></div>
+    <div class="ms-label">כיוון הנתיב</div>
+    <div class="dir-toggle" id="dirToggle">
+      <label class="dir-opt"><input type="radio" name="rdir" value="north" ${r.dir==='north'?'checked':''}><span>נתיב צפוני</span></label>
+      <label class="dir-opt"><input type="radio" name="rdir" value="south" ${r.dir!=='north'?'checked':''}><span>נתיב דרומי</span></label>
+    </div>
+    <div class="ms-label">ציוני דרך <span style="color:var(--line);font-weight:500">(שם + גובה)</span></div>
+    <div id="msRows" class="ms-rows"></div>
+    <button class="inline-add" style="margin-bottom:14px" onclick="addMsRow()">＋ הוסף ציון דרך</button>
+    <div class="modal-actions">
+      ${idx!=null?'<button class="btn line danger" onclick="deleteRoute()">מחק נתיב</button>':''}
+      <button class="btn primary" onclick="saveRoute()">שמירה</button>
+    </div>
+    <button class="close-x" onclick="closeModal()" title="סגור">✕</button>`;
+  const rows=r.legs&&r.legs.length?r.legs:[{name:'',alt:''},{name:'',alt:''}];
+  document.getElementById('msRows').innerHTML='';rows.forEach(m=>addMsRow(m.name,m.alt));
+  document.getElementById('scrim').classList.add('show');
+}
+function editSelectedRoute(){
+  const i=document.getElementById('routeSelect').value;
+  if(i==='' ){toast('אין נתיב לעריכה',true);return}
+  openRouteEditor(+i);
+}
+function saveRoute(){
+  const label=document.getElementById('rName').value.trim();
+  const dir=(document.querySelector('input[name="rdir"]:checked')||{}).value||'south';
+  const legs=collectMs();
+  if(!label){toast('נא למלא שם נתיב',true);return}
+  if(!legs.length){toast('נא להוסיף לפחות ציון דרך אחד',true);return}
+  const rec={label,dir,legs};
+  if(editingRouteIdx!=null){db.routes[editingRouteIdx]=rec;}
+  else{db.routes.push(rec);db.last.route=String(db.routes.length-1);}
+  saveDB();closeModal();refreshRoutes();
+  if(editingRouteIdx==null){document.getElementById('routeSelect').value=db.last.route;renderRoutePreview();}
+  toast('הנתיב נשמר');
+}
+function deleteRoute(){
+  if(editingRouteIdx==null)return;
+  db.routes.splice(editingRouteIdx,1);
+  if(db.last.route!=null && +db.last.route>=db.routes.length) db.last.route = db.routes.length?String(db.routes.length-1):null;
+  saveDB();closeModal();refreshRoutes();toast('הנתיב נמחק');
+}
+
+/* ---------------- reset flight (keep profiles) ---------------- */
+function resetFlight(){
+  ['fEtd','fEta','fFuel','fAlt','fApprovals','fCoord','fNotes'].forEach(id=>document.getElementById(id).value='');
+  document.getElementById('fIas').value='87';
+  document.getElementById('fSouls').value='1';
+  document.getElementById('fPurpose').value='פנאי';
+  document.getElementById('fDest').value='באר שבע';
+  renderRoutePreview();
+  toast('פרטי הטיסה נוקו');
+}
+
+/* ---------------- gather + build sheet ---------------- */
+function val(id){return document.getElementById(id).value.trim()}
+function currentAircraft(){const i=document.getElementById('acSelect').value;return db.aircraft[i]||{call:'',reg:'',type:''}}
+function currentPilot(){const i=document.getElementById('pilotSelect').value;return db.pilots[i]||{name:'',lic:''}}
+
+function buildSheet(){
+  const a=currentAircraft(),p=currentPilot();
+  const d=val('fDate'); const dateHe = d ? d.split('-').reverse().join('/') : '';
+  const esc=s=>(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  const dash=s=>esc(s)|| '-';
+  document.getElementById('formSheet').innerHTML=`
+    <div class="fs-head"><div>נספח ב'</div><div class="l">פמ"ת פנים ארצי</div></div>
+    <div class="fs-title">תוכנית לטיסת מרחב</div>
+    <div class="fs-sub">א' - 11</div>
+    <div class="fs-date">לתאריך: ${dash(dateHe)}</div>
+    <table class="fs">
+      <tr>
+        <th>אות קריאה</th><th>רישום מטוס</th><th>סוג מטוס</th><th>שם הטייס</th>
+        <th>מס' הרישיון</th><th>שם החברה</th><th>מטרת הטיסה</th>
+      </tr>
+      <tr>
+        <td>${dash(a.call)}</td><td>${dash(a.reg)}</td><td>${dash(a.type)}</td><td>${dash(p.name)}</td>
+        <td>${dash(p.lic)}</td><td>${dash(val('fOperator'))}</td><td>${dash(val('fPurpose'))}</td>
+      </tr>
+    </table>
+    <table class="fs" style="border-top:none">
+      <tr>
+        <th>זמן המראה משוער</th><th>זמן נחיתה סופית</th><th>שדה יעד סופי</th><th>שדה משנה</th>
+        <th>זמן דלק</th><th>מהירות בקשר IAS</th><th>מס' נפשות במטוס</th>
+        <th>יש חריגה מהפמ"ת</th><th>יש אישור רת"א</th><th>עבודות אוויר</th>
+      </tr>
+      <tr>
+        <td>${dash(val('fEtd'))}</td><td>${dash(val('fEta'))}</td><td>${dash(val('fDest'))}</td><td>${dash(val('fAlt'))}</td>
+        <td>${dash(val('fFuel'))}</td><td>${dash(val('fIas'))}</td><td>${dash(val('fSouls'))}</td>
+        <td>${dash(val('fDev'))}</td><td>${dash(val('fRtaa'))}</td><td>${dash(val('fAirwork'))}</td>
+      </tr>
+    </table>
+    <div class="fs-routebox">
+      <table>
+        <tr><th style="width:14%">שדה יציאה/אתר</th><th style="width:22%">זמן המראה / נחיתה</th><th>פירוט הנתיבים (מיקום, גובה, נ.צ WGS-84, שעה משוערת)</th></tr>
+        <tr>
+          <td style="text-align:center">${dash(val('fDepart'))}</td>
+          <td style="text-align:center">המראה: ${dash(val('fEtd'))}<br>נחיתה: ${dash(val('fEta'))}</td>
+          <td class="detail">${val('fRouteDir')?`<div class="fs-routehdr">מבוסס על: ${esc(val('fRouteDir'))}</div>`:''}${esc(val('fRoute'))||'-'}</td>
+        </tr>
+      </table>
+    </div>
+    <div class="fs-lines">
+      <div class="ln"><b>כללי טיסה:</b><span>${dash(val('fRules'))}</span></div>
+      <div class="ln"><b>אישורים מצורפים:</b><span>${dash(val('fApprovals'))}</span></div>
+      <div class="ln"><b>תיאומים שבוצעו ע"י המפעיל/טייס:</b><span>${dash(val('fCoord'))}</span></div>
+      <div class="ln"><b>הערות מודיעין טיס והגבלות:</b><span>${dash(val('fNotes'))}</span></div>
+      <div class="ln"><b>טלפון נייד לבירורים:</b><span>${dash(val('fPhone'))}</span></div>
+    </div>
+    <div class="fs-sign"><div>חתימת הטייס: ____________</div><div>חתימת התדריכן: ____________</div></div>
+    <div class="fs-foot"><div>עדכון 1/23</div><div>רשות התעופה האזרחית</div><div>18 מאי 2023</div></div>
+  `;
+}
+
+/* ---------------- generate PDF ---------------- */
+async function generatePDF(){
+  if(!db.aircraft.length||!db.pilots.length){toast('הוסף לפחות מטוס וטייס אחד',true);return}
+  if(!val('fDate')||!val('fEtd')){toast('נא למלא תאריך ושעת המראה',true);return}
+  const btn=document.getElementById('genBtn');btn.disabled=true;btn.textContent='מכין PDF…';
+  try{
+    buildSheet();
+    const sheet=document.getElementById('formSheet');
+    const canvas=await html2canvas(sheet,{scale:2,backgroundColor:'#fff',useCORS:true});
+    const img=canvas.toDataURL('image/png');
+    const {jsPDF}=window.jspdf;
+    const pdf=new jsPDF('p','mm','a4');
+    const pw=210, ph=297, margin=8;
+    const iw=pw-margin*2;
+    const ih=canvas.height*iw/canvas.width;
+    pdf.addImage(img,'PNG',margin,margin,iw,Math.min(ih,ph-margin*2));
+    const a=currentAircraft();const d=val('fDate');
+    const fname=`MERHAV_fpl_${(a.call||'flight')}_${d}.pdf`;
+    // open in a new tab (works on phone + computer); pilot can then view / save / print / share
+    const blob=pdf.output('blob');
+    const url=URL.createObjectURL(blob);
+    const win=window.open(url,'_blank');
+    if(!win){ // popup blocked -> fall back to download
+      const link=document.createElement('a');link.href=url;link.download=fname;link.click();
+      toast('ה-PDF ירד - נחסם חלון חדש');
+    }else{
+      toast('ה-PDF נפתח בכרטיסייה חדשה');
+    }
+    setTimeout(()=>URL.revokeObjectURL(url),60000);
+    // remember last used
+    db.last.ac=document.getElementById('acSelect').value;
+    db.last.pilot=document.getElementById('pilotSelect').value;
+    saveDB();
+  }catch(e){console.error(e);toast('שגיאה ביצירת ה-PDF',true)}
+  btn.disabled=false;btn.innerHTML=`<svg width="18" height="18" viewBox="0 0 20 20" fill="#1a1206"><path d="M10 2v9m0 0l-3.5-3.5M10 11l3.5-3.5M3 15v2a1 1 0 001 1h12a1 1 0 001-1v-2" stroke="#1a1206" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg> הפק ופתח PDF`;
+}
+
+/* ---------------- init ---------------- */
+(function init(){
+  const t=new Date();document.getElementById('fDate').value=t.toISOString().slice(0,10);
+  refreshSelects();refreshRoutes();
+})();
+</script>
+</body>
+</html>
