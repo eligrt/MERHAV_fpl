@@ -75,10 +75,12 @@
   .step.done .step-dot{background:rgba(63,185,132,.16);border-color:#3FB984;color:#3FB984}
   .step.done .step-dot::after{content:'✓'}
   .step.done .step-dot span{display:none}
+  .step.done.active{border-bottom-color:#3FB984}
   .step.opt .step-dot{background:rgba(79,176,224,.14);border-color:rgba(79,176,224,.5);color:var(--sky)}
   .step.opt .step-lbl{color:var(--sky)}
-  .step.opt.active .step-dot{background:var(--amber);border-color:var(--amber);color:#1a1206}
-  .step.opt.active .step-lbl{color:var(--paper)}
+  .step.opt.active{border-bottom-color:var(--sky)}
+  .step.opt.active .step-dot{background:rgba(79,176,224,.28);border-color:var(--sky);color:var(--sky)}
+  .step.opt.active .step-lbl{color:var(--sky)}
   @media(max-width:420px){ .step .step-lbl{font-size:9.5px} }
 
   /* ---------- PDF missing-fields hint ---------- */
@@ -200,8 +202,8 @@
   }
   .notes-tick svg{width:28px;height:28px}
   .modal .note-list{margin:4px 0 0;padding:0;list-style:none}
-  .modal .note-list li{position:relative;padding:6px 0 6px 22px;line-height:1.55;font-size:13.5px;color:var(--paper)}
-  .modal .note-list li::before{content:"";position:absolute;inset-inline-start:6px;top:13px;width:6px;height:6px;border-radius:50%;background:#3FB984}
+  .modal .note-list li{position:relative;padding:6px 24px 6px 0;line-height:1.55;font-size:13.5px;color:var(--paper)}
+  .modal .note-list li::before{content:"";position:absolute;right:8px;top:13px;width:6px;height:6px;border-radius:50%;background:#3FB984}
 
   /* collapsible advanced */
   .adv-toggle{background:none;border:none;color:var(--mist);font-family:'Heebo';font-size:13px;
@@ -516,7 +518,7 @@
   </div>
 </div>
 
-<div class="app-footer" dir="ltr">MERHAV_fpl · v1.01.024 · BUILT BY ELIGRT<br><span id="pdfCounter" class="af-count"></span></div>
+<div class="app-footer" dir="ltr">MERHAV_fpl · v1.01.025 · BUILT BY ELIGRT<br><span id="pdfCounter" class="af-count"></span></div>
 
 <!-- MODAL -->
 <div class="scrim" id="scrim" onclick="if(event.target===this)closeModal()">
@@ -707,6 +709,7 @@ function refreshRoutes(){
   document.getElementById('editRouteBtn').style.display = hasRoutes;
   document.getElementById('dupRouteBtn').style.display = hasRoutes;
   renderRoutePreview();
+  if(typeof refreshGate==='function') refreshGate();
 }
 function renderRoutePills(){
   const box=document.getElementById('routePills');
