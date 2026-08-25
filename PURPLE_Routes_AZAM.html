@@ -251,6 +251,15 @@
   .mail-copy:hover{color:#7CC7ED}
   .mail-copy.copied{color:#3FB984}
   .mail-copy svg{opacity:.85}
+  .mail-copy .ic-check{display:none}
+  .mail-copy.copied .ic-copy{display:none}
+  .mail-copy.copied .ic-check{display:inline;opacity:1}
+  .ready-tick{width:56px;height:56px;border-radius:50%;margin:2px auto 8px;
+    display:flex;align-items:center;justify-content:center;
+    background:rgba(63,185,132,.12);border:1.5px solid rgba(63,185,132,.4)}
+  .ready-tick svg{width:28px;height:28px}
+  .ready-mail{display:flex;margin:0 auto;font-size:16px;gap:8px;padding:8px 4px;justify-content:center}
+  .ready-tip{text-align:center;font-size:12px;color:var(--mist);margin:12px 0 0;line-height:1.5}
   .btn{
     flex:1;border:none;border-radius:11px;padding:15px;font-family:'Heebo';font-size:15px;
     font-weight:700;cursor:pointer;transition:.15s;display:flex;align-items:center;justify-content:center;gap:8px
@@ -552,16 +561,9 @@
       הפק ופתח PDF
     </button>
   </div>
-  <div class="mail-line">
-    <span class="mail-text">את ה-PDF יש לשלוח ל:</span>
-    <button class="mail-copy" id="mailCopy" onclick="copyMail()">
-      <span id="mailAddr">fpl@iaa.gov.il</span>
-      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
-    </button>
-  </div>
 </div>
 
-<div class="app-footer" dir="ltr">MERHAV_fpl · v1.01.035 · BUILT BY ELIGRT<br><span id="pdfCounter" class="af-count"></span></div>
+<div class="app-footer" dir="ltr">MERHAV_fpl · v1.01.037 · BUILT BY ELIGRT<br><span id="pdfCounter" class="af-count"></span></div>
 
 <!-- MODAL -->
 <div class="scrim" id="scrim" onclick="if(event.target===this)closeModal()">
@@ -1225,19 +1227,14 @@ async function generatePDF(){
     const iw=pw-margin*2;
     const ih=canvas.height*iw/canvas.width;
     pdf.addImage(img,'PNG',margin,margin,iw,Math.min(ih,ph-margin*2));
-    const a=currentAircraft();const d=val('fDate');
-    const fname=`MERHAV_fpl_${(a.call||'flight')}_${d}.pdf`;
-    // open in a new tab (works on phone + computer); pilot can then view / save / print / share
+    // build the PDF blob, then show the submission popup (pilot opens the PDF from there)
+    const a=currentAircraft();const dstr=val('fDate');
+    const fname=`MERHAV_fpl_${(a.call||'flight')}_${dstr}.pdf`;
     const blob=pdf.output('blob');
     const url=URL.createObjectURL(blob);
-    const win=window.open(url,'_blank');
-    if(!win){ // popup blocked -> fall back to download
-      const link=document.createElement('a');link.href=url;link.download=fname;link.click();
-      toast('ה-PDF ירד - נחסם חלון חדש');
-    }else{
-      toast('ה-PDF נפתח בכרטיסייה חדשה');
-    }
-    setTimeout(()=>URL.revokeObjectURL(url),60000);
+    _lastPdf={url,fname};
+    showPdfReady();
+    setTimeout(()=>{ try{URL.revokeObjectURL(url);}catch(e){} },300000);
     // remember last used
     db.last.ac=document.getElementById('acSelect').value;
     db.last.pilot=document.getElementById('pilotSelect').value;
@@ -1253,6 +1250,33 @@ const PDF_COUNTER_KEY='merhav_fpl';
 function renderPdfCount(n){
   const el=document.getElementById('pdfCounter');
   if(el && n!=null && n!==undefined) el.textContent=`(${n} PDF)`;
+}
+let _lastPdf=null;
+function showPdfReady(){
+  const m=document.getElementById('modal');
+  m.innerHTML=`
+    <div class="ready-tick">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#3FB984" stroke-width="2.4"><path d="M20 6 9 17l-5-5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </div>
+    <h3 style="text-align:center;margin-bottom:4px">ה-PDF מוכן</h3>
+    <p class="lede" style="text-align:center;margin-bottom:16px">יש לשלוח את התוכנית במייל לכתובת:</p>
+    <button class="mail-copy ready-mail" id="mailCopy" onclick="copyMail()">
+      <span>fpl@iaa.gov.il</span>
+      <svg class="ic-copy" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+      <svg class="ic-check" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path d="M20 6 9 17l-5-5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+    <div class="modal-actions" style="margin-top:16px">
+      <button class="btn line" style="flex:1" onclick="closeModal()">סגור</button>
+      <button class="btn primary" style="flex:1.4" onclick="openLastPdf()">פתח PDF</button>
+    </div>`;
+  modalKind='pdfready';
+  document.getElementById('scrim').classList.add('show');
+}
+function openLastPdf(){
+  if(!_lastPdf){closeModal();return}
+  const win=window.open(_lastPdf.url,'_blank');
+  if(!win){ const link=document.createElement('a');link.href=_lastPdf.url;link.download=_lastPdf.fname;link.click(); }
+  closeModal();
 }
 function copyMail(){
   const addr='fpl@iaa.gov.il';
