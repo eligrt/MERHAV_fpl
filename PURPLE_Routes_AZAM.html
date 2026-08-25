@@ -95,21 +95,29 @@
   /* ---------- Card ---------- */
   .card{
     background:var(--panel);border:1px solid var(--line);border-radius:16px;
-    padding:22px 20px;margin-bottom:16px;
+    padding:22px 20px;margin-bottom:16px;transition:border-color .2s;
   }
+  #sec1,#sec2,#sec3{border-color:rgba(242,169,59,.32)}
+  #sec1.sec-done,#sec2.sec-done,#sec3.sec-done{border-color:rgba(63,185,132,.5)}
+  #sec4{border-color:rgba(79,176,224,.32)}
   .card > .head{display:flex;align-items:baseline;gap:10px;margin-bottom:16px}
   .card > .head .idx{
     font-family:'Rubik';font-size:12px;font-weight:600;color:var(--amber);
     border:1px solid var(--amber-dim);border-radius:6px;padding:2px 7px;letter-spacing:1px
   }
   .card > .head h2{font-size:15px;font-weight:700}
-  .card > .head .idx.idx-opt{color:var(--sky);border-color:rgba(79,176,224,.4)}
-  .card > .head .idx.idx-done{color:#3FB984;border-color:rgba(63,185,132,.45)}
+  .card > .head .idx.idx-opt{color:var(--sky);border-color:rgba(79,176,224,.55)}
+  .card > .head .idx.idx-done{color:#3FB984;border-color:rgba(63,185,132,.6)}
   .card > .head .sub{font-size:12px;color:var(--mist);margin-inline-start:auto;font-weight:500}
 
   /* ---------- Fields ---------- */
   .grid{display:grid;grid-template-columns:1fr 1fr;gap:12px 14px}
   .grid.three{grid-template-columns:1fr 1fr 1fr}
+  .pair-row{grid-column:1/-1;display:flex;gap:14px;align-items:flex-end}
+  .pair-row > .field{margin:0}
+  .pair-row > .field:first-child{flex:1.55}
+  .pair-row > .field.time-col{flex:1}
+  .pair-row .time-col input[type=time]{padding-left:6px;padding-right:6px}
   .field{display:flex;flex-direction:column;gap:6px}
   .field.full{grid-column:1/-1}
   label{font-size:12.5px;color:var(--mist);font-weight:600;display:flex;gap:6px;align-items:center}
@@ -164,8 +172,6 @@
   .route-pill .rp-label{font-size:13px;font-weight:600;color:var(--paper)}
   .route-pill.on{background:rgba(79,176,224,.14);border-color:var(--sky)}
   .route-pill.on .rp-label{color:var(--sky)}
-  .route-pill.south.on{background:rgba(242,169,59,.14);border-color:var(--amber)}
-  .route-pill.south.on .rp-label{color:var(--amber)}
   .route-actions{display:flex;gap:10px;margin-bottom:4px}
   .route-actions .inline-add{width:auto;flex:1;padding:11px}
   .route-reset{background:none;border:none;color:var(--mist);font-family:'Heebo';font-size:12px;
@@ -428,7 +434,7 @@
     </div>
     <div class="title">
       <h1>תוכנית טיסת מרחב</h1>
-      <p>דרומה לבאר שבע בנתיבי אז״מ - הגשה למודיעין טיס</p>
+      <p>נתיבי אז״ם ״סגולים״ - דרומה לבאר שבע<br>להגשה למודיעין טיס</p>
     </div>
     <button class="info-btn" onclick="showNotes()" title="מועדי הגשה" aria-label="מועדי הגשה">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 11v5" stroke-linecap="round"/><circle cx="12" cy="7.5" r="1.1" fill="currentColor" stroke="none"/></svg>
@@ -473,14 +479,18 @@
     <div class="head"><span class="idx" id="idx2">02</span><h2>פרטי הטיסה</h2></div>
     <div class="grid">
       <div class="field full"><label>תאריך</label><input type="date" id="fDate"></div>
-      <div class="field"><label>שדה יציאה</label>
-        <div class="pick-row"><select id="fDepart"></select><button class="pick-manage" onclick="openModal('field')" title="ניהול שדות">＋</button></div>
+      <div class="full pair-row">
+        <div class="field"><label>שדה יציאה</label>
+          <div class="pick-row"><select id="fDepart"></select><button class="pick-manage" onclick="openModal('field')" title="ניהול שדות">＋</button></div>
+        </div>
+        <div class="field time-col"><label>המראה משוער <span class="hint">ETD</span></label><input type="time" id="fEtd"></div>
       </div>
-      <div class="field"><label>המראה משוער <span class="hint">ETD</span></label><input type="time" id="fEtd"></div>
-      <div class="field"><label>שדה יעד סופי</label>
-        <div class="pick-row"><select id="fDest"></select><button class="pick-manage" onclick="openModal('field')" title="ניהול שדות">＋</button></div>
+      <div class="full pair-row">
+        <div class="field"><label>שדה יעד סופי</label>
+          <div class="pick-row"><select id="fDest"></select><button class="pick-manage" onclick="openModal('field')" title="ניהול שדות">＋</button></div>
+        </div>
+        <div class="field time-col"><label>נחיתה סופית <span class="hint">ETA</span></label><input type="time" id="fEta"></div>
       </div>
-      <div class="field"><label>נחיתה סופית <span class="hint">ETA</span></label><input type="time" id="fEta"></div>
       <div class="field"><label>זמן דלק <span class="hint">(בשעות)</span></label><input type="text" id="fFuel" inputmode="decimal" placeholder="למשל 2.5"></div>
       <div class="field"><label>מהירות בקשר <span class="hint">IAS</span></label><input type="text" id="fIas" inputmode="numeric" value="90"></div>
       <div class="field"><label>מטרת הטיסה</label><input type="text" id="fPurpose" value="פנאי"></div>
@@ -551,7 +561,7 @@
   </div>
 </div>
 
-<div class="app-footer" dir="ltr">MERHAV_fpl · v1.01.033 · BUILT BY ELIGRT<br><span id="pdfCounter" class="af-count"></span></div>
+<div class="app-footer" dir="ltr">MERHAV_fpl · v1.01.035 · BUILT BY ELIGRT<br><span id="pdfCounter" class="af-count"></span></div>
 
 <!-- MODAL -->
 <div class="scrim" id="scrim" onclick="if(event.target===this)closeModal()">
@@ -764,7 +774,7 @@ function renderRoutePills(){
 
 // waypoint bullets, each "name (altitude)" on its own line
 function legsToText(legs){
-  return (legs||[]).map(m=>`• ${m.name}${m.alt?` (${m.alt} רגל)`:''}`).join('\n');
+  return (legs||[]).map(m=>`• ${m.name}`).join('\n');
 }
 
 function currentRoute(){
@@ -781,7 +791,7 @@ function renderRoutePreview(){
     `<div class="wp-line">`+legs.map((m,i)=>
       `<div class="wp-node${i===0?' first':''}${i===legs.length-1?' last':''}">
          <span class="wp-dot"></span>
-         <span class="wp-text">${m.name}${m.alt?` <span class="wp-alt">(${m.alt} רגל)</span>`:''}</span>
+         <span class="wp-text">${m.name}</span>
        </div>`).join('')+`</div>`;
   document.getElementById('fRoute').value=legsToText(r.legs);
   document.getElementById('fRouteDir').value=DIR_LABEL[r.dir]||'';
@@ -842,7 +852,6 @@ function addMsRow(name,alt,focus){
   const wrap=document.getElementById('msRows');
   const row=document.createElement('div');row.className='ms-row';
   row.innerHTML=`<input class="ms-name" placeholder="שם ציון דרך" value="${(name||'').replace(/"/g,'&quot;')}">
-    <input class="ms-alt" placeholder="גובה (רגל)" inputmode="numeric" value="${(alt||'').replace(/"/g,'&quot;')}">
     <button class="x" title="הסר">✕</button>`;
   row.querySelector('.x').onclick=()=>row.remove();
   wrap.appendChild(row);
@@ -851,7 +860,7 @@ function addMsRow(name,alt,focus){
 function collectMs(){
   return [...document.querySelectorAll('#msRows .ms-row')].map(r=>({
     name:r.querySelector('.ms-name').value.trim(),
-    alt:r.querySelector('.ms-alt').value.trim()
+    alt:''
   })).filter(m=>m.name);
 }
 function renderModalList(){
@@ -1124,6 +1133,8 @@ function markStepDone(n,done){
   if(b) b.classList.toggle('done',!!done);
   const idx=document.getElementById('idx'+n);
   if(idx) idx.classList.toggle('idx-done',!!done);
+  const sec=document.getElementById('sec'+n);
+  if(sec) sec.classList.toggle('sec-done',!!done);
 }
 
 function buildSheet(){
@@ -1140,7 +1151,7 @@ function buildSheet(){
       `<div class="wp-line">`+(r.legs||[]).map((m,i,arr)=>
         `<div class="wp-node${i===0?' first':''}${i===arr.length-1?' last':''}">
            <span class="wp-dot"></span>
-           <span class="wp-text"><span class="v">${esc(m.name)}</span>${m.alt?` <span class="wp-alt">(${esc(m.alt)} רגל)</span>`:''}</span>
+           <span class="wp-text"><span class="v">${esc(m.name)}</span></span>
          </div>`).join('')+`</div>`;
   }
   document.getElementById('formSheet').innerHTML=`
