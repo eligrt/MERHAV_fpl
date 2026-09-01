@@ -619,7 +619,7 @@
   </div>
 </div>
 
-<div class="app-footer" dir="ltr">MERHAV_fpl · v1.01.050 · BUILT BY ELIGRT<br><span id="pdfCounter" class="af-count"></span></div>
+<div class="app-footer" dir="ltr">MERHAV_fpl · v1.01.051 · BUILT BY ELIGRT<br><span id="pdfCounter" class="af-count"></span></div>
 
 <!-- MODAL -->
 <div class="scrim" id="scrim" onclick="if(event.target===this)closeModal()">
@@ -1505,12 +1505,13 @@ async function sharePdf(){
   const call = a && a.call ? `4X-${a.call}` : '4X-___';
   const d=val('fDate');                                   // yyyy-mm-dd
   const dateHe = d ? d.split('-').reverse().join('/') : '';// dd/mm/yyyy
-  const subject=`הגשת תוכנית לטיסת אזמ דרומית לבאר שבע (${call} | ${dateHe})`;
+  const subject=`הגשת תוכנית לטיסת אז"ם דרומית לבאר שבע (${call} | ${dateHe})`;
   const body=[
     'שלום רב,',
-    'מצורפת תוכנית לטיסת מרחב בנתיב אזמ דרומית לבאר שבע באמצ"ש (נתיב תעופה ספורטיבית - "סגול")',
-    'אודה לאישורה',
-    'בברכה'
+    '',
+    'מצורפת תוכנית לטיסת מרחב בנתיב אז"ם דרומית לבאר שבע באמצ"ש (נתיב תעופה ספורטיבית - "סגול")',
+    '',
+    'אודה לאישורה'
   ].join('\n');
   // preferred path: native share sheet with the PDF file attached
   try{
