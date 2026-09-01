@@ -602,7 +602,7 @@
   </div>
 </div>
 
-<div class="app-footer" dir="ltr">MERHAV_fpl · v1.01.044 · BUILT BY ELIGRT<br><span id="pdfCounter" class="af-count"></span></div>
+<div class="app-footer" dir="ltr">MERHAV_fpl · v1.01.045 · BUILT BY ELIGRT<br><span id="pdfCounter" class="af-count"></span></div>
 
 <!-- MODAL -->
 <div class="scrim" id="scrim" onclick="if(event.target===this)closeModal()">
@@ -647,17 +647,6 @@ const DEFAULT_ROUTES=[
     {name:'הר גבס',alt:'3200'},
     {name:'צופר',alt:'2600'},
     {name:'ביצוע 180 וחזרה באותו נתיב',alt:''}
-  ]},
-  // TEMP: test route with 30 points to exercise multi-column PDF wrapping. Remove before club rollout.
-  {label:'TEST 30',dir:'north',legs:[
-    {name:'נשרים',alt:''},{name:'בית שמש',alt:''},{name:'זכריה',alt:''},{name:'קרית גת',alt:''},
-    {name:'בית קמה',alt:''},{name:'צ. שוקת',alt:''},{name:'צ. ערד',alt:''},{name:'נווה זוהר',alt:''},
-    {name:'צ. הערבה',alt:''},{name:'צופר',alt:''},{name:'צומת שרה',alt:''},{name:'טללים',alt:''},
-    {name:'שדה בוקר',alt:''},{name:'צ. הרוחות',alt:''},{name:'הר גבס',alt:''},{name:'נשרים',alt:''},
-    {name:'בית שמש',alt:''},{name:'זכריה',alt:''},{name:'קרית גת',alt:''},{name:'בית קמה',alt:''},
-    {name:'צ. שוקת',alt:''},{name:'צ. ערד',alt:''},{name:'נווה זוהר',alt:''},{name:'צ. הערבה',alt:''},
-    {name:'צופר',alt:''},{name:'צומת שרה',alt:''},{name:'טללים',alt:''},{name:'שדה בוקר',alt:''},
-    {name:'צ. הרוחות',alt:''},{name:'ביצוע 180 וחזרה באותו נתיב',alt:''}
   ]}
 ];
 const seed={
@@ -706,6 +695,8 @@ function migrate(d){
       }
     }
   });
+  // one-time cleanup: drop the retired TEST 30 route from existing installs
+  if(Array.isArray(d.routes)) d.routes = d.routes.filter(r=>r.label!=='TEST 30');
   // ensure any NEW default routes (added in later versions) are present, matched by label
   DEFAULT_ROUTES.forEach(def=>{
     if(!(d.routes||[]).some(r=>r.label===def.label)){
