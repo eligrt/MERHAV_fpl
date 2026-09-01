@@ -428,12 +428,23 @@
   table.fs th{background:#EDEDED;font-weight:700;font-size:12.5px;line-height:1.3}
   table.fs td{height:46px;font-weight:600}
   .fs-routebox{flex:1 1 auto;display:flex;flex-direction:column;min-height:620px}
-  .fs-routebox table{height:100%}
-  .fs-routebox tr.route-row{height:100%}
+  .fs-routebox table{width:100%}
+  .fs-routebox tr.route-row td.detail{vertical-align:top}
+  .fs-routebox tr.route-row td{height:auto}
+  .fs-routebox tr.landing-row td{height:auto;padding:10px 12px}
+  /* spacer row fills the remaining page height BELOW the landing row */
+  .fs-routebox tr.fill-row td{border:1.4px solid #222;border-top:none;height:100%}
   .fs-routebox th{background:#EDEDED;font-weight:700;font-size:12.5px;border:1.4px solid #222;padding:8px}
   .fs-routebox td{border:1.4px solid #222;padding:12px;font-size:13.5px;font-weight:600;vertical-align:top}
   .fs-routebox .detail{text-align:right;line-height:1.7}
   .fs-routehdr{font-weight:800;font-size:14px;margin-bottom:12px;padding-bottom:8px;border-bottom:1px solid #bbb;white-space:normal}
+  /* authority inline route text (one wrapping line, waypoints joined by " > ") */
+  .fs-routehdr2{font-weight:800;font-size:13.5px;margin-bottom:10px;padding-bottom:7px;
+    border-bottom:1px solid #bbb;white-space:normal}
+  .fs-routebox .detail .rt-inline{font-size:15px;font-weight:700;line-height:2;
+    word-break:break-word;text-align:right;direction:rtl}
+  .rt-inline .rt-wp{white-space:nowrap}
+  .rt-inline .rt-sep{font-weight:800}
   /* takeoff/landing times: label flush-right, value flush-left, two aligned rows */
   .tw-times{display:inline-block;text-align:right}
   .tw-row{display:flex;justify-content:space-between;align-items:baseline;gap:18px;line-height:1.9}
@@ -619,7 +630,7 @@
   </div>
 </div>
 
-<div class="app-footer" dir="ltr">MERHAV_fpl · v1.01.051 · BUILT BY ELIGRT<br><span id="pdfCounter" class="af-count"></span></div>
+<div class="app-footer" dir="ltr">MERHAV_fpl · v1.01.056 · BUILT BY ELIGRT<br><span id="pdfCounter" class="af-count"></span></div>
 
 <!-- MODAL -->
 <div class="scrim" id="scrim" onclick="if(event.target===this)closeModal()">
@@ -1314,60 +1325,32 @@ function buildSheet(){
   // value wrapper: blue + bold; blank stays truly blank (point e + f)
   const V=s=>{const t=esc(s);return t?`<span class="v">${t}</span>`:'';};
   const r=currentRoute();
-  // column-based vertical subway layout for PDF — each column is a vertical line of
-  // waypoints; columns flow RTL (top-right column first, then leftward) to fit many points on A4
+  // Authority-required layout: the route is ONE inline text line (wrapping as needed),
+  // waypoints joined by " > ". Color split: names up to & INCLUDING בית קמה are green,
+  // and the "> " separator that FOLLOWS a green waypoint is green too; everything from the
+  // first waypoint after בית קמה onward is purple.
   let routeHtml='';
   if(r){
     const legs=(r.legs||[]).filter(m=>m&&m.name);
-    const perCol=12; // waypoints per vertical column before wrapping to next column
-    const colCount=Math.max(1,Math.ceil(legs.length/perCol));
-    // two-color split: the line ARRIVING into בית קמה (and everything before) is green;
-    // the line LEAVING בית קמה southward (and everything after) is purple.
-    // pivotIdx = index of בית קמה. A node's downward line (::before) is green when the
-    // node sits strictly above בית קמה, i.e. gi < pivotIdx; otherwise purple.
-    const pivotIdx = legs.findIndex(m=>m.name && m.name.indexOf('בית קמה')===0);
-    const hasPivot = pivotIdx>=0;
-    const lineColorClass = gi => {
-      if(!hasPivot) return 'ln-purple';           // no pivot -> single purple line
-      return gi < pivotIdx ? 'ln-green' : 'ln-purple';
-    };
-    let colsHtml='';
-    for(let c=0;c<colCount;c++){
-      const chunk=legs.slice(c*perCol,c*perCol+perCol);
-      const nodes=chunk.map((m,j)=>{
-        const gi=c*perCol+j;
-        const isLast=gi===legs.length-1;   // true final node of the whole route
-        const isFirst=gi===0;              // true first node of the whole route
-        const isColTop=j===0;              // first node of THIS column
-        const isColBottom=j===chunk.length-1; // last node of THIS column
-        // continuation markers: a continued column's top shows a stub upward,
-        // and a column that continues to the next shows the normal line downward
-        const contTop = isColTop && c>0;              // not the real start -> plain dot + up-stub
-        const contBottom = isColBottom && c<colCount-1; // not the real end -> line continues down
-        const marker = (isLast)
-          ? '<span class="wp-dot wp-finish">'+FINISH_SVG+'</span>'
-          : '<span class="wp-dot"></span>';
-        // downward line (::before) color = this node's outgoing link
-        const downCol = lineColorClass(gi);
-        // upward stub (::after, only on continued-column tops) mirrors the link from the
-        // node above -> same color as (gi-1)'s outgoing link
-        const upCol = lineColorClass(Math.max(0,gi-1));
-        // dot color: green up to & INCLUDING בית קמה, purple after
-        const dotCol = !hasPivot ? 'dot-purple' : (gi<=pivotIdx ? 'dot-green' : 'dot-purple');
-        const cls=[
-          isFirst?'first':'', isLast?'last last-in-route':'',
-          contTop?'cont-top':'', contBottom?'cont-bottom':'',
-          downCol, contTop?('up-'+upCol):'', dotCol
-        ].filter(Boolean).join(' ');
-        return `<div class="wp-node${cls?' '+cls:''}">
-            ${marker}
-            <span class="wp-name"><span class="v">${esc(m.name)}</span></span>
-          </div>`;
-      }).join('');
-      colsHtml+=`<div class="wp-col">${nodes}</div>`;
-    }
-    routeHtml=`<div class="fs-routehdr">מבוסס על: <span class="v">"${esc(DIR_LABEL[r.dir]||'')}"</span></div>`+
-      `<div class="wp-wrap">${colsHtml}</div>`;
+    const pivotIdx=legs.findIndex(m=>m.name && m.name.indexOf('בית קמה')===0);
+    const hasPivot=pivotIdx>=0;
+    const GREEN='#1F9D57', PURPLE='#7A3FB4';
+    const parts=legs.map((m,i)=>{
+      // a waypoint is green if it's at or before the pivot
+      const isGreen = hasPivot ? (i<=pivotIdx) : false;
+      const nameCol = isGreen ? GREEN : PURPLE;
+      const nameHtml=`<span class="rt-wp" style="color:${nameCol}">${esc(m.name)}</span>`;
+      if(i<legs.length-1){
+        // separator after this waypoint: green only if THIS waypoint is strictly before pivot
+        // (so the "> " leaving בית קמה is already purple)
+        const sepGreen = hasPivot ? (i<pivotIdx) : false;
+        const sepCol = sepGreen ? GREEN : PURPLE;
+        return nameHtml+`<span class="rt-sep" style="color:${sepCol}"> &gt; </span>`;
+      }
+      return nameHtml;
+    });
+    routeHtml=`<div class="fs-routehdr2">מבוסס על: <span class="v">"${esc(DIR_LABEL[r.dir]||'')}"</span></div>`+
+      `<div class="rt-inline">${parts.join('')}</div>`;
   }
   document.getElementById('formSheet').innerHTML=`
     <div class="fs-head"><div>נספח ב'</div><div class="l">פמ"ת פנים ארצי</div></div>
@@ -1398,16 +1381,23 @@ function buildSheet(){
       </tr>
     </table>
     <div class="fs-routebox">
-      <table style="border-top:none">
-        <tr><th style="width:14%">שדה יציאה/אתר</th><th style="width:22%">זמן המראה / נחיתה</th><th>פירוט הנתיבים (מיקום, גובה, נ.צ WGS-84, שעה משוערת)</th></tr>
+      <table style="border-top:none;height:100%">
+        <tr><th style="width:12%">שדה יציאה/אתר</th><th style="width:9%">זמן המראה</th><th style="width:9%">זמן נחיתה</th><th>פירוט הנתיבים (מיקום, גובה, נ.צ WGS-84, שעה משוערת)</th></tr>
         <tr class="route-row">
           <td style="text-align:center">${V(val('fDepart'))}</td>
-          <td style="text-align:center"><div class="tw-times">
-            <div class="tw-row"><span class="tw-lbl">המראה:</span><span class="tw-val">${V(val('fEtd'))}</span></div>
-            <div class="tw-row"><span class="tw-lbl">נחיתה:</span><span class="tw-val">${V(val('fEta'))}</span></div>
-          </div></td>
-          <td class="detail" style="height:560px">${routeHtml}</td>
+          <td style="text-align:center">${V(val('fEtd'))}</td>
+          <td style="text-align:center"></td>
+          <td class="detail" style="vertical-align:top">${routeHtml}</td>
         </tr>
+        <tr class="landing-row">
+          <td style="text-align:center">${V(val('fDest'))}</td>
+          <td style="text-align:center"></td>
+          <td style="text-align:center">${V(val('fEta'))}</td>
+          <td class="detail" style="text-align:right;font-weight:800">נחיתה סופית</td>
+        </tr>
+        <tr class="fill-row"><td colspan="4"></td></tr>
+      </table>
+    </div>
       </table>
     </div>
     </div>
@@ -1483,7 +1473,7 @@ function showPdfReady(){
       <svg class="ic-check" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path d="M20 6 9 17l-5-5" stroke-linecap="round" stroke-linejoin="round"/></svg>
     </button>
     <div class="modal-actions" style="margin-top:16px">
-      <button class="btn line" style="flex:1" onclick="openLastPdf()">פתח PDF</button>
+      <button class="btn line" style="flex:1" onclick="openLastPdf()">הורד PDF</button>
       <button class="btn primary" style="flex:1.5" id="shareBtn" onclick="sharePdf()">שלח בדוא״ל</button>
     </div>
     <button class="btn line" style="width:100%;margin-top:8px" onclick="closeModal()">סגור</button>`;
