@@ -344,13 +344,22 @@
     padding-bottom:8px;border-bottom:1px solid var(--line)
   }
   .route-preview .rp-head b{color:var(--paper);font-weight:700}
-  /* subway-style line in the UI preview (matches PDF) */
+  /* subway-style line in the UI preview (matches PDF), two-color green/purple */
   .route-preview .wp-line{position:relative}
-  .route-preview .wp-line::before{content:"";position:absolute;z-index:1;width:2.5px;
-    right:5.25px;top:18px;bottom:18px;background:var(--sky)}
   .route-preview .wp-node{position:relative;display:flex;align-items:center;gap:12px;min-height:36px}
+  /* each node draws its own downward segment to the next node */
+  .route-preview .wp-node::before{content:"";position:absolute;z-index:1;width:2.5px;
+    right:5.25px;top:50%;bottom:-18px;background:var(--sky)}
+  .route-preview .wp-node.last::before{display:none}
+  .route-preview .wp-node.ln-green::before{background:#2FB56B}
+  .route-preview .wp-node.ln-purple::before{background:#9B5FD0}
   .route-preview .wp-dot{position:relative;z-index:2;flex:0 0 13px;width:13px;height:13px;border-radius:50%;
     background:var(--panel-2);border:3px solid var(--sky);box-sizing:border-box}
+  /* colored dots for clearer distinction */
+  .route-preview .wp-node.dot-green .wp-dot{border-color:#2FB56B}
+  .route-preview .wp-node.dot-purple .wp-dot{border-color:#9B5FD0}
+  .route-preview .wp-node.first .wp-dot{background:#2FB56B;border-color:#2FB56B}
+  .route-preview .wp-node.last .wp-dot{background:#9B5FD0;border-color:#9B5FD0}
   .route-preview .wp-text{font-size:14px;font-weight:500;color:var(--paper)}
   .route-preview .wp-alt{color:var(--mist);font-size:12.5px;font-weight:600;font-family:'Rubik'}
 
@@ -448,10 +457,18 @@
   .wp-wrap .wp-node.cont-top::after{display:block}      /* column that continues from previous */
   .wp-wrap .wp-node.cont-bottom::before{bottom:-6px}     /* column that continues to next (line already drawn) */
   .wp-wrap .wp-node.last-in-route::before{display:none}  /* true final node: no line down */
+  /* two-color route line: green arrives into בית קמה, purple leaves it southward */
+  .wp-wrap .wp-node.ln-green::before{background:#1F9D57}
+  .wp-wrap .wp-node.ln-purple::before{background:#7A3FB4}
+  .wp-wrap .wp-node.up-ln-green::after{background:#1F9D57}
+  .wp-wrap .wp-node.up-ln-purple::after{background:#7A3FB4}
   .wp-wrap .wp-dot{position:relative;z-index:1;flex:0 0 22px;width:22px;height:22px;display:flex;
     align-items:center;justify-content:center}
   .wp-wrap .wp-dot::after{content:"";width:14px;height:14px;border-radius:50%;
     background:#fff;border:3px solid #1350C4;box-sizing:border-box}
+  /* colored dot rings: green up to & incl בית קמה, purple after */
+  .wp-wrap .wp-node.dot-green .wp-dot::after{border-color:#1F9D57}
+  .wp-wrap .wp-node.dot-purple .wp-dot::after{border-color:#7A3FB4}
   /* start: filled green dot — same diameter as the finish dot */
   .wp-wrap .wp-node.first .wp-dot::after{width:22px;height:22px;
     background:#1F9D57;border-color:#127A40}
@@ -602,7 +619,7 @@
   </div>
 </div>
 
-<div class="app-footer" dir="ltr">MERHAV_fpl · v1.01.045 · BUILT BY ELIGRT<br><span id="pdfCounter" class="af-count"></span></div>
+<div class="app-footer" dir="ltr">MERHAV_fpl · v1.01.048 · BUILT BY ELIGRT<br><span id="pdfCounter" class="af-count"></span></div>
 
 <!-- MODAL -->
 <div class="scrim" id="scrim" onclick="if(event.target===this)closeModal()">
@@ -622,30 +639,69 @@
 const DB_KEY='azm_flightplan_v1';
 const DEFAULT_ROUTES=[
   {label:'דיפולט צפוני',dir:'north',legs:[
-    {name:'נשרים',alt:'800'},
-    {name:'בית שמש',alt:'1700'},
-    {name:'זכריה',alt:'1700'},
-    {name:'קרית גת',alt:'1200'},
-    {name:'בית קמה',alt:'1200'},
-    {name:'צ. שוקת',alt:'2200'},
-    {name:'צ. ערד',alt:'2300'},
-    {name:'נווה זוהר',alt:'2300'},
-    {name:'צ. הערבה',alt:'500'},
-    {name:'צופר',alt:'1400'},
+    {name:'מנחת ראשון',alt:''},
+    {name:'שורק',alt:''},
+    {name:'בית עובד',alt:''},
+    {name:'א״ת נס ציונה',alt:''},
+    {name:'נצר סירני',alt:''},
+    {name:'נשרים',alt:''},
+    {name:'איילון',alt:''},
+    {name:'לטרון',alt:''},
+    {name:'שער הגיא',alt:''},
+    {name:'אשתאול',alt:''},
+    {name:'בית שמש',alt:''},
+    {name:'זכריה',alt:''},
+    {name:'גפן',alt:''},
+    {name:'כפר מנחם',alt:''},
+    {name:'נחלה',alt:''},
+    {name:'מחלף קרית גת',alt:''},
+    {name:'מחלף מאחז',alt:''},
+    {name:'בית קמה',alt:''},
+    {name:'צומת להבים',alt:''},
+    {name:'צומת שוקת',alt:''},
+    {name:'מיתר',alt:''},
+    {name:'תל ערד',alt:''},
+    {name:'ערד',alt:''},
+    {name:'צומת חתרורים',alt:''},
+    {name:'נוה זוהר',alt:''},
+    {name:'צומת הערבה',alt:''},
+    {name:'חצבה',alt:''},
+    {name:'צופר',alt:''},
     {name:'ביצוע 180 וחזרה באותו נתיב',alt:''}
   ]},
   {label:'דיפולט דרומי',dir:'south',legs:[
-    {name:'נשרים',alt:'800'},
-    {name:'בית שמש',alt:'1700'},
-    {name:'זכריה',alt:'1700'},
-    {name:'קרית גת',alt:'1200'},
-    {name:'בית קמה',alt:'1200'},
-    {name:'צומת שרה',alt:'1700'},
-    {name:'טללים',alt:'2200'},
-    {name:'שדה בוקר',alt:'2700'},
-    {name:'צ. הרוחות',alt:'3200'},
-    {name:'הר גבס',alt:'3200'},
-    {name:'צופר',alt:'2600'},
+    {name:'מנחת ראשון',alt:''},
+    {name:'שורק',alt:''},
+    {name:'בית עובד',alt:''},
+    {name:'א״ת נס ציונה',alt:''},
+    {name:'נצר סירני',alt:''},
+    {name:'נשרים',alt:''},
+    {name:'איילון',alt:''},
+    {name:'לטרון',alt:''},
+    {name:'שער הגיא',alt:''},
+    {name:'אשתאול',alt:''},
+    {name:'בית שמש',alt:''},
+    {name:'זכריה',alt:''},
+    {name:'גפן',alt:''},
+    {name:'כפר מנחם',alt:''},
+    {name:'נחלה',alt:''},
+    {name:'מחלף קרית גת',alt:''},
+    {name:'מחלף מאחז',alt:''},
+    {name:'בית קמה',alt:''},
+    {name:'צומת להבים',alt:''},
+    {name:'צומת גורל',alt:''},
+    {name:'חטיבת הנגב',alt:''},
+    {name:'צומת שרה',alt:''},
+    {name:'אוהלים',alt:''},
+    {name:'רמת חובב',alt:''},
+    {name:'צומת הנגב',alt:''},
+    {name:'טללים',alt:''},
+    {name:'שדה בוקר',alt:''},
+    {name:'חורבות עבדת',alt:''},
+    {name:'כלא נפחא',alt:''},
+    {name:'צומת הרוחות',alt:''},
+    {name:'מעלה מישר',alt:''},
+    {name:'צומת ציחור',alt:''},
     {name:'ביצוע 180 וחזרה באותו נתיב',alt:''}
   ]}
 ];
@@ -850,12 +906,22 @@ function renderRoutePreview(){
   const r=currentRoute();
   if(!r){box.innerHTML='<div class="rp-empty">לא נבחר נתיב</div>';document.getElementById('fRoute').value='';document.getElementById('fRouteDir').value='';return}
   const legs=r.legs||[];
+  // two-color split (matches PDF): green up to & into בית קמה, purple leaving it southward
+  const pivotIdx=legs.findIndex(m=>m.name && m.name.indexOf('בית קמה')===0);
+  const hasPivot=pivotIdx>=0;
+  const lineCol=i=>!hasPivot?'ln-purple':(i<pivotIdx?'ln-green':'ln-purple');
+  const dotCol=i=>{ // dot color: green for nodes up to & including בית קמה, purple after
+    if(!hasPivot) return 'dot-purple';
+    return i<=pivotIdx ? 'dot-green' : 'dot-purple';
+  };
   box.innerHTML=`<div class="rp-head">מבוסס על: <b>"${DIR_LABEL[r.dir]||''}"</b></div>`+
-    `<div class="wp-line">`+legs.map((m,i)=>
-      `<div class="wp-node${i===0?' first':''}${i===legs.length-1?' last':''}">
+    `<div class="wp-line">`+legs.map((m,i)=>{
+      const isFirst=i===0,isLast=i===legs.length-1;
+      const cls=[isFirst?'first':'',isLast?'last':'',lineCol(i),dotCol(i)].filter(Boolean).join(' ');
+      return `<div class="wp-node ${cls}">
          <span class="wp-dot"></span>
          <span class="wp-text">${m.name}</span>
-       </div>`).join('')+`</div>`;
+       </div>`;}).join('')+`</div>`;
   document.getElementById('fRoute').value=legsToText(r.legs);
   document.getElementById('fRouteDir').value=DIR_LABEL[r.dir]||'';
 }
@@ -1255,6 +1321,16 @@ function buildSheet(){
     const legs=(r.legs||[]).filter(m=>m&&m.name);
     const perCol=12; // waypoints per vertical column before wrapping to next column
     const colCount=Math.max(1,Math.ceil(legs.length/perCol));
+    // two-color split: the line ARRIVING into בית קמה (and everything before) is green;
+    // the line LEAVING בית קמה southward (and everything after) is purple.
+    // pivotIdx = index of בית קמה. A node's downward line (::before) is green when the
+    // node sits strictly above בית קמה, i.e. gi < pivotIdx; otherwise purple.
+    const pivotIdx = legs.findIndex(m=>m.name && m.name.indexOf('בית קמה')===0);
+    const hasPivot = pivotIdx>=0;
+    const lineColorClass = gi => {
+      if(!hasPivot) return 'ln-purple';           // no pivot -> single purple line
+      return gi < pivotIdx ? 'ln-green' : 'ln-purple';
+    };
     let colsHtml='';
     for(let c=0;c<colCount;c++){
       const chunk=legs.slice(c*perCol,c*perCol+perCol);
@@ -1271,9 +1347,17 @@ function buildSheet(){
         const marker = (isLast)
           ? '<span class="wp-dot wp-finish">'+FINISH_SVG+'</span>'
           : '<span class="wp-dot"></span>';
+        // downward line (::before) color = this node's outgoing link
+        const downCol = lineColorClass(gi);
+        // upward stub (::after, only on continued-column tops) mirrors the link from the
+        // node above -> same color as (gi-1)'s outgoing link
+        const upCol = lineColorClass(Math.max(0,gi-1));
+        // dot color: green up to & INCLUDING בית קמה, purple after
+        const dotCol = !hasPivot ? 'dot-purple' : (gi<=pivotIdx ? 'dot-green' : 'dot-purple');
         const cls=[
           isFirst?'first':'', isLast?'last last-in-route':'',
-          contTop?'cont-top':'', contBottom?'cont-bottom':''
+          contTop?'cont-top':'', contBottom?'cont-bottom':'',
+          downCol, contTop?('up-'+upCol):'', dotCol
         ].filter(Boolean).join(' ');
         return `<div class="wp-node${cls?' '+cls:''}">
             ${marker}
