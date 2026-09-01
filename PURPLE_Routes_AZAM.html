@@ -619,7 +619,7 @@
   </div>
 </div>
 
-<div class="app-footer" dir="ltr">MERHAV_fpl · v1.01.049 · BUILT BY ELIGRT<br><span id="pdfCounter" class="af-count"></span></div>
+<div class="app-footer" dir="ltr">MERHAV_fpl · v1.01.050 · BUILT BY ELIGRT<br><span id="pdfCounter" class="af-count"></span></div>
 
 <!-- MODAL -->
 <div class="scrim" id="scrim" onclick="if(event.target===this)closeModal()">
@@ -1501,8 +1501,17 @@ function openLastPdf(){
 const MAIL_TO='fpl@iaa.gov.il';
 async function sharePdf(){
   if(!_lastPdf){closeModal();return}
-  const subject='תוכנית טיסת מרחב';
-  const body='מצורפת תוכנית טיסת מרחב.';
+  const a=currentAircraft();
+  const call = a && a.call ? `4X-${a.call}` : '4X-___';
+  const d=val('fDate');                                   // yyyy-mm-dd
+  const dateHe = d ? d.split('-').reverse().join('/') : '';// dd/mm/yyyy
+  const subject=`הגשת תוכנית לטיסת אזמ דרומית לבאר שבע (${call} | ${dateHe})`;
+  const body=[
+    'שלום רב,',
+    'מצורפת תוכנית לטיסת מרחב בנתיב אזמ דרומית לבאר שבע באמצ"ש (נתיב תעופה ספורטיבית - "סגול")',
+    'אודה לאישורה',
+    'בברכה'
+  ].join('\n');
   // preferred path: native share sheet with the PDF file attached
   try{
     const file=new File([_lastPdf.blob], _lastPdf.fname, {type:'application/pdf'});
