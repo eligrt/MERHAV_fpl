@@ -316,10 +316,22 @@
   .ms-rows::-webkit-scrollbar{width:6px}
   .ms-rows::-webkit-scrollbar-thumb{background:var(--line);border-radius:3px}
   .ms-row{display:flex;gap:8px;align-items:center}
-  .ms-row .ms-name{flex:2}
-  .ms-row .ms-alt{flex:1}
-  .ms-row .x{flex:0 0 auto;background:none;border:none;color:var(--mist);cursor:pointer;font-size:15px;padding:4px 6px;border-radius:6px}
-  .ms-row .x:hover{color:#F27171;background:rgba(242,113,113,.1)}
+  .ms-row .ms-name{flex:1}
+  .ms-btn{width:26px;height:26px;line-height:1;border-radius:7px;
+    border:1px solid var(--line);background:var(--panel);cursor:pointer;padding:0;
+    display:flex;align-items:center;justify-content:center;font-size:14px;transition:.15s;flex:0 0 auto}
+  .ms-del{color:var(--mist)}
+  .ms-del:hover{color:#F27171;border-color:#F27171;background:rgba(242,113,113,.1)}
+  /* insert-between bar: sits on the divider line between two report points */
+  .ms-insbar{display:flex;align-items:center;gap:8px;padding:0 2px;height:22px}
+  .ms-insbar-line{flex:1;height:1px;background:var(--line)}
+  .ms-insbar-btn{flex:0 0 auto;background:var(--panel);border:1px dashed var(--line);
+    color:var(--mist);border-radius:20px;font-size:11.5px;padding:3px 12px;cursor:pointer;
+    white-space:nowrap;transition:.15s}
+  .ms-insbar-btn:hover{color:var(--amber);border-color:var(--amber);background:rgba(242,169,59,.1)}
+  .ms-add-first{width:100%;padding:9px;border-radius:8px;border:1px dashed var(--line);
+    background:var(--panel);color:var(--mist);cursor:pointer;font-size:13.5px;transition:.15s}
+  .ms-add-first:hover{color:var(--amber);border-color:var(--amber);background:rgba(242,169,59,.12)}
 
   /* route preview (read-only) */
   .route-preview{
@@ -413,15 +425,42 @@
   .fs-routebox td{border:1.4px solid #222;padding:12px;font-size:13.5px;font-weight:600;vertical-align:top}
   .fs-routebox .detail{text-align:right;line-height:1.7}
   .fs-routehdr{font-weight:800;font-size:14px;margin-bottom:12px;padding-bottom:8px;border-bottom:1px solid #bbb;white-space:normal}
-  /* subway-style waypoint line (point c) */
-  .wp-line{position:relative}
-  .wp-line::before{content:"";position:absolute;z-index:1;width:2.5px;
-    right:5.75px;top:20px;bottom:20px;background:#1350C4}
-  .wp-node{position:relative;display:flex;align-items:center;gap:12px;min-height:40px}
-  .wp-dot{position:relative;z-index:2;flex:0 0 14px;width:14px;height:14px;border-radius:50%;
+  /* takeoff/landing times: label flush-right, value flush-left, two aligned rows */
+  .tw-times{display:inline-block;text-align:right}
+  .tw-row{display:flex;justify-content:space-between;align-items:baseline;gap:18px;line-height:1.9}
+  .tw-lbl{font-weight:600;color:#111;padding-left:4px}
+  .tw-val{white-space:nowrap}
+  /* serpentine / slalom route layout for PDF */
+  /* column-based vertical subway: columns flow RTL (first column at right).
+     ALL these rules are scoped under .wp-wrap so they never touch the UI preview. */
+  .wp-wrap{display:flex;flex-direction:row;align-items:flex-start;gap:44px;padding:10px 6px 6px}
+  .wp-col{display:flex;flex-direction:column;align-items:flex-start;flex:0 0 auto}
+  .wp-wrap .wp-node{display:flex;flex-direction:row;align-items:center;gap:11px;position:relative;
+    min-height:34px;padding:6px 0}
+  /* vertical connector through the marker centre (marker 22px wide -> centre 11px from
+     the start/right edge in RTL), joining downward to the node below */
+  .wp-wrap .wp-node::before{content:"";position:absolute;right:9.9px;top:50%;bottom:-6px;
+    width:2.5px;background:#1350C4;z-index:0}
+  /* continuation stub ABOVE a node: shown on the first node of a continued column
+     and hidden on the true first node of the whole route */
+  .wp-wrap .wp-node::after{content:"";position:absolute;right:9.9px;top:-6px;height:calc(50% + 6px);
+    width:2.5px;background:#1350C4;z-index:0;display:none}
+  .wp-wrap .wp-node.cont-top::after{display:block}      /* column that continues from previous */
+  .wp-wrap .wp-node.cont-bottom::before{bottom:-6px}     /* column that continues to next (line already drawn) */
+  .wp-wrap .wp-node.last-in-route::before{display:none}  /* true final node: no line down */
+  .wp-wrap .wp-dot{position:relative;z-index:1;flex:0 0 22px;width:22px;height:22px;display:flex;
+    align-items:center;justify-content:center}
+  .wp-wrap .wp-dot::after{content:"";width:14px;height:14px;border-radius:50%;
     background:#fff;border:3px solid #1350C4;box-sizing:border-box}
-  .wp-text{font-size:14px}
-  .wp-alt{color:#555;font-weight:600;font-size:12.5px}
+  /* start: filled green dot — same diameter as the finish dot */
+  .wp-wrap .wp-node.first .wp-dot::after{width:22px;height:22px;
+    background:#1F9D57;border-color:#127A40}
+  /* finish: dot filled with black/white checkerboard (svg supplies it) */
+  .wp-wrap .wp-dot.wp-finish::after{display:none}
+  .wp-wrap .wp-dot.wp-finish svg{width:22px;height:22px}
+  .wp-wrap .wp-name{font-size:13.5px;font-weight:600;line-height:1.2;color:#111;
+    word-break:break-word;max-width:160px}
+  .wp-wrap .wp-node.first .wp-name,.wp-wrap .wp-node.last .wp-name{font-weight:700}
   .fs-lines{margin-top:14px;font-size:13.5px}
   .fs-lines .ln{display:flex;border-bottom:1px solid #999;padding:9px 2px;gap:8px;min-height:20px}
   .fs-lines .ln b{font-weight:700;white-space:nowrap}
@@ -563,7 +602,7 @@
   </div>
 </div>
 
-<div class="app-footer" dir="ltr">MERHAV_fpl · v1.01.037 · BUILT BY ELIGRT<br><span id="pdfCounter" class="af-count"></span></div>
+<div class="app-footer" dir="ltr">MERHAV_fpl · v1.01.044 · BUILT BY ELIGRT<br><span id="pdfCounter" class="af-count"></span></div>
 
 <!-- MODAL -->
 <div class="scrim" id="scrim" onclick="if(event.target===this)closeModal()">
@@ -608,6 +647,17 @@ const DEFAULT_ROUTES=[
     {name:'הר גבס',alt:'3200'},
     {name:'צופר',alt:'2600'},
     {name:'ביצוע 180 וחזרה באותו נתיב',alt:''}
+  ]},
+  // TEMP: test route with 30 points to exercise multi-column PDF wrapping. Remove before club rollout.
+  {label:'TEST 30',dir:'north',legs:[
+    {name:'נשרים',alt:''},{name:'בית שמש',alt:''},{name:'זכריה',alt:''},{name:'קרית גת',alt:''},
+    {name:'בית קמה',alt:''},{name:'צ. שוקת',alt:''},{name:'צ. ערד',alt:''},{name:'נווה זוהר',alt:''},
+    {name:'צ. הערבה',alt:''},{name:'צופר',alt:''},{name:'צומת שרה',alt:''},{name:'טללים',alt:''},
+    {name:'שדה בוקר',alt:''},{name:'צ. הרוחות',alt:''},{name:'הר גבס',alt:''},{name:'נשרים',alt:''},
+    {name:'בית שמש',alt:''},{name:'זכריה',alt:''},{name:'קרית גת',alt:''},{name:'בית קמה',alt:''},
+    {name:'צ. שוקת',alt:''},{name:'צ. ערד',alt:''},{name:'נווה זוהר',alt:''},{name:'צ. הערבה',alt:''},
+    {name:'צופר',alt:''},{name:'צומת שרה',alt:''},{name:'טללים',alt:''},{name:'שדה בוקר',alt:''},
+    {name:'צ. הרוחות',alt:''},{name:'ביצוע 180 וחזרה באותו נתיב',alt:''}
   ]}
 ];
 const seed={
@@ -654,6 +704,12 @@ function migrate(d){
       if(wasOldPlaceholder || !hasReturn){
         r.legs=JSON.parse(JSON.stringify(def.legs));
       }
+    }
+  });
+  // ensure any NEW default routes (added in later versions) are present, matched by label
+  DEFAULT_ROUTES.forEach(def=>{
+    if(!(d.routes||[]).some(r=>r.label===def.label)){
+      (d.routes = d.routes||[]).push(JSON.parse(JSON.stringify(def)));
     }
   });
   return d;
@@ -719,6 +775,20 @@ function refreshAirfields(){
   });
 }
 const DIR_LABEL={north:'נתיב צפוני',south:'נתיב דרומי'};
+// finish marker: a larger dot filled with a black/white checkerboard (finish-line motif).
+// start marker is a plain larger green dot handled purely in CSS (.wp-node.first .wp-dot).
+const FINISH_SVG=(function(){
+  // checkerboard clipped to a circle
+  const R=11,cx=11,cy=11,cell=R*2/4; let sq='';
+  for(let ry=0;ry<4;ry++)for(let cxi=0;cxi<4;cxi++){
+    if((ry+cxi)%2===0) sq+='<rect x="'+(cxi*cell)+'" y="'+(ry*cell)+'" width="'+cell+'" height="'+cell+'" fill="#111"/>';
+  }
+  return '<svg viewBox="0 0 22 22" width="22" height="22" aria-hidden="true">'+
+    '<defs><clipPath id="fclip"><circle cx="'+cx+'" cy="'+cy+'" r="'+R+'"/></clipPath></defs>'+
+    '<circle cx="'+cx+'" cy="'+cy+'" r="'+R+'" fill="#fff"/>'+
+    '<g clip-path="url(#fclip)">'+sq+'</g>'+
+    '<circle cx="'+cx+'" cy="'+cy+'" r="'+(R-0.75)+'" fill="none" stroke="#111" stroke-width="1.5"/></svg>';
+})();
 
 function restoreDefaultRoutes(){
   const esc=s=>(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
@@ -850,19 +920,59 @@ function openModal(kind){
   renderModalList();
   document.getElementById('scrim').classList.add('show');
 }
-function addMsRow(name,alt,focus){
+let _msData=[];
+function readMsInputs(){
+  // capture what's currently typed so a re-render doesn't lose it
+  const names=[...document.querySelectorAll('#msRows .ms-name')].map(i=>i.value);
+  if(names.length) _msData=names.map(n=>({name:n,alt:''}));
+}
+function renderMsRows(focusIdx){
   const wrap=document.getElementById('msRows');
-  const row=document.createElement('div');row.className='ms-row';
-  row.innerHTML=`<input class="ms-name" placeholder="שם ציון דרך" value="${(name||'').replace(/"/g,'&quot;')}">
-    <button class="x" title="הסר">✕</button>`;
-  row.querySelector('.x').onclick=()=>row.remove();
-  wrap.appendChild(row);
-  if(focus){const n=row.querySelector('.ms-name');n.focus();if(row.scrollIntoView)row.scrollIntoView({block:'nearest'});}
+  wrap.innerHTML='';
+  const addBar=(pos)=>{
+    const bar=document.createElement('div');bar.className='ms-insbar';
+    bar.innerHTML='<span class="ms-insbar-line"></span>'+
+      '<button class="ms-insbar-btn" title="הוסף נקודת דיווח כאן">＋ הוסף נקודת דיווח</button>'+
+      '<span class="ms-insbar-line"></span>';
+    bar.querySelector('.ms-insbar-btn').onclick=()=>{ readMsInputs(); _msData.splice(pos,0,{name:'',alt:''}); renderMsRows(pos); };
+    wrap.appendChild(bar);
+  };
+  _msData.forEach((m,i)=>{
+    const row=document.createElement('div');row.className='ms-row';
+    row.innerHTML=`<button class="ms-btn ms-del" title="הסר נקודת דיווח">✕</button>
+      <input class="ms-name" placeholder="שם נקודת דיווח" value="${(m.name||'').replace(/"/g,'&quot;')}">`;
+    row.querySelector('.ms-del').onclick=()=>{ readMsInputs(); _msData.splice(i,1); renderMsRows(); };
+    wrap.appendChild(row);
+    if(i<_msData.length-1) addBar(i+1);   // insert-between bar on each divider
+  });
+  if(_msData.length){
+    const tail=document.createElement('div');tail.className='ms-insbar ms-insbar-tail';
+    tail.innerHTML='<span class="ms-insbar-line"></span>'+
+      '<button class="ms-insbar-btn" title="הוסף נקודת דיווח בסוף">＋ הוסף נקודת דיווח</button>'+
+      '<span class="ms-insbar-line"></span>';
+    tail.querySelector('.ms-insbar-btn').onclick=()=>{ readMsInputs(); _msData.push({name:'',alt:''}); renderMsRows(_msData.length-1); };
+    wrap.appendChild(tail);
+  } else {
+    const empty=document.createElement('button');empty.className='ms-add-first';
+    empty.innerHTML='＋ הוסף נקודת דיווח';
+    empty.onclick=()=>{ _msData.push({name:'',alt:''}); renderMsRows(0); };
+    wrap.appendChild(empty);
+  }
+  if(focusIdx!=null){
+    const inputs=wrap.querySelectorAll('.ms-name');
+    const n=inputs[focusIdx];
+    if(n){n.focus();if(n.scrollIntoView)n.scrollIntoView({block:'nearest'});}
+  }
+}
+function addMsRow(name,alt,focus){
+  // kept for compatibility: append one row
+  readMsInputs();
+  _msData.push({name:name||'',alt:''});
+  renderMsRows(focus?_msData.length-1:null);
 }
 function collectMs(){
-  return [...document.querySelectorAll('#msRows .ms-row')].map(r=>({
-    name:r.querySelector('.ms-name').value.trim(),
-    alt:''
+  return [...document.querySelectorAll('#msRows .ms-name')].map(i=>({
+    name:i.value.trim(), alt:''
   })).filter(m=>m.name);
 }
 function renderModalList(){
@@ -986,7 +1096,7 @@ function openRouteEditor(idx,prefill){
       <label class="dir-opt"><input type="radio" name="rdir" value="north" ${r.dir==='north'?'checked':''}><span>נתיב צפוני</span></label>
       <label class="dir-opt"><input type="radio" name="rdir" value="south" ${r.dir!=='north'?'checked':''}><span>נתיב דרומי</span></label>
     </div>
-    <div class="ms-label">ציוני דרך <span style="color:var(--line);font-weight:500">(שם + גובה)</span></div>
+    <div class="ms-label">ציוני דרך</div>
     <div id="msRows" class="ms-rows"></div>
     <button class="inline-add" style="margin-bottom:14px" onclick="addMsRow('','',true)">＋ הוסף ציון דרך</button>
     <div class="modal-actions">
@@ -995,7 +1105,8 @@ function openRouteEditor(idx,prefill){
     </div>
     <button class="close-x" onclick="closeModal()" title="סגור">✕</button>`;
   const rows=r.legs&&r.legs.length?r.legs:[{name:'',alt:''},{name:'',alt:''}];
-  document.getElementById('msRows').innerHTML='';rows.forEach(m=>addMsRow(m.name,m.alt));
+  _msData=rows.map(m=>({name:m.name||'',alt:''}));
+  renderMsRows();
   document.getElementById('scrim').classList.add('show');
 }
 function editSelectedRoute(){
@@ -1146,15 +1257,42 @@ function buildSheet(){
   // value wrapper: blue + bold; blank stays truly blank (point e + f)
   const V=s=>{const t=esc(s);return t?`<span class="v">${t}</span>`:'';};
   const r=currentRoute();
-  // subway-style waypoint list (point c)
+  // column-based vertical subway layout for PDF — each column is a vertical line of
+  // waypoints; columns flow RTL (top-right column first, then leftward) to fit many points on A4
   let routeHtml='';
   if(r){
+    const legs=(r.legs||[]).filter(m=>m&&m.name);
+    const perCol=12; // waypoints per vertical column before wrapping to next column
+    const colCount=Math.max(1,Math.ceil(legs.length/perCol));
+    let colsHtml='';
+    for(let c=0;c<colCount;c++){
+      const chunk=legs.slice(c*perCol,c*perCol+perCol);
+      const nodes=chunk.map((m,j)=>{
+        const gi=c*perCol+j;
+        const isLast=gi===legs.length-1;   // true final node of the whole route
+        const isFirst=gi===0;              // true first node of the whole route
+        const isColTop=j===0;              // first node of THIS column
+        const isColBottom=j===chunk.length-1; // last node of THIS column
+        // continuation markers: a continued column's top shows a stub upward,
+        // and a column that continues to the next shows the normal line downward
+        const contTop = isColTop && c>0;              // not the real start -> plain dot + up-stub
+        const contBottom = isColBottom && c<colCount-1; // not the real end -> line continues down
+        const marker = (isLast)
+          ? '<span class="wp-dot wp-finish">'+FINISH_SVG+'</span>'
+          : '<span class="wp-dot"></span>';
+        const cls=[
+          isFirst?'first':'', isLast?'last last-in-route':'',
+          contTop?'cont-top':'', contBottom?'cont-bottom':''
+        ].filter(Boolean).join(' ');
+        return `<div class="wp-node${cls?' '+cls:''}">
+            ${marker}
+            <span class="wp-name"><span class="v">${esc(m.name)}</span></span>
+          </div>`;
+      }).join('');
+      colsHtml+=`<div class="wp-col">${nodes}</div>`;
+    }
     routeHtml=`<div class="fs-routehdr">מבוסס על: <span class="v">"${esc(DIR_LABEL[r.dir]||'')}"</span></div>`+
-      `<div class="wp-line">`+(r.legs||[]).map((m,i,arr)=>
-        `<div class="wp-node${i===0?' first':''}${i===arr.length-1?' last':''}">
-           <span class="wp-dot"></span>
-           <span class="wp-text"><span class="v">${esc(m.name)}</span></span>
-         </div>`).join('')+`</div>`;
+      `<div class="wp-wrap">${colsHtml}</div>`;
   }
   document.getElementById('formSheet').innerHTML=`
     <div class="fs-head"><div>נספח ב'</div><div class="l">פמ"ת פנים ארצי</div></div>
@@ -1189,7 +1327,10 @@ function buildSheet(){
         <tr><th style="width:14%">שדה יציאה/אתר</th><th style="width:22%">זמן המראה / נחיתה</th><th>פירוט הנתיבים (מיקום, גובה, נ.צ WGS-84, שעה משוערת)</th></tr>
         <tr class="route-row">
           <td style="text-align:center">${V(val('fDepart'))}</td>
-          <td style="text-align:center">המראה: ${V(val('fEtd'))}<br>נחיתה: ${V(val('fEta'))}</td>
+          <td style="text-align:center"><div class="tw-times">
+            <div class="tw-row"><span class="tw-lbl">המראה:</span><span class="tw-val">${V(val('fEtd'))}</span></div>
+            <div class="tw-row"><span class="tw-lbl">נחיתה:</span><span class="tw-val">${V(val('fEta'))}</span></div>
+          </div></td>
           <td class="detail" style="height:560px">${routeHtml}</td>
         </tr>
       </table>
