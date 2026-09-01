@@ -619,7 +619,7 @@
   </div>
 </div>
 
-<div class="app-footer" dir="ltr">MERHAV_fpl · v1.01.048 · BUILT BY ELIGRT<br><span id="pdfCounter" class="af-count"></span></div>
+<div class="app-footer" dir="ltr">MERHAV_fpl · v1.01.049 · BUILT BY ELIGRT<br><span id="pdfCounter" class="af-count"></span></div>
 
 <!-- MODAL -->
 <div class="scrim" id="scrim" onclick="if(event.target===this)closeModal()">
@@ -1436,19 +1436,20 @@ async function generatePDF(){
     buildSheet();
     const sheet=document.getElementById('formSheet');
     const canvas=await html2canvas(sheet,{scale:2,backgroundColor:'#fff',useCORS:true});
-    const img=canvas.toDataURL('image/png');
+    // JPEG (not PNG) keeps the file a few hundred KB instead of ~20MB, so it's emailable
+    const img=canvas.toDataURL('image/jpeg',0.85);
     const {jsPDF}=window.jspdf;
-    const pdf=new jsPDF('p','mm','a4');
+    const pdf=new jsPDF({orientation:'p',unit:'mm',format:'a4',compress:true});
     const pw=210, ph=297, margin=6;
     const iw=pw-margin*2;
     const ih=canvas.height*iw/canvas.width;
-    pdf.addImage(img,'PNG',margin,margin,iw,Math.min(ih,ph-margin*2));
+    pdf.addImage(img,'JPEG',margin,margin,iw,Math.min(ih,ph-margin*2));
     // build the PDF blob, then show the submission popup (pilot opens the PDF from there)
     const a=currentAircraft();const dstr=val('fDate');
     const fname=`MERHAV_fpl_${(a.call||'flight')}_${dstr}.pdf`;
     const blob=pdf.output('blob');
     const url=URL.createObjectURL(blob);
-    _lastPdf={url,fname};
+    _lastPdf={url,fname,blob};
     showPdfReady();
     setTimeout(()=>{ try{URL.revokeObjectURL(url);}catch(e){} },300000);
     // remember last used
@@ -1482,17 +1483,44 @@ function showPdfReady(){
       <svg class="ic-check" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path d="M20 6 9 17l-5-5" stroke-linecap="round" stroke-linejoin="round"/></svg>
     </button>
     <div class="modal-actions" style="margin-top:16px">
-      <button class="btn line" style="flex:1" onclick="closeModal()">סגור</button>
-      <button class="btn primary" style="flex:1.4" onclick="openLastPdf()">פתח PDF</button>
-    </div>`;
+      <button class="btn line" style="flex:1" onclick="openLastPdf()">פתח PDF</button>
+      <button class="btn primary" style="flex:1.5" id="shareBtn" onclick="sharePdf()">שלח בדוא״ל</button>
+    </div>
+    <button class="btn line" style="width:100%;margin-top:8px" onclick="closeModal()">סגור</button>`;
   modalKind='pdfready';
   document.getElementById('scrim').classList.add('show');
 }
 function openLastPdf(){
   if(!_lastPdf){closeModal();return}
-  const win=window.open(_lastPdf.url,'_blank');
-  if(!win){ const link=document.createElement('a');link.href=_lastPdf.url;link.download=_lastPdf.fname;link.click(); }
-  closeModal();
+  // download with the real filename so the viewer/tab shows MERHAV_fpl_… not a UUID
+  const link=document.createElement('a');
+  link.href=_lastPdf.url; link.download=_lastPdf.fname;
+  link.rel='noopener'; link.target='_blank';
+  document.body.appendChild(link); link.click(); link.remove();
+}
+const MAIL_TO='fpl@iaa.gov.il';
+async function sharePdf(){
+  if(!_lastPdf){closeModal();return}
+  const subject='תוכנית טיסת מרחב';
+  const body='מצורפת תוכנית טיסת מרחב.';
+  // preferred path: native share sheet with the PDF file attached
+  try{
+    const file=new File([_lastPdf.blob], _lastPdf.fname, {type:'application/pdf'});
+    if(navigator.canShare && navigator.canShare({files:[file]})){
+      await navigator.share({ files:[file], title:subject, text:body });
+      return;
+    }
+  }catch(e){ if(e && e.name==='AbortError') return; /* user cancelled */ }
+  // fallback: no file-share support -> open a prefilled mail draft + trigger the download,
+  // so the pilot attaches the just-downloaded file manually
+  try{
+    const link=document.createElement('a');
+    link.href=_lastPdf.url; link.download=_lastPdf.fname;
+    document.body.appendChild(link); link.click(); link.remove();
+  }catch(e){}
+  const mailto=`mailto:${MAIL_TO}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+  window.location.href=mailto;
+  toast('צריך לצרף את הקובץ שהורד להודעה');
 }
 function copyMail(){
   const addr='fpl@iaa.gov.il';
