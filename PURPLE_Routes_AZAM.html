@@ -92,6 +92,29 @@
 
   main{max-width:760px;margin:22px auto 0;padding:0 18px}
 
+  /* ---------- Date: plain inline text, dashed underline = tappable ---------- */
+  .datebar{display:flex;align-items:baseline;gap:8px;padding:0 4px;margin:0 0 14px}
+  .datebar label{flex:0 0 auto;font-size:13px;color:var(--mist);font-weight:600}
+  .datebar input{width:auto;flex:0 0 auto;background:none;border:0;border-bottom:1.5px dashed var(--amber-dim);
+    border-radius:0;padding:4px 2px;min-height:34px;font-size:15px;font-weight:700;color:var(--paper);box-shadow:none}
+  .datebar input:focus{border-bottom-color:var(--amber);box-shadow:none}
+  .datebar input.field-missing{border-bottom-color:#E5604D}
+  /* inline ETD / ETA on the first and last waypoint rows */
+  .wp-timeslot{margin-inline-start:auto;flex:0 0 auto}
+  .wp-timebox{display:flex;align-items:center;gap:6px;font-size:11px;color:var(--mist);font-weight:700}
+  .wp-timebox input[type=time]{width:100px;min-height:40px;padding:4px 6px;font-family:'Rubik';font-weight:600;font-size:15px;text-align:center}
+  .wp-timebox input.field-missing{border-color:#E5604D}
+  #timeHolder{display:none}
+  .wp-ep{flex:1;min-width:0;background:rgba(242,169,59,.10);border:0;border-bottom:1.5px dashed var(--amber);border-radius:6px 6px 0 0;
+    padding:8px 6px;font-size:13px;font-weight:600;color:var(--paper)}
+  .wp-ep::placeholder{color:var(--amber);opacity:1}
+  .wp-ep.field-missing{border-bottom-color:#E5604D;background:rgba(229,96,77,.12)}
+
+  /* ---------- Segmented toggle (souls 1 / 2) ---------- */
+  .seg{display:flex;gap:4px;padding:4px;background:var(--panel-2);border:1px solid var(--line);border-radius:999px;min-height:52px}
+  .seg button{flex:1;background:transparent;color:var(--mist);border:0;border-radius:999px;font-family:'Rubik';font-size:18px;font-weight:600;cursor:pointer;transition:.15s}
+  .seg button.on{background:var(--amber);color:#1a1206}
+
   /* ---------- Card ---------- */
   .card{
     background:var(--panel);border:1px solid var(--line);border-radius:16px;
@@ -172,8 +195,8 @@
   .route-pill .rp-label{font-size:13px;font-weight:600;color:var(--paper)}
   .route-pill.on{background:rgba(79,176,224,.14);border-color:var(--sky)}
   .route-pill.on .rp-label{color:var(--sky)}
-  .route-actions{display:flex;gap:10px;margin-bottom:4px}
-  .route-actions .inline-add{width:auto;flex:1;padding:11px}
+  .route-actions{display:flex;gap:8px;margin-bottom:4px}
+  .route-actions .inline-add{width:auto;flex:1;padding:11px 4px;white-space:nowrap}
   .route-reset{background:none;border:none;color:var(--mist);font-family:'Heebo';font-size:12px;
     font-weight:600;cursor:pointer;padding:8px 2px 2px;text-decoration:underline;text-underline-offset:3px;transition:.15s}
   .route-reset:hover{color:var(--sky)}
@@ -336,7 +359,7 @@
 
   /* route preview (read-only) */
   .route-preview{
-    margin-top:14px;background:var(--panel-2);border:1px solid var(--line);border-radius:11px;
+    margin-top:10px;margin-bottom:10px;background:var(--panel-2);border:1px solid var(--line);border-radius:11px;
     padding:14px 16px;min-height:56px;
   }
   .route-preview .rp-empty{color:var(--mist);font-size:13px;font-weight:500}
@@ -361,6 +384,8 @@
   .route-preview .wp-node.dot-purple .wp-dot{border-color:#9B5FD0}
   .route-preview .wp-node.first .wp-dot{background:#2FB56B;border-color:#2FB56B}
   .route-preview .wp-node.last .wp-dot{background:#9B5FD0;border-color:#9B5FD0}
+  .route-preview .rv .wp-node.first.dot-purple .wp-dot{background:#9B5FD0;border-color:#9B5FD0}
+  .route-preview .rv .wp-node.last.dot-green .wp-dot{background:#2FB56B;border-color:#2FB56B}
   .route-preview .wp-text{font-size:14px;font-weight:500;color:var(--paper)}
   .route-preview .wp-alt{color:var(--mist);font-size:12.5px;font-weight:600;font-family:'Rubik'}
 
@@ -522,13 +547,19 @@
 <div class="stepbar">
   <div class="rail">
     <button class="step" id="stepBtn1" onclick="goStep(1)"><span class="step-dot"><span>1</span></span><span class="step-lbl">טייס ומטוס</span></button>
-    <button class="step" id="stepBtn2" onclick="goStep(2)"><span class="step-dot"><span>2</span></span><span class="step-lbl">פרטי טיסה</span></button>
-    <button class="step" id="stepBtn3" onclick="goStep(3)"><span class="step-dot"><span>3</span></span><span class="step-lbl">נתיב</span></button>
+    <button class="step" id="stepBtn2" onclick="goStep(2)"><span class="step-dot"><span>2</span></span><span class="step-lbl">נתיב</span></button>
+    <button class="step" id="stepBtn3" onclick="goStep(3)"><span class="step-dot"><span>3</span></span><span class="step-lbl">פרטי טיסה</span></button>
     <button class="step opt" id="stepBtn4" onclick="goStep(4)"><span class="step-dot"><span>4</span></span><span class="step-lbl">נוסף</span></button>
   </div>
 </div>
 
 <main>
+
+  <!-- DATE BAR (standalone, outside the numbered steps) -->
+  <div class="datebar" id="dateBar">
+    <label for="fDate">תאריך הטיסה:</label>
+    <input type="date" id="fDate">
+  </div>
 
   <!-- WHO -->
   <section class="card" id="sec1">
@@ -551,33 +582,9 @@
     </div>
   </section>
 
-  <!-- FLIGHT DETAILS -->
+  <!-- ROUTE (step 2): departure row, waypoints, landing row -->
   <section class="card" id="sec2">
-    <div class="head"><span class="idx" id="idx2">02</span><h2>פרטי הטיסה</h2></div>
-    <div class="grid">
-      <div class="field full"><label>תאריך</label><input type="date" id="fDate"></div>
-      <div class="full pair-row">
-        <div class="field"><label>שדה יציאה</label>
-          <div class="pick-row"><select id="fDepart"></select><button class="pick-manage" onclick="openModal('field')" title="ניהול שדות">＋</button></div>
-        </div>
-        <div class="field time-col"><label>המראה משוער <span class="hint">ETD</span></label><input type="time" id="fEtd"></div>
-      </div>
-      <div class="full pair-row">
-        <div class="field"><label>שדה יעד סופי</label>
-          <div class="pick-row"><select id="fDest"></select><button class="pick-manage" onclick="openModal('field')" title="ניהול שדות">＋</button></div>
-        </div>
-        <div class="field time-col"><label>נחיתה סופית <span class="hint">ETA</span></label><input type="time" id="fEta"></div>
-      </div>
-      <div class="field"><label>זמן דלק <span class="hint">(בשעות)</span></label><input type="text" id="fFuel" inputmode="decimal" placeholder="למשל 2.5"></div>
-      <div class="field"><label>מהירות בקשר <span class="hint">IAS</span></label><input type="text" id="fIas" inputmode="numeric" value="90"></div>
-      <div class="field"><label>מטרת הטיסה</label><input type="text" id="fPurpose" value="פנאי"></div>
-      <div class="field"><label>נפשות במטוס</label><select id="fSouls"><option value="1">1</option><option value="2">2</option></select></div>
-    </div>
-  </section>
-
-  <!-- ROUTE -->
-  <section class="card" id="sec3">
-    <div class="head"><span class="idx" id="idx3">03</span><h2>נתיב הטיסה</h2><span class="sub">בחר נתיב שמור או צור חדש</span></div>
+    <div class="head"><span class="idx" id="idx2">02</span><h2>נתיב הטיסה</h2><span class="sub">בחר נתיב שמור או צור חדש</span></div>
     <div class="route-savenote">נתיבים מותאמים אישית נשמרים על המכשיר לשימוש חוזר</div>
     <select id="routeSelect" style="display:none"></select>
     <div class="route-pills" id="routePills"></div>
@@ -585,11 +592,31 @@
       <button class="inline-add" onclick="openRouteEditor(null)">＋ חדש</button>
       <button class="inline-add" id="dupRouteBtn" onclick="duplicateSelectedRoute()">⧉ שכפל</button>
       <button class="inline-add" id="editRouteBtn" onclick="editSelectedRoute()">✎ ערוך</button>
+      <button class="inline-add" id="revRouteBtn" onclick="reverseSelectedRoute()">⇄ הפוך</button>
     </div>
     <button class="route-reset" onclick="restoreDefaultRoutes()">↺ שחזר נתיבי ברירת מחדל</button>
+
     <div class="route-preview" id="routePreview"></div>
+
+    <input type="hidden" id="fDepart">
+    <input type="hidden" id="fDest">
+    <!-- ETD/ETA inputs live here and are moved into the first/last waypoint rows on render -->
+    <div id="timeHolder"><input type="time" id="fEtd" aria-label="ETD"><input type="time" id="fEta" aria-label="ETA"></div>
     <input type="hidden" id="fRoute">
     <input type="hidden" id="fRouteDir">
+  </section>
+
+  <!-- FLIGHT DETAILS (step 3) -->
+  <section class="card" id="sec3">
+    <div class="head"><span class="idx" id="idx3">03</span><h2>פרטי הטיסה</h2></div>
+    <div class="grid">
+      <div class="field"><label>זמן דלק <span class="hint">(בשעות)</span></label><input type="text" id="fFuel" inputmode="decimal" placeholder="למשל 2.5"></div>
+      <div class="field"><label>מהירות בקשר <span class="hint">IAS</span></label><input type="text" id="fIas" inputmode="numeric" value="90"></div>
+      <div class="field"><label>מטרת הטיסה</label><input type="text" id="fPurpose" value="פנאי"></div>
+      <div class="field"><label>נפשות במטוס</label>
+        <div class="seg" id="soulsSeg"><button type="button" data-v="1" class="on" onclick="setSouls('1')">1</button><button type="button" data-v="2" onclick="setSouls('2')">2</button></div>
+        <input type="hidden" id="fSouls" value="1"></div>
+    </div>
   </section>
 
   <!-- ADVANCED -->
@@ -631,7 +658,7 @@
   </div>
 </div>
 
-<div class="app-footer" dir="ltr">MERHAV_fpl · v1.01.058 · BUILT BY ELIGRT<br><span id="pdfCounter" class="af-count"></span></div>
+<div class="app-footer" dir="ltr">MERHAV_fpl · v1.01.069 · BUILT BY ELIGRT<br><span id="pdfCounter" class="af-count"></span></div>
 
 <!-- MODAL -->
 <div class="scrim" id="scrim" onclick="if(event.target===this)closeModal()">
@@ -679,7 +706,8 @@ const DEFAULT_ROUTES=[
     {name:'צומת הערבה',alt:''},
     {name:'חצבה',alt:''},
     {name:'צופר',alt:''},
-    {name:'ביצוע 180 וחזרה באותו נתיב',alt:''}
+    {name:'ביצוע 180 וחזרה באותו נתיב',alt:''},
+    {name:'',alt:''}
   ]},
   {label:'דיפולט דרומי',dir:'south',legs:[
     {name:'מנחת ראשון',alt:''},
@@ -714,7 +742,8 @@ const DEFAULT_ROUTES=[
     {name:'צומת הרוחות',alt:''},
     {name:'מעלה מישר',alt:''},
     {name:'צומת ציחור',alt:''},
-    {name:'ביצוע 180 וחזרה באותו נתיב',alt:''}
+    {name:'ביצוע 180 וחזרה באותו נתיב',alt:''},
+    {name:'',alt:''}
   ]}
 ];
 const seed={
@@ -725,6 +754,13 @@ const seed={
   last:{}
 };
 function clone(o){return JSON.parse(JSON.stringify(o))}
+function setSouls(v){
+  document.getElementById('fSouls').value=v;
+  document.querySelectorAll('#soulsSeg button').forEach(b=>b.classList.toggle('on',b.dataset.v===String(v)));
+  if(typeof refreshGate==='function') refreshGate();
+}
+function tomorrowStr(){const t=new Date();t.setDate(t.getDate()+1);
+  return t.getFullYear()+'-'+String(t.getMonth()+1).padStart(2,'0')+'-'+String(t.getDate()).padStart(2,'0')}
 function migrate(d){
   // legacy free-text routes -> single milestone; ensure pilot.phone exists
   (d.routes||[]).forEach(r=>{
@@ -762,6 +798,11 @@ function migrate(d){
         r.legs=JSON.parse(JSON.stringify(def.legs));
       }
     }
+  });
+  // the 180 turn is a normal waypoint; the true last row is the landing airfield (blank until the pilot types it)
+  (d.routes||[]).forEach(r=>{
+    const L=r.legs||[];
+    if(L.length && L[L.length-1].name && L[L.length-1].name.indexOf('ביצוע 180')===0) L.push({name:'',alt:''});
   });
   // one-time cleanup: drop the retired TEST 30 route from existing installs
   if(Array.isArray(d.routes)) d.routes = d.routes.filter(r=>r.label!=='TEST 30');
@@ -820,7 +861,7 @@ function syncPilotPhone(){
 function refreshAirfields(){
   const list=db.airfields||[];
   // fDepart & fDest start empty (placeholder); fAlt allows a blank "none" option
-  [['fDepart',false],['fDest',false],['fAlt',true]].forEach(([id,allowBlank])=>{
+  [['fAlt',true]].forEach(([id,allowBlank])=>{
     const sel=document.getElementById(id); if(!sel)return;
     const prev=sel.value;
     sel.innerHTML = allowBlank
@@ -880,11 +921,12 @@ function refreshRoutes(){
   db.routes.forEach((r,i)=>sel.add(new Option(`${r.label} · ${DIR_LABEL[r.dir]||''}`,i)));
   if(db.last.route!=null && db.last.route!=='' && db.routes[db.last.route]) sel.value=db.last.route;
   else sel.value='';
-  sel.onchange=()=>{db.last.route=sel.value;saveDB();renderRoutePreview();refreshGate();};
+  sel.onchange=()=>{db.last.route=sel.value;saveDB();clearLegTimes();renderRoutePreview();refreshGate();};
   renderRoutePills();
   const hasRoutes = db.routes.length ? '' : 'none';
   document.getElementById('editRouteBtn').style.display = hasRoutes;
   document.getElementById('dupRouteBtn').style.display = hasRoutes;
+  document.getElementById('revRouteBtn').style.display = hasRoutes;
   renderRoutePreview();
   if(typeof refreshGate==='function') refreshGate();
 }
@@ -898,7 +940,7 @@ function renderRoutePills(){
     const pill=document.createElement('button');
     pill.className='route-pill'+(on?' on':'')+(r.dir==='north'?' north':' south');
     pill.innerHTML=`<span class="rp-label">${r.label}</span>`;
-    pill.onclick=()=>{sel.value=i;db.last.route=String(i);saveDB();renderRoutePills();renderRoutePreview();refreshGate();};
+    pill.onclick=()=>{if(String(sel.value)!==String(i))clearLegTimes();sel.value=i;db.last.route=String(i);saveDB();renderRoutePills();renderRoutePreview();refreshGate();};
     box.appendChild(pill);
   });
 }
@@ -908,6 +950,8 @@ function legsToText(legs){
   return (legs||[]).map(m=>`• ${m.name}`).join('\n');
 }
 
+// ETD/ETA are per-flight values, never stored with a route: blank them on a route switch
+function clearLegTimes(){['fEtd','fEta'].forEach(id=>{const e=document.getElementById(id);if(e)e.value=''})}
 function currentRoute(){
   const i=document.getElementById('routeSelect').value;
   return (i!==''&&db.routes[i]) ? db.routes[i] : null;
@@ -916,24 +960,48 @@ function currentRoute(){
 function renderRoutePreview(){
   const box=document.getElementById('routePreview');
   const r=currentRoute();
-  if(!r){box.innerHTML='<div class="rp-empty">לא נבחר נתיב</div>';document.getElementById('fRoute').value='';document.getElementById('fRouteDir').value='';return}
+  if(!r){{const h=document.getElementById('timeHolder');h.appendChild(document.getElementById('fEtd'));h.appendChild(document.getElementById('fEta'));}
+    box.innerHTML='<div class="rp-empty">לא נבחר נתיב</div>';document.getElementById('fRoute').value='';document.getElementById('fRouteDir').value='';
+    const h=document.getElementById('timeHolder');h.appendChild(document.getElementById('fEtd'));h.appendChild(document.getElementById('fEta'));
+    document.getElementById('fDepart').value='';document.getElementById('fDest').value='';return}
   const legs=r.legs||[];
   // two-color split (matches PDF): green up to & into בית קמה, purple leaving it southward
   const pivotIdx=legs.findIndex(m=>m.name && m.name.indexOf('בית קמה')===0);
   const hasPivot=pivotIdx>=0;
-  const lineCol=i=>!hasPivot?'ln-purple':(i<pivotIdx?'ln-green':'ln-purple');
-  const dotCol=i=>{ // dot color: green for nodes up to & including בית קמה, purple after
+  const rev=!!r.rev;   // reversed order: purple (south) first, then green (north) from בית קמה on
+  const lineCol=i=>!hasPivot?'ln-purple':(rev?(i<pivotIdx?'ln-purple':'ln-green'):(i<pivotIdx?'ln-green':'ln-purple'));
+  const dotCol=i=>{
     if(!hasPivot) return 'dot-purple';
-    return i<=pivotIdx ? 'dot-green' : 'dot-purple';
+    return rev ? (i>=pivotIdx?'dot-green':'dot-purple') : (i<=pivotIdx?'dot-green':'dot-purple');
   };
+  {const h=document.getElementById('timeHolder');h.appendChild(document.getElementById('fEtd'));h.appendChild(document.getElementById('fEta'));}
   box.innerHTML=`<div class="rp-head">מבוסס על: <b>"${DIR_LABEL[r.dir]||''}"</b></div>`+
-    `<div class="wp-line">`+legs.map((m,i)=>{
+    `<div class="wp-line${r.rev?' rv':''}">`+legs.map((m,i)=>{
       const isFirst=i===0,isLast=i===legs.length-1;
       const cls=[isFirst?'first':'',isLast?'last':'',lineCol(i),dotCol(i)].filter(Boolean).join(' ');
       return `<div class="wp-node ${cls}">
          <span class="wp-dot"></span>
-         <span class="wp-text">${m.name}</span>
+         ${(m.name||!(isFirst||isLast))?`<span class="wp-text">${m.name}</span>`:`<input class="wp-ep" data-ep="${i}" data-for="${isFirst?'fDepart':'fDest'}" placeholder="בחר ${isFirst?'שדה יציאה':'שדה נחיתה'}" autocomplete="off">`}
+         ${isFirst?'<label class="wp-timeslot wp-timebox" data-slot="fEtd"><span>המראה</span></label>':''}
+         ${isLast?'<label class="wp-timeslot wp-timebox" data-slot="fEta"><span>נחיתה</span></label>':''}
        </div>`;}).join('')+`</div>`;
+  box.querySelectorAll('[data-slot]').forEach(sl=>sl.appendChild(document.getElementById(sl.dataset.slot)));
+  // a blank endpoint is filled in place and saved as that waypoint's name
+  box.querySelectorAll('.wp-ep').forEach(inp=>{
+    inp.onchange=()=>{
+      const v=inp.value.trim(); if(!v) return;
+      const ri=document.getElementById('routeSelect').value;
+      if(ri!=='' && db.routes[ri] && db.routes[ri].legs[+inp.dataset.ep]){
+        db.routes[ri].legs[+inp.dataset.ep].name=v; saveDB();
+        renderRoutePreview(); refreshGate();
+      }
+    };
+  });
+  // departure = first waypoint; destination = last waypoint
+  const first=legs.length?legs[0].name:'';
+  const lastN=legs.length?legs[legs.length-1].name:'';
+  document.getElementById('fDepart').value=first;
+  document.getElementById('fDest').value=lastN;
   document.getElementById('fRoute').value=legsToText(r.legs);
   document.getElementById('fRouteDir').value=DIR_LABEL[r.dir]||'';
 }
@@ -1009,7 +1077,7 @@ function renderMsRows(focusIdx){
   _msData.forEach((m,i)=>{
     const row=document.createElement('div');row.className='ms-row';
     row.innerHTML=`<button class="ms-btn ms-del" title="הסר נקודת דיווח">✕</button>
-      <input class="ms-name" placeholder="שם נקודת דיווח" value="${(m.name||'').replace(/"/g,'&quot;')}">`;
+      <input class="ms-name"${(i===0||i===_msData.length-1)?' placeholder="'+(i===0?'שדה יציאה':'שדה נחיתה')+'"':' placeholder="שם נקודת דיווח"'} value="${(m.name||'').replace(/"/g,'&quot;')}">`;
     row.querySelector('.ms-del').onclick=()=>{ readMsInputs(); _msData.splice(i,1); renderMsRows(); };
     wrap.appendChild(row);
     if(i<_msData.length-1) addBar(i+1);   // insert-between bar on each divider
@@ -1040,9 +1108,9 @@ function addMsRow(name,alt,focus){
   renderMsRows(focus?_msData.length-1:null);
 }
 function collectMs(){
-  return [...document.querySelectorAll('#msRows .ms-name')].map(i=>({
-    name:i.value.trim(), alt:''
-  })).filter(m=>m.name);
+  const all=[...document.querySelectorAll('#msRows .ms-name')];
+  return all.map(i=>({name:i.value.trim(), alt:''}))
+    .filter((m,idx)=>m.name || idx===0 || idx===all.length-1);   // blank endpoints are kept
 }
 function renderModalList(){
   const list=document.getElementById('mList');const arr=arrFor();
@@ -1191,7 +1259,51 @@ function duplicateSelectedRoute(){
     dir:src.dir,
     legs:JSON.parse(JSON.stringify(src.legs||[]))
   };
+  if(src.rev) copy.rev=true;
   openRouteEditor(null, copy);
+}
+// reversed leg order: new departure = old landing, new landing = old departure,
+// middle waypoints flip, and a 180-turn waypoint stays second-to-last
+function reverseLegs(legs){
+  const L=JSON.parse(JSON.stringify(legs||[])); const n=L.length;
+  if(n>=3 && L[n-2].name && L[n-2].name.indexOf('ביצוע 180')===0){
+    return [L[n-1]].concat(L.slice(1,n-2).reverse(),[L[n-2],L[0]]);
+  }
+  return L.reverse();
+}
+function reverseSelectedRoute(){
+  const i=document.getElementById('routeSelect').value;
+  if(i==='' || !db.routes[i]){toast('בחר נתיב להיפוך',true);return}
+  const src=db.routes[i];
+  const m=document.getElementById('modal');
+  m.innerHTML=`<h3>היפוך נתיב</h3>
+    <div class="cf-body"><p style="margin:0 0 8px">ייווצר נתיב חדש בסדר הפוך (שדה היציאה והנחיתה יתחלפו). הנתיב המקורי יישאר. אפשר למחוק את החדש בכל עת.</p>
+    <p style="margin:0"><b>שעות ההמראה והנחיתה (ETD / ETA) יאופסו.</b></p></div>
+    <div class="modal-actions" style="flex-direction:column">
+      <button class="btn primary" id="rvNew">צור נתיב הפוך</button>
+      <button class="btn line" id="rvNo">ביטול</button>
+    </div>`;
+  document.getElementById('scrim').classList.add('show');
+  document.getElementById('rvNo').onclick=()=>closeModal();
+  document.getElementById('rvNew').onclick=()=>applyReverse(+i);
+}
+// rev = the saved order runs south to north, so the colours mirror (purple south, green north)
+function applyReverse(i){
+  const src=db.routes[i]; if(!src) return;
+  const SUF=' (הפוך)';
+  let sel;
+  {
+    let label=src.label.endsWith(SUF)?src.label.slice(0,-SUF.length):src.label+SUF;
+    while(db.routes.some(r=>r.label===label)) label+=' 2';
+    const legs=reverseLegs(src.legs);
+    legs[0].name=''; legs[legs.length-1].name='';   // endpoints: pilot picks them
+    const rec={label,dir:src.dir,legs};
+    if(!src.rev) rec.rev=true;
+    db.routes.push(rec); sel=db.routes.length-1;
+  }
+  db.last.route=String(sel);
+  clearLegTimes();
+  saveDB(); closeModal(); refreshRoutes();
 }
 function saveRoute(){
   const label=document.getElementById('rName').value.trim();
@@ -1200,6 +1312,7 @@ function saveRoute(){
   if(!label){toast('נא למלא שם נתיב',true);return}
   if(!legs.length){toast('נא להוסיף לפחות ציון דרך אחד',true);return}
   const rec={label,dir,legs};
+  if(editingRouteIdx!=null && db.routes[editingRouteIdx] && db.routes[editingRouteIdx].rev) rec.rev=true;
   if(editingRouteIdx!=null){db.routes[editingRouteIdx]=rec;}
   else{db.routes.push(rec);db.last.route=String(db.routes.length-1);}
   saveDB();closeModal();refreshRoutes();
@@ -1228,20 +1341,13 @@ function deleteRoute(){
 
 /* ---------------- reset flight (keep profiles) ---------------- */
 function resetFlight(){
+  // per-flight values only: pilot, aircraft, saved routes and the selected route stay as they are
   ['fEtd','fEta','fFuel','fApprovals','fCoord','fNotes'].forEach(id=>document.getElementById(id).value='');
   document.getElementById('fIas').value='90';
-  document.getElementById('fSouls').value='1';
+  setSouls('1');
   document.getElementById('fPurpose').value='פנאי';
   document.getElementById('fAlt').value='';
-  document.getElementById('fDate').value=new Date().toISOString().slice(0,10);
-  document.getElementById('fDepart').value='';
-  document.getElementById('fDest').value='';
-  // clear route selection -> back to "no route chosen"
-  db.last.route='';
-  const rs=document.getElementById('routeSelect'); if(rs) rs.value='';
-  saveDB();
-  renderRoutePills();
-  renderRoutePreview();
+  document.getElementById('fDate').value=tomorrowStr();
   refreshGate();
   toast('פרטי הטיסה נוקו');
 }
@@ -1270,16 +1376,15 @@ function refreshGate(){
   const hasRoute = currentRoute()!=null;
 
   const s1 = hasAircraft && hasPilot;
-  const s2 = hasDate && hasEtd && hasDep && hasDest && hasEta && hasFuel && hasIas && hasPurpose && hasSouls;
-  const s3 = hasRoute;
+  const s2 = hasRoute && hasDep && hasEtd && hasDest && hasEta;
+  const s3 = hasFuel && hasIas && hasPurpose && hasSouls;
   markStepDone(1,s1); markStepDone(2,s2); markStepDone(3,s3);
 
   // map each requirement to the element id(s) to highlight
   const req=[
     [hasAircraft,'acSelect'],[hasPilot,'pilotSelect'],
-    [hasDate,'fDate'],[hasDep,'fDepart'],[hasEtd,'fEtd'],[hasDest,'fDest'],
-    [hasEta,'fEta'],[hasFuel,'fFuel'],[hasIas,'fIas'],[hasPurpose,'fPurpose'],[hasSouls,'fSouls'],
-    [hasRoute,'routePills']
+    [hasDate,'fDate'],[hasRoute,'routePills'],[hasDep,'fDepart'],[hasEtd,'fEtd'],
+    [hasDest,'fDest'],[hasEta,'fEta'],[hasFuel,'fFuel'],[hasIas,'fIas'],[hasPurpose,'fPurpose'],[hasSouls,'fSouls']
   ];
   _missingIds = req.filter(r=>!r[0]).map(r=>r[1]);
 
@@ -1299,14 +1404,15 @@ function applyMissingHighlight(){
   // clear all, then re-mark if in reveal mode
   document.querySelectorAll('.field-missing').forEach(el=>el.classList.remove('field-missing'));
   if(!_showMissing) return;
-  _missingIds.forEach(id=>{ const el=document.getElementById(id); if(el) el.classList.add('field-missing'); });
+  _missingIds.forEach(id=>{ let el=document.getElementById(id); if(el&&el.type==='hidden') el=document.querySelector('[data-for="'+id+'"]'); if(el) el.classList.add('field-missing'); });
 }
 function revealMissing(){
   if(!_missingIds.length) return;
   _showMissing=true;
   applyMissingHighlight();
   // scroll the first missing field into view
-  const first=document.getElementById(_missingIds[0]);
+  let first=document.getElementById(_missingIds[0]);
+  if(first&&first.type==='hidden') first=document.querySelector('[data-for="'+_missingIds[0]+'"]');
   if(first){ const y=first.getBoundingClientRect().top+window.pageYOffset-140; window.scrollTo({top:Math.max(0,y),behavior:'smooth'}); }
 }
 function markStepDone(n,done){
@@ -1337,13 +1443,13 @@ function buildSheet(){
     const GREEN='#1F9D57', PURPLE='#7A3FB4';
     const parts=legs.map((m,i)=>{
       // a waypoint is green if it's at or before the pivot
-      const isGreen = hasPivot ? (i<=pivotIdx) : false;
+      const isGreen = hasPivot ? (r.rev ? i>=pivotIdx : i<=pivotIdx) : false;
       const nameCol = isGreen ? GREEN : PURPLE;
       const nameHtml=`<span class="rt-wp" style="color:${nameCol}">${esc(m.name)}</span>`;
       if(i<legs.length-1){
         // separator after this waypoint: green only if THIS waypoint is strictly before pivot
         // (so the "> " leaving בית קמה is already purple)
-        const sepGreen = hasPivot ? (i<pivotIdx) : false;
+        const sepGreen = hasPivot ? (r.rev ? i>=pivotIdx : i<pivotIdx) : false;
         const sepCol = sepGreen ? GREEN : PURPLE;
         return nameHtml+`<span class="rt-sep" style="color:${sepCol}"> &gt; </span>`;
       }
@@ -1550,14 +1656,14 @@ async function fetchPdfCount(){
 
 /* ---------------- init ---------------- */
 (function init(){
-  const t=new Date();document.getElementById('fDate').value=t.toISOString().slice(0,10);
+  document.getElementById('fDate').value=tomorrowStr();
   db.last.route='';   // route selection starts clean each flight (pilot/aircraft persist)
-  db.last.fDepart=''; db.last.fDest='';   // airfields start clean too
-  refreshSelects();refreshAirfields();refreshRoutes();
+    refreshSelects();refreshAirfields();refreshRoutes();
   try{const c=localStorage.getItem('merhav_pdf_count');if(c)renderPdfCount(c);}catch(e){}
   fetchPdfCount();
   // step bar + gate
   initStepSpy();
+  setSouls('1');
   refreshGate();
   // recompute gate on any relevant input
   ['fDate','fEtd','fDepart','fDest','fEta','fFuel','fIas','fPurpose','fSouls','acSelect','pilotSelect','fRoute'].forEach(id=>{
