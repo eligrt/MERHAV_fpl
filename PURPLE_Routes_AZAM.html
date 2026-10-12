@@ -31,11 +31,11 @@
   html,body{overscroll-behavior:none;touch-action:manipulation;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
   button,select,label{touch-action:manipulation}
   input,textarea{-webkit-user-select:text;user-select:text;-webkit-touch-callout:default}
-  html{height:100%;overflow:hidden;background:#1a1a1c;-webkit-text-size-adjust:100%}
+  html{height:100%;height:var(--app-h,100%);overflow:hidden;background:#1a1a1c;-webkit-text-size-adjust:100%}
   /* PC: same phone-width frame as the other apps (gold edges, dark surround) */
   @media(min-width:600px){body{border-left:2px solid var(--gold);border-right:2px solid var(--gold);box-shadow:0 0 60px rgba(0,0,0,.6)}}
   body{
-    height:100vh;height:100dvh;max-width:430px;margin:0 auto;padding:0;position:relative;overflow:hidden;
+    height:100vh;height:var(--app-h,100dvh);max-width:430px;margin:0 auto;padding:0;position:relative;overflow:hidden;
     display:flex;flex-direction:column;
     background-color:var(--paper);
     background-image:repeating-linear-gradient(0deg,transparent 0,transparent 27px,var(--paper-line) 27px,var(--paper-line) 28px);
@@ -105,6 +105,7 @@
   .datebar label{flex:0 0 auto;font-size:13px;color:var(--ink-muted);font-weight:600}
   .datebar input{width:auto;flex:0 0 auto;background:none;border:0;border-bottom:1.5px dashed var(--gold-deep);
     border-radius:0;padding:4px 2px;min-height:34px;font-family:var(--font-mono);font-size:15px;font-weight:700;color:var(--ink);box-shadow:none}
+  .datebar input{direction:ltr;text-align:right}
   .datebar input:focus{border-bottom-color:var(--ink);box-shadow:none}
   .datebar input.field-missing{border-bottom-color:var(--stamp-red)}
 
@@ -201,7 +202,7 @@
     position:relative;flex:0 0 auto;z-index:15;margin-top:0;
     background:var(--paper);border-top:1px solid var(--gold);
     box-shadow:0 -8px 18px -8px rgba(28,61,110,.18);
-    padding:10px 14px calc(10px + env(safe-area-inset-bottom));
+    padding:10px 14px 10px;
   }
   .actionbar .rail{display:flex;gap:10px}
   .field-missing, .field-missing input, .field-missing select{
@@ -349,6 +350,25 @@
   .toast.show{transform:translate(-50%,0);opacity:1}
   .toast.err{background:var(--stamp-red)}
 
+
+  /* ---------- Splash (same pattern as AirATIS) ---------- */
+  #splash{position:fixed;top:0;left:0;right:0;margin:0 auto;width:100%;max-width:430px;height:100vh;height:var(--app-h,100vh);z-index:500;
+    background:var(--paper);background-image:repeating-linear-gradient(0deg,transparent 0,transparent 27px,var(--paper-line) 27px,var(--paper-line) 28px);
+    display:flex;flex-direction:column;align-items:stretch;overflow:hidden;transition:opacity .3s ease}
+  #splash.fade{opacity:0;pointer-events:none}
+  #splash.gone{display:none}
+  .sp-logo{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding-bottom:6vh}
+  .sp-icon{width:180px;height:180px;border-radius:40px;box-shadow:0 10px 30px rgba(28,61,110,.18);margin-bottom:22px}
+  .sp-title{font-size:30px;font-weight:700;color:var(--ink);letter-spacing:.02em;direction:ltr}
+  .sp-tag{font-family:var(--font-mono);font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:var(--gold-deep);margin-top:6px;margin-bottom:26px;padding-left:.3em;direction:ltr}
+  .sp-line1{font-size:19px;font-weight:600;color:var(--ink);min-height:28px;text-align:center;direction:ltr}
+  .sp-line2{font-family:var(--font-mono);font-size:13px;font-weight:700;letter-spacing:.14em;color:var(--ink-muted);margin-top:8px;min-height:20px;opacity:0;transition:opacity .4s ease;direction:ltr;text-align:center}
+  .sp-line2.show{opacity:1}
+  .sp-cursor{display:inline-block;width:2px;height:1em;background:var(--gold);margin-inline:2px;vertical-align:-2px;animation:spBlink .8s step-end infinite}
+  @keyframes spBlink{0%,100%{opacity:1}50%{opacity:0}}
+  #splash .app-footer{margin-top:auto}
+  @media (prefers-reduced-motion:reduce){#splash *{transition:none !important;animation:none !important}}
+
   .app-footer{
     flex:0 0 auto;display:flex;align-items:center;justify-content:space-between;gap:8px;direction:rtl;
     padding:8px 12px calc(8px + env(safe-area-inset-bottom));border-top:1px solid var(--gold-lite);background:var(--paper-hi);
@@ -456,6 +476,17 @@
 </style>
 </head>
 <body>
+
+<div id="splash" class="gone" aria-hidden="true">
+  <div class="sp-logo">
+    <img class="sp-icon" id="spIcon" alt="">
+    <div class="sp-title">MERHAV_FPL</div>
+    <div class="sp-tag">Purple routes · AZAM</div>
+    <div class="sp-line1" id="spLine1"></div>
+    <div class="sp-line2" id="spLine2">TAP · PDF · EMAIL</div>
+  </div>
+  <div class="app-footer"><button type="button" class="footer-refresh" onclick="forceReload()">רענן</button><span class="af-ver">MERHAV_fpl · v1.01.085 · BUILT BY ELIGRT</span><span class="af-side"></span></div>
+</div>
 
 <div class="topbar">
   <div class="rail">
@@ -585,7 +616,7 @@
   </div>
 </div>
 
-<div class="app-footer"><button type="button" class="footer-refresh" onclick="forceReload()">רענן</button><span class="af-ver">MERHAV_fpl · v1.01.082 · BUILT BY ELIGRT</span><span id="pdfCounter" class="af-side af-count"></span></div>
+<div class="app-footer"><button type="button" class="footer-refresh" onclick="forceReload()">רענן</button><span class="af-ver">MERHAV_fpl · v1.01.085 · BUILT BY ELIGRT</span><span id="pdfCounter" class="af-side af-count"></span></div>
 
 <!-- MODAL -->
 <div class="scrim" id="scrim" onclick="if(event.target===this)closeModal()">
@@ -1593,6 +1624,45 @@ document.addEventListener('dblclick',e=>e.preventDefault(),{passive:false});
 document.addEventListener('gesturestart',e=>e.preventDefault(),{passive:false});
 
 /* ---------------- init ---------------- */
+// Full-height fix: on an iPhone home-screen app, 100vh and innerHeight come out shorter than the real screen
+// and leave an empty strip under the footer. Use the screen height there (same as AirATIS / AirCheck).
+function setAppHeight(){
+  const iosApp=window.navigator.standalone===true;
+  const h=iosApp?Math.max(window.innerHeight,screen.height):window.innerHeight;
+  document.documentElement.style.setProperty('--app-h',h+'px');
+}
+setAppHeight();
+window.addEventListener('resize',setAppHeight);
+window.addEventListener('orientationchange',()=>setTimeout(setAppHeight,300));
+function refitAppHeight(){setAppHeight();setTimeout(setAppHeight,250);setTimeout(setAppHeight,800)}
+window.addEventListener('pageshow',refitAppHeight);
+window.addEventListener('focus',refitAppHeight);
+document.addEventListener('visibilitychange',()=>{if(!document.hidden)refitAppHeight()});
+
+// Splash: plays on every open (tap to skip), then the deadline notes show as before.
+function runSplash(){
+  const sp=document.getElementById('splash');
+  document.getElementById('spIcon').src=document.querySelector('link[rel="apple-touch-icon"]').href;
+  sp.classList.remove('gone');sp.setAttribute('aria-hidden','false');
+  let done=false;
+  const l1=document.getElementById('spLine1'),l2=document.getElementById('spLine2');
+  const text='Paperwork, minus the work.';
+  const finish=()=>{
+    if(done)return;done=true;
+    sp.classList.add('fade');sp.setAttribute('aria-hidden','true');
+    setTimeout(()=>{sp.classList.add('gone');sp.classList.remove('fade');showNotes();},300);
+  };
+  sp.addEventListener('click',finish);
+  let i=0;
+  setTimeout(function tick(){
+    if(done)return;
+    i++;
+    l1.innerHTML=text.slice(0,i)+'<span class="sp-cursor"></span>';
+    if(i<text.length)setTimeout(tick,55);
+    else{l1.textContent=text;l2.classList.add('show');setTimeout(finish,1100);}
+  },250);
+}
+
 (function init(){
   document.getElementById('fDate').value=tomorrowStr();
   db.last.route='';   // route selection starts clean each flight (pilot/aircraft persist)
@@ -1609,8 +1679,8 @@ document.addEventListener('gesturestart',e=>e.preventDefault(),{passive:false});
     if(el){ el.addEventListener('change',refreshGate); el.addEventListener('input',refreshGate); }
   });
   window.addEventListener('resize',stepbarOffset);
-  // show deadline notes on every load
-  showNotes();
+  // splash first; the deadline notes show right after it
+  runSplash();
 })();
 </script>
 </body>
