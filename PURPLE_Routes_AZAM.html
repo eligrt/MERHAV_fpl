@@ -585,7 +585,7 @@
   </div>
 </div>
 
-<div class="app-footer"><button type="button" class="footer-refresh" onclick="forceReload()">רענן</button><span class="af-ver">MERHAV_fpl · v1.01.081 · BUILT BY ELIGRT</span><span id="pdfCounter" class="af-side af-count"></span></div>
+<div class="app-footer"><button type="button" class="footer-refresh" onclick="forceReload()">רענן</button><span class="af-ver">MERHAV_fpl · v1.01.082 · BUILT BY ELIGRT</span><span id="pdfCounter" class="af-side af-count"></span></div>
 
 <!-- MODAL -->
 <div class="scrim" id="scrim" onclick="if(event.target===this)closeModal()">
@@ -1084,11 +1084,15 @@ function closeModal(){document.getElementById('scrim').classList.remove('show');
 function stepbarOffset(){
   const tb=document.querySelector('.topbar'), sb=document.querySelector('.stepbar');
 }
+let _pulseT1=null,_pulseT2=null;
 function goStep(n){
   const sec=document.getElementById('sec'+n);
   if(!sec) return;
   setActiveStep(n);
-  sec.classList.remove('pulse');void sec.offsetWidth;setTimeout(()=>sec.classList.add('pulse'),350);setTimeout(()=>sec.classList.remove('pulse'),2600);
+  document.querySelectorAll('.card.pulse').forEach(c=>c.classList.remove('pulse'));
+  clearTimeout(_pulseT1);clearTimeout(_pulseT2);
+  _pulseT1=setTimeout(()=>{sec.classList.add('pulse');},350);
+  _pulseT2=setTimeout(()=>sec.classList.remove('pulse'),2600);
   _lockStep=true;
   if(_lockTimer) clearTimeout(_lockTimer);
   _lockTimer=setTimeout(()=>{ _lockStep=false; },800);
