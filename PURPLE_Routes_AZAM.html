@@ -28,14 +28,15 @@
   }
   *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
   /* mobile: no double-tap / pinch zoom, no text selection or iOS copy menu (fields stay typeable), same as the other apps */
-  html,body{touch-action:manipulation;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
+  html,body{overscroll-behavior:none;touch-action:manipulation;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
   button,select,label{touch-action:manipulation}
   input,textarea{-webkit-user-select:text;user-select:text;-webkit-touch-callout:default}
-  html{background:#1a1a1c;-webkit-text-size-adjust:100%}
+  html{height:100%;overflow:hidden;background:#1a1a1c;-webkit-text-size-adjust:100%}
   /* PC: same phone-width frame as the other apps (gold edges, dark surround) */
   @media(min-width:600px){body{border-left:2px solid var(--gold);border-right:2px solid var(--gold);box-shadow:0 0 60px rgba(0,0,0,.6)}}
   body{
-    min-height:100vh;max-width:430px;margin:0 auto;padding:0 0 28px;position:relative;
+    height:100vh;height:100dvh;max-width:430px;margin:0 auto;padding:0;position:relative;overflow:hidden;
+    display:flex;flex-direction:column;
     background-color:var(--paper);
     background-image:repeating-linear-gradient(0deg,transparent 0,transparent 27px,var(--paper-line) 27px,var(--paper-line) 28px);
     color:var(--ink-body);font-family:var(--font-ui);-webkit-font-smoothing:antialiased;
@@ -50,7 +51,7 @@
   .topbar{
     background:var(--ink);color:var(--paper);
     padding:calc(14px + env(safe-area-inset-top)) 16px 12px;
-    position:sticky;top:0;z-index:20;
+    position:relative;flex:0 0 auto;z-index:20;
   }
   .topbar .rail{display:flex;align-items:center;gap:12px}
   .glyph{
@@ -69,7 +70,7 @@
 
   /* ---------- Step strip ---------- */
   .stepbar{
-    position:sticky;top:0;z-index:18;
+    position:relative;flex:0 0 auto;z-index:18;
     background:var(--ink-dark);
   }
   .stepbar .rail{display:flex;padding:6px 8px 0;gap:4px}
@@ -96,7 +97,8 @@
   .step.opt.active .step-lbl{color:var(--gold-deep)}
   @media(max-width:420px){ .step .step-lbl{font-size:9.5px} }
 
-  main{padding:16px 14px 0}
+  main{flex:1 1 auto;min-height:0;overflow-y:auto;overscroll-behavior:none;-webkit-overflow-scrolling:touch;padding:16px 14px 16px}
+  main::-webkit-scrollbar{width:0}
 
   /* ---------- Date: plain inline text, dashed underline = tappable ---------- */
   .datebar{display:flex;align-items:baseline;gap:8px;padding:0 4px;margin:0 0 14px}
@@ -196,7 +198,7 @@
   .pdf-hint{margin:0 0 6px;padding:0 4px;font-size:11.5px;color:var(--stamp-red);font-weight:600;text-align:center;min-height:16px}
   .pdf-hint:empty{display:none}
   .actionbar{
-    position:sticky;bottom:0;z-index:15;margin-top:18px;
+    position:relative;flex:0 0 auto;z-index:15;margin-top:0;
     background:var(--paper);border-top:1px solid var(--gold);
     box-shadow:0 -8px 18px -8px rgba(28,61,110,.18);
     padding:10px 14px calc(10px + env(safe-area-inset-bottom));
@@ -348,10 +350,15 @@
   .toast.err{background:var(--stamp-red)}
 
   .app-footer{
-    text-align:center;padding:14px 10px 4px;letter-spacing:.1em;
-    font-family:var(--font-mono);color:var(--ink-faint);font-size:9px;text-transform:uppercase;
+    flex:0 0 auto;display:flex;align-items:center;justify-content:space-between;gap:8px;direction:rtl;
+    padding:8px 12px calc(8px + env(safe-area-inset-bottom));border-top:1px solid var(--gold-lite);background:var(--paper-hi);
+    font-family:var(--font-mono);color:var(--ink-faint);font-size:9px;text-transform:uppercase;letter-spacing:.06em;
   }
-  .app-footer .af-count{font-size:10px;color:var(--ink-faint);font-style:normal;display:block;margin-top:6px;letter-spacing:.05em}
+  .app-footer .af-ver{flex:1;text-align:center;direction:ltr;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
+  .app-footer .af-side{flex:0 0 52px}
+  .app-footer .af-count{text-align:left;direction:ltr;font-size:9px;letter-spacing:.04em;white-space:nowrap}
+  .footer-refresh{flex:0 0 52px;text-align:right;background:none;border:0;padding:6px 0;font-family:var(--font-ui);font-size:11px;color:var(--ink-muted);text-decoration:underline;text-underline-offset:2px;opacity:.75;cursor:pointer;text-transform:none;letter-spacing:.02em}
+  .footer-refresh:active{opacity:.4}
 
 
   /* ============ PDF TEMPLATE (rendered off-screen, snapshotted) ============ */
@@ -578,7 +585,7 @@
   </div>
 </div>
 
-<div class="app-footer" dir="ltr">MERHAV_fpl · v1.01.079 · BUILT BY ELIGRT<br><span id="pdfCounter" class="af-count"></span></div>
+<div class="app-footer"><button type="button" class="footer-refresh" onclick="forceReload()">רענן</button><span class="af-ver">MERHAV_fpl · v1.01.081 · BUILT BY ELIGRT</span><span id="pdfCounter" class="af-side af-count"></span></div>
 
 <!-- MODAL -->
 <div class="scrim" id="scrim" onclick="if(event.target===this)closeModal()">
@@ -1076,7 +1083,6 @@ function closeModal(){document.getElementById('scrim').classList.remove('show');
 /* ---------------- step bar: jump + scroll-spy ---------------- */
 function stepbarOffset(){
   const tb=document.querySelector('.topbar'), sb=document.querySelector('.stepbar');
-  if(tb&&sb) sb.style.top=tb.offsetHeight+'px';
 }
 function goStep(n){
   const sec=document.getElementById('sec'+n);
@@ -1087,9 +1093,9 @@ function goStep(n){
   if(_lockTimer) clearTimeout(_lockTimer);
   _lockTimer=setTimeout(()=>{ _lockStep=false; },800);
   const tb=document.querySelector('.topbar'), sb=document.querySelector('.stepbar');
-  const offset=(tb?tb.offsetHeight:0)+(sb?sb.offsetHeight:0)+10;
-  const y=sec.getBoundingClientRect().top+window.pageYOffset-offset;
-  window.scrollTo({top:Math.max(0,y),behavior:'smooth'});
+  const sc=document.querySelector('main');
+  const y=sec.getBoundingClientRect().top-sc.getBoundingClientRect().top+sc.scrollTop-10;
+  sc.scrollTo({top:Math.max(0,y),behavior:'smooth'});
 }
 function setActiveStep(n){
   for(let i=1;i<=4;i++){
@@ -1101,13 +1107,14 @@ let _spy, _lockStep=false, _lockTimer=null;
 function computeActiveStep(){
   const secs=[1,2,3,4].map(i=>document.getElementById('sec'+i)).filter(Boolean);
   const tb=document.querySelector('.topbar'), sb=document.querySelector('.stepbar');
-  const base=(tb?tb.offsetHeight:0)+(sb?sb.offsetHeight:0)+40; // just below the sticky bars
-  const max=Math.max(1,document.documentElement.scrollHeight-window.innerHeight);
-  const p=Math.min(1,Math.max(0,window.pageYOffset/max));
-  const line=base+(window.innerHeight-base)*p; // reading line slides down as we scroll so short last sections still get their turn
+  const sc=document.querySelector('main'), mt=sc.getBoundingClientRect().top, mh=sc.clientHeight;
+  const base=40; // reading line starts just under the top of the scroller
+  const max=Math.max(1,sc.scrollHeight-mh);
+  const p=Math.min(1,Math.max(0,sc.scrollTop/max));
+  const line=base+(mh-base)*p; // slides down as we scroll so short last sections still get their turn
   let active=1;
   secs.forEach(s=>{
-    const top=s.getBoundingClientRect().top;
+    const top=s.getBoundingClientRect().top-mt;
     if(top-line<=0) active=+s.id.replace('sec','');
   });
   return active;
@@ -1116,9 +1123,17 @@ function onScrollSpy(){
   if(_lockStep) return;
   setActiveStep(computeActiveStep());
 }
+function initNoBounce(){
+  document.addEventListener('touchmove',e=>{
+    if(e.touches.length>1){e.preventDefault();return;}
+    const sc=e.target.closest&&e.target.closest('main,.modal,#modal,.scrim .sheet');
+    if(!sc) e.preventDefault();
+  },{passive:false});
+}
 function initStepSpy(){
+  initNoBounce();
   stepbarOffset();
-  window.addEventListener('scroll',onScrollSpy,{passive:true});
+  document.querySelector('main').addEventListener('scroll',onScrollSpy,{passive:true});
   setActiveStep(1);
 }
 
@@ -1320,7 +1335,7 @@ function revealMissing(){
   // scroll the first missing field into view
   let first=document.getElementById(_missingIds[0]);
   if(first&&first.type==='hidden') first=document.querySelector('[data-for="'+_missingIds[0]+'"]');
-  if(first){ const y=first.getBoundingClientRect().top+window.pageYOffset-140; window.scrollTo({top:Math.max(0,y),behavior:'smooth'}); }
+  if(first){ const sc=document.querySelector('main'); const y=first.getBoundingClientRect().top-sc.getBoundingClientRect().top+sc.scrollTop-60; sc.scrollTo({top:Math.max(0,y),behavior:'smooth'}); }
 }
 function markStepDone(n,done){
   const b=document.getElementById('stepBtn'+n);
@@ -1464,12 +1479,20 @@ async function generatePDF(){
   btn.disabled=false;btn.innerHTML=`<svg width="18" height="18" viewBox="0 0 20 20" ><path d="M10 2v9m0 0l-3.5-3.5M10 11l3.5-3.5M3 15v2a1 1 0 001 1h12a1 1 0 001-1v-2" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg> הפק ופתח PDF`;
 }
 
+async function forceReload(){
+  try{
+    if('caches' in window){ const k=await caches.keys(); await Promise.all(k.map(x=>caches.delete(x))); }
+    if(navigator.serviceWorker){ const r=await navigator.serviceWorker.getRegistrations(); await Promise.all(r.map(x=>x.unregister())); }
+  }catch(e){}
+  const u=new URL(window.location.href); u.searchParams.set('r',Date.now()); window.location.replace(u.href);
+}
+
 /* ---------------- PDF counter (global, via dedicated worker) ---------------- */
 const PDF_COUNTER_BASE='https://merhav-counter.eligrt.workers.dev';
 const PDF_COUNTER_KEY='merhav_fpl';
 function renderPdfCount(n){
   const el=document.getElementById('pdfCounter');
-  if(el && n!=null && n!==undefined) el.textContent=`(${n} PDF)`;
+  if(el && n!=null && n!==undefined) el.textContent=`${n} PDF`;
 }
 let _lastPdf=null;
 function showPdfReady(){
