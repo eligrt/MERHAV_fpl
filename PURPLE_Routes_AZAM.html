@@ -485,7 +485,7 @@
     <div class="sp-line1" id="spLine1"></div>
     <div class="sp-line2" id="spLine2">TAP · PDF · EMAIL</div>
   </div>
-  <div class="app-footer"><button type="button" class="footer-refresh" onclick="forceReload()">רענן</button><span class="af-ver">MERHAV_fpl · v1.01.085 · BUILT BY ELIGRT</span><span class="af-side"></span></div>
+  <div class="app-footer"><button type="button" class="footer-refresh" onclick="forceReload()">רענן</button><span class="af-ver">MERHAV_fpl · v1.01.086 · BUILT BY ELIGRT</span><span class="af-side"></span></div>
 </div>
 
 <div class="topbar">
@@ -616,7 +616,7 @@
   </div>
 </div>
 
-<div class="app-footer"><button type="button" class="footer-refresh" onclick="forceReload()">רענן</button><span class="af-ver">MERHAV_fpl · v1.01.085 · BUILT BY ELIGRT</span><span id="pdfCounter" class="af-side af-count"></span></div>
+<div class="app-footer"><button type="button" class="footer-refresh" onclick="forceReload()">רענן</button><span class="af-ver">MERHAV_fpl · v1.01.086 · BUILT BY ELIGRT</span><span id="pdfCounter" class="af-side af-count"></span></div>
 
 <!-- MODAL -->
 <div class="scrim" id="scrim" onclick="if(event.target===this)closeModal()">
@@ -1649,8 +1649,9 @@ function runSplash(){
   const text='Paperwork, minus the work.';
   const finish=()=>{
     if(done)return;done=true;
+    showNotes();   // popup sits under the fading splash, so splash -> popup is one smooth crossfade
     sp.classList.add('fade');sp.setAttribute('aria-hidden','true');
-    setTimeout(()=>{sp.classList.add('gone');sp.classList.remove('fade');showNotes();},300);
+    setTimeout(()=>{sp.classList.add('gone');sp.classList.remove('fade');},300);
   };
   sp.addEventListener('click',finish);
   let i=0;
