@@ -211,6 +211,8 @@
   .mail-copy{display:inline-flex;align-items:center;gap:5px;background:none;border:none;padding:0;
     color:var(--ink);font-family:var(--font-mono);font-size:12.5px;font-weight:700;
     cursor:pointer;direction:ltr;text-decoration:underline dotted;text-underline-offset:3px}
+.share-ta{width:100%;min-height:96px;resize:none;direction:ltr;text-align:left;font-family:var(--font-mono);font-size:12px;padding:10px;border:1.5px solid var(--gold);border-radius:var(--r);background:var(--paper);color:var(--ink-body);margin-bottom:12px;-webkit-user-select:text;user-select:text}
+  .share-sum{background:var(--gold-tint);border:1px solid var(--gold);border-radius:var(--r);padding:10px 12px;font-size:13.5px;line-height:1.6;margin-bottom:14px}
   .mail-copy.copied{color:var(--cleared)}
   .mail-copy .ic-check{display:none}
   .mail-copy.copied .ic-copy{display:none}
@@ -228,8 +230,8 @@
   .btn.primary svg{fill:var(--paper);stroke:var(--paper)}
   .btn.primary:active{background:var(--ink-dark)}
   .btn.primary:disabled{background:var(--paper-edge);border-color:var(--paper-edge);color:var(--ink-faint);cursor:not-allowed}
-  .btn.primary.not-ready{background:var(--paper-edge);border-color:var(--paper-edge);color:var(--ink-muted)}
-  .btn.primary.not-ready svg{fill:var(--ink-muted);stroke:var(--ink-muted)}
+  .btn.primary.not-ready{background:#d5d7da;border-color:#c4c7cb;color:#80858c;box-shadow:none}
+  .btn.primary.not-ready svg{fill:#80858c;stroke:#80858c}
   .btn:disabled{opacity:.6;cursor:not-allowed}
 
   /* ---------- Modal ---------- */
@@ -483,7 +485,7 @@
     <div class="sp-line1" id="spLine1"></div>
     <div class="sp-line2" id="spLine2">TAP · PDF · EMAIL</div>
   </div>
-  <div class="app-footer"><button type="button" class="footer-refresh" onclick="forceReload()">רענן</button><span class="af-ver">MERHAV_fpl · v1.01.087 · BUILT BY ELIGRT</span><span class="af-side"></span></div>
+  <div class="app-footer"><button type="button" class="footer-refresh" onclick="forceReload()">רענן</button><span class="af-ver">MERHAV_fpl · v1.01.090 · BUILT BY ELIGRT</span><span class="af-side"></span></div>
 </div>
 
 <div class="topbar">
@@ -550,6 +552,7 @@
       <button class="inline-add" id="revRouteBtn" onclick="reverseSelectedRoute()">⇄ הפוך</button>
     </div>
     <button class="route-reset" onclick="restoreDefaultRoutes()">↺ שחזר נתיבי ברירת מחדל</button>
+    <button class="route-reset" onclick="showImport()">⇩ ייבוא תוכנית משותפת</button>
 
     <div class="route-preview" id="routePreview"></div>
 
@@ -612,7 +615,7 @@
   </div>
 </div>
 
-<div class="app-footer"><button type="button" class="footer-refresh" onclick="forceReload()">רענן</button><span class="af-ver">MERHAV_fpl · v1.01.087 · BUILT BY ELIGRT</span><span id="pdfCounter" class="af-side af-count"></span></div>
+<div class="app-footer"><button type="button" class="footer-refresh" onclick="forceReload()">רענן</button><span class="af-ver">MERHAV_fpl · v1.01.090 · BUILT BY ELIGRT</span><span id="pdfCounter" class="af-side af-count"></span></div>
 
 <!-- MODAL -->
 <div class="scrim" id="scrim" onclick="if(event.target===this)closeModal()">
@@ -1518,6 +1521,110 @@ async function forceReload(){
   const u=new URL(window.location.href); u.searchParams.set('r',Date.now()); window.location.replace(u.href);
 }
 
+
+/* ---------------- Share a flight plan as a link / code ---------------- */
+const SHARE_BASE='https://eligrt.github.io/MERHAV_fpl/PURPLE_Routes_AZAM.html';
+const b64u={
+  enc:u8=>{let b='';u8.forEach(c=>b+=String.fromCharCode(c));return btoa(b).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'')},
+  dec:t=>{t=t.replace(/-/g,'+').replace(/_/g,'/');while(t.length%4)t+='=';const b=atob(t);const u=new Uint8Array(b.length);for(let i=0;i<b.length;i++)u[i]=b.charCodeAt(i);return u}
+};
+async function packShare(o){
+  const u8=new TextEncoder().encode(JSON.stringify(o));
+  if(typeof CompressionStream!=='undefined'){
+    try{const cs=new CompressionStream('deflate-raw');const w=cs.writable.getWriter();w.write(u8);w.close();
+      const z=new Uint8Array(await new Response(cs.readable).arrayBuffer());return 'z'+b64u.enc(z);}catch(e){}
+  }
+  return 'j'+b64u.enc(u8);
+}
+async function unpackShare(code){
+  const k=code[0],u8=b64u.dec(code.slice(1));
+  if(k==='z'){const ds=new DecompressionStream('deflate-raw');const w=ds.writable.getWriter();w.write(u8);w.close();
+    return JSON.parse(new TextDecoder().decode(new Uint8Array(await new Response(ds.readable).arrayBuffer())));}
+  return JSON.parse(new TextDecoder().decode(u8));
+}
+function collectShare(){
+  const r=currentRoute(); if(!r) return null;
+  const v=id=>{const e=document.getElementById(id);return e?e.value.trim():''};
+  const o={v:1,r:{l:r.label,d:r.dir,g:r.legs.map(l=>[l.name||'',l.alt||''])}};
+  if(r.rev) o.r.rv=1;
+  const pl=db.pilots[document.getElementById('pilotSelect').value];
+  if(pl&&pl.name) o.n=String(pl.name).trim().split(/\s+/)[0];   // sender first name only
+  o.t=[v('fEtd'),v('fEta')]; o.f=v('fFuel'); o.i=v('fIas'); o.p=v('fPurpose'); o.s=v('fSouls');
+  return o;
+}
+async function shareText(){
+  const o=collectShare(); if(!o) return '';
+  return 'MERHAV_FPL - '+o.r.l+'\n'+SHARE_BASE+'#p='+await packShare(o);
+}
+async function copyShareLink(btn){
+  let txt=''; try{txt=await shareText();}catch(e){}
+  if(!txt){toast('אין תוכנית לשיתוף',true);return}
+  let ok=false;
+  try{await navigator.clipboard.writeText(txt);ok=true;}catch(e){
+    const ta=document.createElement('textarea');ta.value=txt;ta.style.cssText='position:fixed;opacity:0';document.body.appendChild(ta);ta.select();
+    try{ok=document.execCommand('copy');}catch(_){} ta.remove();
+  }
+  if(ok&&btn){const t=btn.textContent;btn.textContent='הקישור הועתק ✓';setTimeout(()=>{btn.textContent=t},2000);}
+  else if(!ok) toast('ההעתקה נכשלה',true);
+}
+function extractShareCode(txt){
+  const m=(txt||'').match(/[#&?]p=([zj][A-Za-z0-9_-]+)/)||(txt||'').trim().match(/^([zj][A-Za-z0-9_-]{8,})$/);
+  return m?m[1]:null;
+}
+function showImport(){
+  const m=document.getElementById('modal');
+  m.innerHTML=`<h3>ייבוא תוכנית משותפת</h3>
+    <p class="lede">הדבק כאן את הקישור שקיבלת.</p>
+    <textarea class="share-ta" id="impTa" placeholder="https://...#p=..." autocapitalize="off" autocorrect="off" spellcheck="false"></textarea>
+    <div class="modal-actions">
+      <button class="btn line" id="impNo">ביטול</button>
+      <button class="btn primary" id="impGo">טען</button>
+    </div>`;
+  modalKind='import';
+  document.getElementById('scrim').classList.add('show');
+  document.getElementById('impNo').onclick=closeModal;
+  document.getElementById('impGo').onclick=async()=>{
+    const code=extractShareCode(document.getElementById('impTa').value);
+    if(!code){toast('הקישור לא תקין',true);return}
+    await confirmShared(code);
+  };
+}
+async function confirmShared(code){
+  let o; try{o=await unpackShare(code); if(!o||!o.r||!Array.isArray(o.r.g)) throw 0;}catch(e){closeModal();toast('הקישור לא תקין',true);return}
+  const esc=t=>String(t==null?'':t).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  const g=o.r.g, ft=(o.t&&o.t[0])?` · ETD ${esc(o.t[0])}`:'', fe=(o.t&&o.t[1])?` · ETA ${esc(o.t[1])}`:'';
+  const msg=`<div class="share-sum"><b>${esc(o.r.l)}</b><br>${esc((g[0]||[])[0]||'?')} - ${esc((g[g.length-1]||[])[0]||'?')}<br>${g.length} נקודות${ft}${fe}</div>
+    <p class="cf-lead">לטעון את התוכנית לטופס? הטייס והמטוס שלך לא ישתנו.</p>`;
+  showConfirm('תוכנית משותפת',msg,()=>applyShared(o),{yesPrimary:true,yesLabel:'טען',noLabel:'ביטול'});
+}
+function applyShared(o){
+  const legs=o.r.g.map(a=>({name:String(a[0]||''),alt:String(a[1]||'')}));
+  const baseL=String(o.r.l||'').replace(/ \(שיתוף[^)]*\)$/,'');
+  const same=r=>(r.label===o.r.l||r.label===baseL+' (שיתוף'+(o.n?' - '+String(o.n).slice(0,20):'')+')')&&JSON.stringify(r.legs)===JSON.stringify(legs);
+  let idx=db.routes.findIndex(same);
+  if(idx<0){
+    let label=String(o.r.l||'נתיב משותף').replace(/ \(שיתוף[^)]*\)$/,'')+' (שיתוף'+(o.n?' - '+String(o.n).slice(0,20):'')+')';
+    while(db.routes.some(r=>r.label===label)) label+=' 2';
+    const rec={label,dir:o.r.d==='north'?'north':'south',legs}; if(o.r.rv) rec.rev=true;
+    db.routes.push(rec); idx=db.routes.length-1;
+  }
+  db.last.route=String(idx); saveDB();
+  refreshRoutes(); clearLegTimes();
+  const set=(id,v)=>{const e=document.getElementById(id);if(e&&v!=null&&v!=='')e.value=v};
+  set('fEtd',o.t&&o.t[0]); set('fEta',o.t&&o.t[1]); set('fFuel',o.f); set('fIas',o.i); set('fPurpose',o.p);
+  if(o.s) setSouls(String(o.s));
+  renderRoutePreview(); refreshGate();
+  toast('התוכנית נטענה');
+  goStep(2);
+}
+async function checkIncomingShare(){
+  const code=extractShareCode(location.hash);
+  if(!code) return false;
+  try{history.replaceState(null,'',location.pathname+location.search);}catch(e){}
+  await confirmShared(code);
+  return true;
+}
+
 /* ---------------- PDF counter (global, via dedicated worker) ---------------- */
 const PDF_COUNTER_BASE='https://merhav-counter.eligrt.workers.dev';
 const PDF_COUNTER_KEY='merhav_fpl';
@@ -1543,6 +1650,7 @@ function showPdfReady(){
       <button class="btn line" style="flex:1" onclick="openLastPdf()">הורד PDF</button>
       <button class="btn primary" style="flex:1.5" id="shareBtn" onclick="sharePdf()">שלח בדוא״ל</button>
     </div>
+    <button class="btn line" id="shareLinkBtn" style="width:100%;margin-top:8px" onclick="copyShareLink(this)">העתק קישור לחבר</button>
     <button class="btn line" style="width:100%;margin-top:8px" onclick="closeModal()">סגור</button>`;
   modalKind='pdfready';
   document.getElementById('scrim').classList.add('show');
@@ -1645,7 +1753,7 @@ function runSplash(){
   const text='Paperwork, minus the work.';
   const finish=()=>{
     if(done)return;done=true;
-    showNotes();   // popup sits under the fading splash, so splash -> popup is one smooth crossfade
+    checkIncomingShare().then(had=>{ if(!had) showNotes(); });   // popup sits under the fading splash, so splash -> popup is one smooth crossfade
     sp.classList.add('fade');sp.setAttribute('aria-hidden','true');
     setTimeout(()=>{sp.classList.add('gone');sp.classList.remove('fade');},300);
   };
