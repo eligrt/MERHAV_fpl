@@ -35,7 +35,7 @@
   /* PC: same phone-width frame as the other apps (gold edges, dark surround) */
   @media(min-width:600px){body{border-left:2px solid var(--gold);border-right:2px solid var(--gold);box-shadow:0 0 60px rgba(0,0,0,.6)}}
   body{
-    height:100vh;height:var(--app-h,100dvh);max-width:430px;margin:0 auto;padding:0;position:relative;overflow:hidden;
+    height:100vh;height:var(--app-h,100dvh);margin:0 auto;padding:0;position:relative;overflow:hidden;
     display:flex;flex-direction:column;
     background-color:var(--paper);
     background-image:repeating-linear-gradient(0deg,transparent 0,transparent 27px,var(--paper-line) 27px,var(--paper-line) 28px);
@@ -43,7 +43,7 @@
   }
   @media(min-width:600px){
     html{background:#1a1a1c}
-    body{border-left:2px solid var(--gold);border-right:2px solid var(--gold);box-shadow:0 0 60px rgba(0,0,0,.6)}
+    body{max-width:430px;border-left:2px solid var(--gold);border-right:2px solid var(--gold);box-shadow:0 0 60px rgba(0,0,0,.6)}
   }
   button{font-family:var(--font-ui)}
 
@@ -213,6 +213,28 @@
     cursor:pointer;direction:ltr;text-decoration:underline dotted;text-underline-offset:3px}
 .share-ta{width:100%;min-height:96px;resize:none;direction:ltr;text-align:left;font-family:var(--font-mono);font-size:12px;padding:10px;border:1.5px solid var(--gold);border-radius:var(--r);background:var(--paper);color:var(--ink-body);margin-bottom:12px;-webkit-user-select:text;user-select:text}
   .share-sum{background:var(--gold-tint);border:1px solid var(--gold);border-radius:var(--r);padding:10px 12px;font-size:13.5px;line-height:1.6;margin-bottom:14px}
+
+  .act-sub{text-align:center;font-size:12.5px;color:var(--ink-muted);margin:4px 0 14px;line-height:1.5}
+  .act-sub b{color:var(--ink)}
+  .act-list{border-top:1px solid var(--gold-lite)}
+  .act-row{width:100%;display:flex;align-items:center;gap:12px;padding:12px 2px;background:none;border:0;border-bottom:1px solid var(--gold-lite);color:var(--ink);cursor:pointer;text-align:right;font-family:inherit;min-height:64px}
+  .act-row:active{background:var(--gold-tint)}
+  .act-ic{width:40px;height:40px;flex:0 0 40px;border-radius:50%;background:var(--gold-tint);display:flex;align-items:center;justify-content:center}
+  .act-row.main .act-ic{background:var(--ink);color:var(--paper)}
+  .act-ic svg,.act-ch{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+  .act-t{flex:1;min-width:0}
+  .act-t b{display:block;font-size:15px;font-weight:700}
+  .act-t span{display:block;font-size:12px;color:var(--ink-muted);margin-top:1px}
+  .act-ch{color:var(--gold-deep);flex:0 0 20px}
+  .act-chip{display:flex;align-items:center;justify-content:center;gap:8px;margin:0 auto 14px;background:var(--gold-tint);border:1px solid var(--gold-lite);border-radius:22px;padding:0 16px;min-height:44px;width:max-content;max-width:100%;font-size:12px;color:var(--ink-muted);cursor:pointer;font-family:inherit}
+  .act-chip code{font-family:var(--font-mono);font-size:13px;color:var(--ink);font-weight:600;direction:ltr}
+  .act-chip:active{background:var(--gold-lite)}
+  .act-chip.copied{border-color:var(--cleared2);color:var(--cleared)}
+  .act-chip.copied code{color:var(--cleared)}
+  .act-chip .ic-check{display:none}
+  .act-chip.copied .ic-copy{display:none}
+  .act-chip.copied .ic-check{display:inline}
+  .act-close{display:block;margin:14px auto 0;background:none;border:0;font-size:13.5px;color:var(--ink-muted);text-decoration:underline;text-underline-offset:3px;padding:10px 14px;cursor:pointer;font-family:inherit}
   .mail-copy.copied{color:var(--cleared)}
   .mail-copy .ic-check{display:none}
   .mail-copy.copied .ic-copy{display:none}
@@ -352,9 +374,10 @@
 
 
   /* ---------- Splash (same pattern as AirATIS) ---------- */
-  #splash{position:fixed;top:0;left:0;right:0;margin:0 auto;width:100%;max-width:430px;height:100vh;height:var(--app-h,100vh);z-index:500;
+  #splash{position:fixed;top:0;left:0;right:0;margin:0 auto;width:100%;height:100vh;height:var(--app-h,100vh);z-index:500;
     background:var(--paper);background-image:repeating-linear-gradient(0deg,transparent 0,transparent 27px,var(--paper-line) 27px,var(--paper-line) 28px);
     display:flex;flex-direction:column;align-items:stretch;overflow:hidden;transition:opacity .3s ease}
+  @media(min-width:600px){#splash{max-width:430px}}
   #splash.fade{opacity:0;pointer-events:none}
   #splash.gone{display:none}
   .sp-logo{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding-bottom:6vh}
@@ -485,7 +508,7 @@
     <div class="sp-line1" id="spLine1"></div>
     <div class="sp-line2" id="spLine2">TAP · PDF · EMAIL</div>
   </div>
-  <div class="app-footer"><button type="button" class="footer-refresh" onclick="forceReload()">רענן</button><span class="af-ver">MERHAV_fpl · v1.01.091 · BUILT BY ELIGRT</span><span class="af-side"></span></div>
+  <div class="app-footer"><button type="button" class="footer-refresh" onclick="forceReload()">רענן</button><span class="af-ver">MERHAV_fpl · v1.01.094 · BUILT BY ELIGRT</span><span class="af-side"></span></div>
 </div>
 
 <div class="topbar">
@@ -610,12 +633,12 @@
   <div class="rail">
     <button class="btn primary" id="genBtn" onclick="generatePDF()">
       <svg width="18" height="18" viewBox="0 0 20 20" ><path d="M10 2v9m0 0l-3.5-3.5M10 11l3.5-3.5M3 15v2a1 1 0 001 1h12a1 1 0 001-1v-2" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      הפק ופתח PDF
+      הפק תוכנית לטיסת מרחב
     </button>
   </div>
 </div>
 
-<div class="app-footer"><button type="button" class="footer-refresh" onclick="forceReload()">רענן</button><span class="af-ver">MERHAV_fpl · v1.01.091 · BUILT BY ELIGRT</span><span id="pdfCounter" class="af-side af-count"></span></div>
+<div class="app-footer"><button type="button" class="footer-refresh" onclick="forceReload()">רענן</button><span class="af-ver">MERHAV_fpl · v1.01.094 · BUILT BY ELIGRT</span><span id="pdfCounter" class="af-side af-count"></span></div>
 
 <!-- MODAL -->
 <div class="scrim" id="scrim" onclick="if(event.target===this)closeModal()">
@@ -1510,7 +1533,7 @@ async function generatePDF(){
     saveDB();
     trackPdf();
   }catch(e){console.error(e);toast('שגיאה ביצירת ה-PDF',true)}
-  btn.disabled=false;btn.innerHTML=`<svg width="18" height="18" viewBox="0 0 20 20" ><path d="M10 2v9m0 0l-3.5-3.5M10 11l3.5-3.5M3 15v2a1 1 0 001 1h12a1 1 0 001-1v-2" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg> הפק ופתח PDF`;
+  btn.disabled=false;btn.innerHTML=`<svg width="18" height="18" viewBox="0 0 20 20" ><path d="M10 2v9m0 0l-3.5-3.5M10 11l3.5-3.5M3 15v2a1 1 0 001 1h12a1 1 0 001-1v-2" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg> הפק תוכנית לטיסת מרחב`;
 }
 
 async function forceReload(){
@@ -1583,7 +1606,7 @@ async function copyShareLink(btn){
     const ta=document.createElement('textarea');ta.value=txt;ta.style.cssText='position:fixed;opacity:0';document.body.appendChild(ta);ta.select();
     try{ok=document.execCommand('copy');}catch(_){} ta.remove();
   }
-  if(ok&&btn){const t=btn.textContent;btn.textContent='הקישור הועתק ✓';setTimeout(()=>{btn.textContent=t},2000);}
+  if(ok&&btn){const sp=btn.querySelector('.act-t span')||btn;const t=sp.textContent;sp.textContent='הקישור הועתק ✓';setTimeout(()=>{sp.textContent=t},2200);}
   else if(!ok) toast('ההעתקה נכשלה',true);
 }
 function extractShareCode(txt){
@@ -1594,6 +1617,7 @@ function showImport(){
   const m=document.getElementById('modal');
   m.innerHTML=`<h3>ייבוא תוכנית משותפת</h3>
     <p class="lede">הדבק כאן את הקישור שקיבלת.</p>
+    <button class="btn line" id="impPaste" style="width:100%;margin-bottom:10px">הדבק מהלוח</button>
     <textarea class="share-ta" id="impTa" placeholder="https://...#p=..." autocapitalize="off" autocorrect="off" spellcheck="false"></textarea>
     <div class="modal-actions">
       <button class="btn line" id="impNo">ביטול</button>
@@ -1602,6 +1626,11 @@ function showImport(){
   modalKind='import';
   document.getElementById('scrim').classList.add('show');
   document.getElementById('impNo').onclick=closeModal;
+  document.getElementById('impPaste').onclick=async()=>{
+    try{const t=await navigator.clipboard.readText();document.getElementById('impTa').value=t;
+      const code=extractShareCode(t); if(code) await confirmShared(code); else toast('לא נמצא קישור בלוח',true);}
+    catch(e){toast('אפשר להדביק ידנית בתיבה',true);}
+  };
   document.getElementById('impGo').onclick=async()=>{
     const code=extractShareCode(document.getElementById('impTa').value);
     if(!code){toast('הקישור לא תקין',true);return}
@@ -1614,7 +1643,11 @@ async function confirmShared(code){
   const g=o.r.g, ft=(o.t&&o.t[0])?` · ETD ${esc(o.t[0])}`:'', fe=(o.t&&o.t[1])?` · ETA ${esc(o.t[1])}`:'';
   const msg=`<div class="share-sum"><b>${esc(o.r.l)}</b><br>${esc((g[0]||[])[0]||'?')} - ${esc((g[g.length-1]||[])[0]||'?')}<br>${g.length} נקודות${ft}${fe}</div>
     <p class="cf-lead">לטעון את התוכנית לטופס? הטייס והמטוס שלך לא ישתנו.</p>`;
-  showConfirm('תוכנית משותפת',msg,()=>applyShared(o),{yesPrimary:true,yesLabel:'טען',noLabel:'ביטול'});
+  const standalone=(window.navigator.standalone===true)||(window.matchMedia&&matchMedia('(display-mode: standalone)').matches);
+  const hint=standalone?'':`<p class="cf-lead" style="color:var(--ink-muted);font-size:12px">נפתח בדפדפן ולא באפליקציה שבמסך הבית. לטעינה באפליקציה: <a href="#" id="cpForApp" style="color:var(--ink)">העתק קישור</a>, פתח את האפליקציה ובחר ״ייבוא תוכנית משותפת״ ← ״הדבק מהלוח״.</p>`;
+  showConfirm('תוכנית משותפת',msg+hint,()=>applyShared(o),{yesPrimary:true,yesLabel:'טען כאן',noLabel:'ביטול'});
+  const cp=document.getElementById('cpForApp');
+  if(cp) cp.onclick=async e=>{e.preventDefault();try{await navigator.clipboard.writeText(SHARE_BASE+'#p='+code);toast('הקישור הועתק');}catch(_){toast('ההעתקה נכשלה',true);}};
 }
 function applyShared(o){
   const legs=o.r.g.map(a=>({name:String(a[0]||''),alt:String(a[1]||'')}));
@@ -1654,23 +1687,30 @@ function renderPdfCount(n){
 let _lastPdf=null;
 function showPdfReady(){
   const m=document.getElementById('modal');
+  const r=currentRoute();
+  const v=id=>{const e=document.getElementById(id);return e?e.value.trim():''};
+  const esc=t=>String(t==null?'':t).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  const times=(v('fEtd')&&v('fEta'))?` · ETD ${esc(v('fEtd'))} · ETA ${esc(v('fEta'))}`:'';
+  const ic={
+    mail:'<svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>',
+    dl:'<svg viewBox="0 0 24 24"><path d="M12 3v12m0 0-4-4m4 4 4-4M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2"/></svg>',
+    share:'<svg viewBox="0 0 24 24"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="m8.6 13.5 6.8 4M15.4 6.5l-6.8 4"/></svg>',
+    ch:'<svg class="act-ch" viewBox="0 0 24 24"><path d="m15 6-6 6 6 6"/></svg>',
+    copy:'<svg class="ic-copy" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg><svg class="ic-check" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path d="M20 6 9 17l-5-5" stroke-linecap="round" stroke-linejoin="round"/></svg>'
+  };
   m.innerHTML=`
     <div class="ready-tick">
       <svg viewBox="0 0 24 24" fill="none" stroke="#2d8a52" stroke-width="2.4"><path d="M20 6 9 17l-5-5" stroke-linecap="round" stroke-linejoin="round"/></svg>
     </div>
-    <h3 style="text-align:center;margin-bottom:4px">ה-PDF מוכן</h3>
-    <p class="lede" style="text-align:center;margin-bottom:16px">יש לשלוח את התוכנית במייל לכתובת:</p>
-    <button class="mail-copy ready-mail" id="mailCopy" onclick="copyMail()">
-      <span>fpl@iaa.gov.il</span>
-      <svg class="ic-copy" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
-      <svg class="ic-check" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path d="M20 6 9 17l-5-5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-    </button>
-    <div class="modal-actions" style="margin-top:16px">
-      <button class="btn line" style="flex:1" onclick="openLastPdf()">הורד PDF</button>
-      <button class="btn primary" style="flex:1.5" id="shareBtn" onclick="sharePdf()">שלח בדוא״ל</button>
+    <h3 style="text-align:center">תוכנית המרחב מוכנה</h3>
+    <p class="act-sub">${r?'<b>'+esc(r.label)+'</b>':''}${times}</p>
+    <button class="act-chip" id="mailCopy" onclick="copyMail()">אל: <code>fpl@iaa.gov.il</code>${ic.copy}</button>
+    <div class="act-list">
+      <button class="act-row main" onclick="sharePdf()"><span class="act-ic">${ic.mail}</span><span class="act-t"><b>שלח למודיעין טיס</b><span>קובץ ה PDF יצורף לגוף המייל</span></span>${ic.ch}</button>
+      <button class="act-row" onclick="openLastPdf()"><span class="act-ic">${ic.dl}</span><span class="act-t"><b>שמור PDF</b><span>הורדה למכשיר</span></span>${ic.ch}</button>
+      <button class="act-row" id="shareLinkBtn" onclick="copyShareLink(this)"><span class="act-ic">${ic.share}</span><span class="act-t"><b>שתף תוכנית</b><span>יצירת קישור לשיתוף עם משתמש אחר</span></span>${ic.ch}</button>
     </div>
-    <button class="btn line" id="shareLinkBtn" style="width:100%;margin-top:8px" onclick="copyShareLink(this)">העתק קישור לחבר</button>
-    <button class="btn line" style="width:100%;margin-top:8px" onclick="closeModal()">סגור</button>`;
+    <button class="act-close" onclick="closeModal()">סגור</button>`;
   modalKind='pdfready';
   document.getElementById('scrim').classList.add('show');
 }
