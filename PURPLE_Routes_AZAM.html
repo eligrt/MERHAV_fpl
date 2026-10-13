@@ -485,7 +485,7 @@
     <div class="sp-line1" id="spLine1"></div>
     <div class="sp-line2" id="spLine2">TAP · PDF · EMAIL</div>
   </div>
-  <div class="app-footer"><button type="button" class="footer-refresh" onclick="forceReload()">רענן</button><span class="af-ver">MERHAV_fpl · v1.01.090 · BUILT BY ELIGRT</span><span class="af-side"></span></div>
+  <div class="app-footer"><button type="button" class="footer-refresh" onclick="forceReload()">רענן</button><span class="af-ver">MERHAV_fpl · v1.01.091 · BUILT BY ELIGRT</span><span class="af-side"></span></div>
 </div>
 
 <div class="topbar">
@@ -615,7 +615,7 @@
   </div>
 </div>
 
-<div class="app-footer"><button type="button" class="footer-refresh" onclick="forceReload()">רענן</button><span class="af-ver">MERHAV_fpl · v1.01.090 · BUILT BY ELIGRT</span><span id="pdfCounter" class="af-side af-count"></span></div>
+<div class="app-footer"><button type="button" class="footer-refresh" onclick="forceReload()">רענן</button><span class="af-ver">MERHAV_fpl · v1.01.091 · BUILT BY ELIGRT</span><span id="pdfCounter" class="af-side af-count"></span></div>
 
 <!-- MODAL -->
 <div class="scrim" id="scrim" onclick="if(event.target===this)closeModal()">
@@ -1523,11 +1523,30 @@ async function forceReload(){
 
 
 /* ---------------- Share a flight plan as a link / code ---------------- */
+const SHARE_NAMES=["מנחת ראשון", "שורק", "בית עובד", "א״ת נס ציונה", "נצר סירני", "נשרים", "איילון", "לטרון", "שער הגיא", "אשתאול", "בית שמש", "זכריה", "גפן", "כפר מנחם", "נחלה", "מחלף קרית גת", "מחלף מאחז", "בית קמה", "צומת להבים", "צומת שוקת", "מיתר", "תל ערד", "ערד", "צומת חתרורים", "נוה זוהר", "צומת הערבה", "חצבה", "צופר", "ביצוע 180 וחזרה באותו נתיב", "צומת גורל", "חטיבת הנגב", "צומת שרה", "אוהלים", "רמת חובב", "צומת הנגב", "טללים", "שדה בוקר", "חורבות עבדת", "כלא נפחא", "צומת הרוחות", "מעלה מישר", "צומת ציחור"];   // append-only: an index in a shared link points here
 const SHARE_BASE='https://eligrt.github.io/MERHAV_fpl/PURPLE_Routes_AZAM.html';
 const b64u={
   enc:u8=>{let b='';u8.forEach(c=>b+=String.fromCharCode(c));return btoa(b).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'')},
   dec:t=>{t=t.replace(/-/g,'+').replace(/_/g,'/');while(t.length%4)t+='=';const b=atob(t);const u=new Uint8Array(b.length);for(let i=0;i<b.length;i++)u[i]=b.charCodeAt(i);return u}
 };
+function packLegs(legs){
+  const out=[];let run='';
+  const flush=()=>{if(run){out.push(run);run=''}};
+  legs.forEach(l=>{
+    const n=l.name||'',a=l.alt||'',i=SHARE_NAMES.indexOf(n);
+    if(n&&i>=0&&!a) run+=String.fromCharCode(48+i);
+    else{flush();out.push([i>=0&&n?i:n,a]);}
+  });
+  flush();return out;
+}
+function unpackLegs(g){
+  const out=[];
+  g.forEach(x=>{
+    if(typeof x==='string'){for(const ch of x) out.push([SHARE_NAMES[ch.charCodeAt(0)-48]||'','']);}
+    else out.push([typeof x[0]==='number'?(SHARE_NAMES[x[0]]||''):String(x[0]||''),String(x[1]||'')]);
+  });
+  return out;
+}
 async function packShare(o){
   const u8=new TextEncoder().encode(JSON.stringify(o));
   if(typeof CompressionStream!=='undefined'){
@@ -1545,7 +1564,7 @@ async function unpackShare(code){
 function collectShare(){
   const r=currentRoute(); if(!r) return null;
   const v=id=>{const e=document.getElementById(id);return e?e.value.trim():''};
-  const o={v:1,r:{l:r.label,d:r.dir,g:r.legs.map(l=>[l.name||'',l.alt||''])}};
+  const o={v:2,r:{l:r.label,d:r.dir,g:packLegs(r.legs)}};
   if(r.rev) o.r.rv=1;
   const pl=db.pilots[document.getElementById('pilotSelect').value];
   if(pl&&pl.name) o.n=String(pl.name).trim().split(/\s+/)[0];   // sender first name only
@@ -1590,7 +1609,7 @@ function showImport(){
   };
 }
 async function confirmShared(code){
-  let o; try{o=await unpackShare(code); if(!o||!o.r||!Array.isArray(o.r.g)) throw 0;}catch(e){closeModal();toast('הקישור לא תקין',true);return}
+  let o; try{o=await unpackShare(code); if(!o||!o.r||!Array.isArray(o.r.g)) throw 0; if(o.v>=2) o.r.g=unpackLegs(o.r.g);}catch(e){closeModal();toast('הקישור לא תקין',true);return}
   const esc=t=>String(t==null?'':t).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
   const g=o.r.g, ft=(o.t&&o.t[0])?` · ETD ${esc(o.t[0])}`:'', fe=(o.t&&o.t[1])?` · ETA ${esc(o.t[1])}`:'';
   const msg=`<div class="share-sum"><b>${esc(o.r.l)}</b><br>${esc((g[0]||[])[0]||'?')} - ${esc((g[g.length-1]||[])[0]||'?')}<br>${g.length} נקודות${ft}${fe}</div>
