@@ -509,7 +509,7 @@
     <div class="sp-line2" id="spLine2">TAP · PDF · EMAIL</div>
   </div>
   <div class="sp-skip">tap to skip</div>
-  <div class="app-footer"><button type="button" class="footer-refresh" onclick="forceReload()">רענן</button><span class="af-ver">MERHAV_fpl · v1.01.096 · BUILT BY ELIGRT</span><span class="af-side"></span></div>
+  <div class="app-footer"><button type="button" class="footer-refresh" onclick="forceReload()">רענן</button><span class="af-ver">MERHAV_fpl · v1.01.097 · BUILT BY ELIGRT</span><span class="af-side"></span></div>
 </div>
 
 <div class="topbar">
@@ -639,7 +639,7 @@
   </div>
 </div>
 
-<div class="app-footer"><button type="button" class="footer-refresh" onclick="forceReload()">רענן</button><span class="af-ver">MERHAV_fpl · v1.01.096 · BUILT BY ELIGRT</span><span id="pdfCounter" class="af-side af-count"></span></div>
+<div class="app-footer"><button type="button" class="footer-refresh" onclick="forceReload()">רענן</button><span class="af-ver">MERHAV_fpl · v1.01.097 · BUILT BY ELIGRT</span><span id="pdfCounter" class="af-side af-count"></span></div>
 
 <!-- MODAL -->
 <div class="scrim" id="scrim" onclick="if(event.target===this)closeModal()">
@@ -1847,6 +1847,29 @@ function runSplash(){
   window.addEventListener('resize',stepbarOffset);
   // splash first; the deadline notes show right after it
   runSplash();
+})();
+</script>
+<style>
+.lsa-back{position:absolute;left:4px;top:5px;z-index:5;background:none;border:0;padding:7px 8px;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:9.5px;font-weight:700;letter-spacing:.06em;color:#8a6a2a;cursor:pointer;direction:ltr;-webkit-tap-highlight-color:transparent;text-transform:uppercase;}
+</style>
+<script>
+/* Back to LSA Toolbox: shown in the footer, only in the installed app, when the page was opened from the Toolbox (?from=tb) */
+(function(){
+  try{ if(new URLSearchParams(location.search).get('from')==='tb') sessionStorage.setItem('lsa_from_tb','1'); }catch(e){}
+  var tb=false; try{ tb=sessionStorage.getItem('lsa_from_tb')==='1'; }catch(e){}
+  var sa=(window.matchMedia&&matchMedia('(display-mode: standalone)').matches)||navigator.standalone===true;
+  if(!(tb&&sa)) return;
+  function add(){
+    document.querySelectorAll('.app-footer').forEach(function(f){
+      if(f.querySelector('.lsa-back')) return;
+      if(getComputedStyle(f).position==='static') f.style.position='relative';
+      var b=document.createElement('button');b.type='button';b.className='lsa-back';b.setAttribute('aria-label','Back to LSA Toolbox home');
+      b.textContent='\u2039 Home';
+      b.onclick=function(e){ e.stopPropagation(); location.href='https://eligrt.github.io/LSA-Toolbox/'; };
+      f.appendChild(b);
+    });
+  }
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',add); else add();
 })();
 </script>
 </body>
