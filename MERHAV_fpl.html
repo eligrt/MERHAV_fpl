@@ -1,0 +1,1852 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<meta name="theme-color" content="#1c3d6e">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<link rel="icon" type="image/png" href="data:image/png;base64,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">
+<link rel="apple-touch-icon" href="data:image/png;base64,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">
+<meta name="apple-mobile-web-app-title" content="MERHAV FPL">
+<title>תוכנית טיסת מרחב - דרומה לבאר שבע</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600;700;800&family=IBM+Plex+Sans+Hebrew:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<style>
+  :root{
+    /* AirCheck+ family palette: ruled paper, navy ink, gold rules */
+    --paper:#f4ecdc; --paper-hi:#fbf6e8; --paper-edge:#e3d4ad; --paper-line:rgba(28,61,110,.055);
+    --ink:#1c3d6e; --ink-dark:#0e2348; --ink-body:#1a1308; --ink-muted:#5a4a3a; --ink-faint:#8a7a5a;
+    --gold:#c8a04a; --gold-deep:#8a6a2a; --gold-lite:#d4b878; --gold-tint:#f1e2bc;
+    --cleared:#1f6f3f; --cleared2:#2d8a52; --stamp-red:#b94a3a; --amber:#f59e0b; --amber-ink:#b45309;
+    --route-green:#1F9D57; --route-purple:#7A3FB4;
+    --font-ui:'IBM Plex Sans Hebrew','Heebo',sans-serif; --font-mono:'JetBrains Mono',monospace;
+    --r:6px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+  /* mobile: no double-tap / pinch zoom, no text selection or iOS copy menu (fields stay typeable), same as the other apps */
+  html,body{overscroll-behavior:none;touch-action:manipulation;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
+  button,select,label{touch-action:manipulation}
+  input,textarea{-webkit-user-select:text;user-select:text;-webkit-touch-callout:default}
+  html{height:100%;height:var(--app-h,100%);overflow:hidden;background:#1a1a1c;-webkit-text-size-adjust:100%}
+  /* PC: same phone-width frame as the other apps (gold edges, dark surround) */
+  @media(min-width:600px){body{border-left:2px solid var(--gold);border-right:2px solid var(--gold);box-shadow:0 0 60px rgba(0,0,0,.6)}}
+  body{
+    height:100vh;height:var(--app-h,100dvh);margin:0 auto;padding:0;position:relative;overflow:hidden;
+    display:flex;flex-direction:column;
+    background-color:var(--paper);
+    background-image:repeating-linear-gradient(0deg,transparent 0,transparent 27px,var(--paper-line) 27px,var(--paper-line) 28px);
+    color:var(--ink-body);font-family:var(--font-ui);-webkit-font-smoothing:antialiased;
+  }
+  @media(min-width:600px){
+    html{background:#1a1a1c}
+    body{max-width:430px;border-left:2px solid var(--gold);border-right:2px solid var(--gold);box-shadow:0 0 60px rgba(0,0,0,.6)}
+  }
+  button{font-family:var(--font-ui)}
+
+  /* ---------- Header strip ---------- */
+  .topbar{
+    background:var(--ink);color:var(--paper);
+    padding:calc(8px + env(safe-area-inset-top)) 16px 8px;
+    position:relative;flex:0 0 auto;z-index:20;
+  }
+  .topbar .rail{display:flex;align-items:center;gap:10px}
+  .glyph{
+    width:38px;height:38px;flex:0 0 38px;border-radius:9px;overflow:hidden;
+    border:1px solid var(--gold);background:var(--paper);
+  }
+  .glyph img{width:100%;height:100%;display:block;object-fit:cover}
+  .title h1{font-size:16.5px;line-height:1.25;font-weight:700;letter-spacing:-.1px}
+  .title p{font-size:11px;color:var(--gold-lite);font-weight:500;margin-top:1px;line-height:1.3;font-size:10.5px}
+  .info-btn{margin-inline-start:auto;flex:0 0 auto;background:none;border:1px solid rgba(244,236,220,.3);cursor:pointer;
+    color:var(--paper);width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center}
+  .info-btn svg{width:18px;height:18px}
+  .info-btn:active{background:rgba(244,236,220,.12)}
+
+  /* ---------- Step strip ---------- */
+  .stepbar{
+    position:relative;flex:0 0 auto;z-index:18;
+    background:var(--ink-dark);
+  }
+  .stepbar .rail{display:flex;padding:6px 8px 0;gap:4px}
+  .step{
+    flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;
+    padding:7px 2px 7px;background:none;border:1px solid transparent;border-bottom:0;cursor:pointer;
+    border-radius:var(--r) var(--r) 0 0;transition:.15s;
+  }
+  .step .step-dot{
+    width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+    font-size:11px;font-weight:700;font-family:var(--font-mono);
+    background:transparent;border:1.5px solid rgba(244,236,220,.4);color:var(--paper);transition:.15s;
+  }
+  .step .step-lbl{font-size:10.5px;font-weight:600;color:rgba(244,236,220,.7);transition:.15s;white-space:nowrap}
+  .step.active{background:var(--paper-hi);border-color:var(--gold-lite)}
+  .step.active .step-dot{background:var(--ink);border-color:var(--ink);color:var(--paper)}
+  .step.active .step-lbl{color:var(--ink)}
+  .step.done .step-dot{background:var(--cleared2);border-color:var(--cleared2);color:#fff}
+  .step.done .step-dot::after{content:'✓'}
+  .step.done .step-dot span{display:none}
+  .step.opt .step-dot{border-style:dashed;border-color:var(--gold-lite);color:var(--gold-lite)}
+  .step.opt .step-lbl{color:var(--gold-lite)}
+  .step.opt.active .step-dot{background:var(--gold-deep);border-color:var(--gold-deep);border-style:solid;color:var(--paper-hi)}
+  .step.opt.active .step-lbl{color:var(--gold-deep)}
+  @media(max-width:420px){ .step .step-lbl{font-size:9.5px} }
+
+  main{flex:1 1 auto;min-height:0;overflow-y:auto;overscroll-behavior:none;-webkit-overflow-scrolling:touch;padding:16px 14px 16px}
+  main::-webkit-scrollbar{width:0}
+
+  /* ---------- Date: plain inline text, dashed underline = tappable ---------- */
+  .datebar{display:flex;align-items:baseline;gap:8px;padding:0 4px;margin:0 0 14px}
+  .datebar label{flex:0 0 auto;font-size:13px;color:var(--ink-muted);font-weight:600}
+  .datebar input{width:auto;flex:0 0 auto;background:none;border:0;border-bottom:1.5px dashed var(--gold-deep);
+    border-radius:0;padding:4px 2px;min-height:34px;font-family:var(--font-mono);font-size:15px;font-weight:700;color:var(--ink);box-shadow:none}
+  .datebar input{direction:ltr;text-align:right}
+  .datebar input:focus{border-bottom-color:var(--ink);box-shadow:none}
+  .datebar input.field-missing{border-bottom-color:var(--stamp-red)}
+
+  /* ---------- Cards ---------- */
+  .card{
+    background:var(--paper-hi);border:1px solid var(--gold);border-radius:2px 2px 8px 8px;
+    padding:16px 14px 18px;margin-bottom:14px;
+  }
+  .card.pulse{animation:secPulse .7s ease-in-out 3}
+  @keyframes secPulse{0%,100%{box-shadow:0 0 0 0 rgba(200,160,74,0)}50%{box-shadow:0 0 0 4px rgba(200,160,74,.85),0 0 16px 4px rgba(200,160,74,.5)}}
+  .card.sec-done{border-color:var(--cleared2)}
+  .card > .head{display:flex;align-items:baseline;gap:10px;margin-bottom:14px;padding-bottom:10px;border-bottom:1px dashed var(--gold)}
+  .card > .head .idx{font-family:var(--font-mono);font-size:12px;font-weight:700;color:var(--gold-deep);letter-spacing:.08em}
+  .card > .head h2{font-size:16px;font-weight:700;color:var(--ink)}
+  .card > .head .idx.idx-opt{color:var(--ink-faint)}
+  .card > .head .idx.idx-done{color:var(--cleared)}
+  .card > .head .sub{font-size:11.5px;color:var(--ink-muted);margin-inline-start:auto;font-weight:500}
+  #sec4{border-style:dashed}
+
+  /* ---------- Fields ---------- */
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:12px 12px}
+  .field{display:flex;flex-direction:column;gap:6px}
+  .field.full{grid-column:1/-1}
+  label{font-size:12.5px;color:var(--ink-muted);font-weight:600;display:flex;gap:6px;align-items:center}
+  label .hint{color:var(--ink-faint);font-family:var(--font-mono);font-size:10.5px;font-weight:500}
+  input,select,textarea{
+    background:var(--paper);border:1px solid var(--paper-edge);color:var(--ink-body);
+    border-radius:var(--r);padding:11px 12px;font-family:var(--font-ui);font-size:15px;font-weight:500;
+    width:100%;transition:border-color .15s,box-shadow .15s;min-height:46px;
+  }
+  input::placeholder,textarea::placeholder{color:var(--ink-faint);opacity:.8}
+  input:focus,select:focus,textarea:focus{outline:none;border-color:var(--ink);box-shadow:0 0 0 3px var(--gold-tint)}
+  select{cursor:pointer;appearance:none;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%238a7a5a'><path d='M6 8L1 3h10z'/></svg>");
+    background-repeat:no-repeat;background-position:left 12px center;padding-left:32px}
+  textarea{resize:vertical;min-height:74px;line-height:1.55}
+
+  .inline-add{
+    background:none;border:1px dashed var(--gold-lite);color:var(--ink);
+    border-radius:var(--r);padding:9px;font-size:13px;font-weight:600;min-height:44px;
+    cursor:pointer;width:100%;transition:.15s;display:flex;align-items:center;justify-content:center;gap:6px
+  }
+  .inline-add:active{background:var(--gold-tint);border-color:var(--gold)}
+
+  .stack{display:flex;flex-direction:column;gap:14px}
+  .pick-row{display:flex;gap:8px;align-items:stretch}
+  .pick-row select{flex:1}
+  .pick-manage{flex:0 0 auto;width:46px;background:var(--paper-hi);border:1px solid var(--gold-lite);
+    color:var(--ink);border-radius:var(--r);font-size:20px;font-weight:600;cursor:pointer;transition:.15s}
+  .pick-manage:active{background:var(--gold-tint)}
+
+  .reg-input{display:flex;align-items:stretch;border:1px solid var(--paper-edge);border-radius:var(--r);
+    background:var(--paper);overflow:hidden}
+  .reg-input:focus-within{border-color:var(--ink);box-shadow:0 0 0 3px var(--gold-tint)}
+  .reg-prefix{display:flex;align-items:center;padding:0 12px;background:var(--paper-edge);color:var(--ink-muted);
+    font-family:var(--font-mono);font-weight:700;font-size:15px;border-inline-end:1px solid var(--paper-edge);white-space:nowrap}
+  .reg-input input{border:none;border-radius:0;background:transparent;flex:1;letter-spacing:3px;
+    font-family:var(--font-mono);font-weight:700;font-size:16px}
+  .reg-input input:focus{box-shadow:none}
+
+  /* ---------- Souls toggle: pill segmented control ---------- */
+  .seg{display:flex;gap:3px;padding:3px;background:var(--paper);border:1px solid var(--gold);border-radius:999px;min-height:48px}
+  .seg button{flex:1;background:transparent;color:var(--ink-muted);border:0;border-radius:999px;font-family:var(--font-mono);font-size:17px;font-weight:700;cursor:pointer;transition:.15s}
+  .seg button.on{background:var(--ink);color:var(--paper)}
+
+  /* ---------- Route pills ---------- */
+  .route-pills{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:12px}
+  .route-savenote{font-size:12px;color:var(--ink-muted);line-height:1.5;margin-bottom:12px}
+  .route-pills .pills-empty{color:var(--ink-muted);font-size:13px;font-weight:500;padding:6px 0}
+  .route-pill{display:inline-flex;align-items:center;min-height:40px;
+    background:var(--paper-hi);border:1.5px solid var(--gold-lite);border-radius:999px;
+    padding:7px 16px;cursor:pointer;transition:.14s;white-space:nowrap}
+  .route-pill .rp-label{font-size:13px;font-weight:600;color:var(--ink)}
+  .route-pill.on{background:var(--ink);border-color:var(--ink)}
+  .route-pill.on .rp-label{color:var(--paper)}
+  .route-actions{display:flex;gap:6px;margin-bottom:4px}
+  .route-actions .inline-add{width:auto;flex:1;padding:10px 2px;white-space:nowrap}
+  .route-reset{background:none;border:none;color:var(--ink-muted);font-size:12px;
+    font-weight:600;cursor:pointer;padding:8px 2px 2px;text-decoration:underline;text-underline-offset:3px}
+
+  /* ---------- Collapsible advanced ---------- */
+  .adv-toggle{background:none;border:none;color:var(--ink-muted);font-size:13px;
+    font-weight:600;cursor:pointer;display:flex;align-items:center;gap:7px;padding:6px 0;min-height:36px}
+  .adv-toggle .car{transition:transform .2s}
+  .adv-toggle .car path{fill:var(--ink-faint)}
+  .adv-toggle.open .car{transform:rotate(90deg)}
+  .adv-body{display:none;margin-top:14px}
+  .adv-body.show{display:block}
+
+  /* ---------- Action bar ---------- */
+  .pdf-hint{margin:0 0 6px;padding:0 4px;font-size:11.5px;color:var(--stamp-red);font-weight:600;text-align:center;min-height:16px}
+  .pdf-hint:empty{display:none}
+  .actionbar{
+    position:relative;flex:0 0 auto;z-index:15;margin-top:0;
+    background:var(--paper);border-top:1px solid var(--gold);
+    box-shadow:0 -8px 18px -8px rgba(28,61,110,.18);
+    padding:10px 14px 10px;
+  }
+  .actionbar .rail{display:flex;gap:10px}
+  .field-missing, .field-missing input, .field-missing select{
+    border-color:var(--stamp-red) !important;
+    box-shadow:0 0 0 2px rgba(185,74,58,.2) !important;
+  }
+  .route-pills.field-missing{border:1px solid var(--stamp-red);border-radius:10px;padding:6px}
+  .mail-copy{display:inline-flex;align-items:center;gap:5px;background:none;border:none;padding:0;
+    color:var(--ink);font-family:var(--font-mono);font-size:12.5px;font-weight:700;
+    cursor:pointer;direction:ltr;text-decoration:underline dotted;text-underline-offset:3px}
+.share-ta{width:100%;min-height:96px;resize:none;direction:ltr;text-align:left;font-family:var(--font-mono);font-size:12px;padding:10px;border:1.5px solid var(--gold);border-radius:var(--r);background:var(--paper);color:var(--ink-body);margin-bottom:12px;-webkit-user-select:text;user-select:text}
+  .share-sum{background:var(--gold-tint);border:1px solid var(--gold);border-radius:var(--r);padding:10px 12px;font-size:13.5px;line-height:1.6;margin-bottom:14px}
+
+  .act-sub{text-align:center;font-size:12.5px;color:var(--ink-muted);margin:4px 0 14px;line-height:1.5}
+  .act-sub b{color:var(--ink)}
+  .act-list{border-top:1px solid var(--gold-lite)}
+  .act-row{width:100%;display:flex;align-items:center;gap:12px;padding:12px 2px;background:none;border:0;border-bottom:1px solid var(--gold-lite);color:var(--ink);cursor:pointer;text-align:right;font-family:inherit;min-height:64px}
+  .act-row:active{background:var(--gold-tint)}
+  .act-ic{width:40px;height:40px;flex:0 0 40px;border-radius:50%;background:var(--gold-tint);display:flex;align-items:center;justify-content:center}
+  .act-row.main .act-ic{background:var(--ink);color:var(--paper)}
+  .act-ic svg,.act-ch{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+  .act-t{flex:1;min-width:0}
+  .act-t b{display:block;font-size:15px;font-weight:700}
+  .act-t span{display:block;font-size:12px;color:var(--ink-muted);margin-top:1px}
+  .act-ch{color:var(--gold-deep);flex:0 0 20px}
+  .act-chip{display:flex;align-items:center;justify-content:center;gap:8px;margin:0 auto 14px;background:var(--gold-tint);border:1px solid var(--gold-lite);border-radius:22px;padding:0 16px;min-height:44px;width:max-content;max-width:100%;font-size:12px;color:var(--ink-muted);cursor:pointer;font-family:inherit}
+  .act-chip code{font-family:var(--font-mono);font-size:13px;color:var(--ink);font-weight:600;direction:ltr}
+  .act-chip:active{background:var(--gold-lite)}
+  .act-chip.copied{border-color:var(--cleared2);color:var(--cleared)}
+  .act-chip.copied code{color:var(--cleared)}
+  .act-chip .ic-check{display:none}
+  .act-chip.copied .ic-copy{display:none}
+  .act-chip.copied .ic-check{display:inline}
+  .act-close{display:block;margin:14px auto 0;background:none;border:0;font-size:13.5px;color:var(--ink-muted);text-decoration:underline;text-underline-offset:3px;padding:10px 14px;cursor:pointer;font-family:inherit}
+  .mail-copy.copied{color:var(--cleared)}
+  .mail-copy .ic-check{display:none}
+  .mail-copy.copied .ic-copy{display:none}
+  .mail-copy.copied .ic-check{display:inline}
+  .ready-tick{width:56px;height:56px;border-radius:50%;margin:2px auto 8px;
+    display:flex;align-items:center;justify-content:center;
+    background:rgba(31,111,63,.1);border:1.5px solid var(--cleared2)}
+  .ready-tick svg{width:28px;height:28px}
+  .ready-mail{display:flex;margin:0 auto;font-size:16px;gap:8px;padding:8px 4px;justify-content:center}
+  .btn{
+    flex:1;border:2px solid transparent;border-radius:var(--r);padding:15px 16px;font-size:15px;
+    font-weight:700;cursor:pointer;transition:.15s;display:flex;align-items:center;justify-content:center;gap:8px;min-height:50px
+  }
+  .btn.primary{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+  .btn.primary svg{fill:var(--paper);stroke:var(--paper)}
+  .btn.primary:active{background:var(--ink-dark)}
+  .btn.primary:disabled{background:var(--paper-edge);border-color:var(--paper-edge);color:var(--ink-faint);cursor:not-allowed}
+  .btn.primary.not-ready{background:#d5d7da;border-color:#c4c7cb;color:#80858c;box-shadow:none}
+  .btn.primary.not-ready svg{fill:#80858c;stroke:#80858c}
+  .btn:disabled{opacity:.6;cursor:not-allowed}
+
+  /* ---------- Modal ---------- */
+  .scrim{position:fixed;inset:0;background:rgba(14,35,72,.6);z-index:40;display:none;
+    align-items:center;justify-content:center;padding:18px}
+  .scrim.show{display:flex}
+  .modal{position:relative;background:var(--paper-hi);border:2px solid var(--gold);border-radius:8px;
+    width:100%;max-width:400px;max-height:88vh;overflow:auto;padding:20px}
+  .modal:has(.cf-danger){border-color:var(--stamp-red)}
+  .modal h3{font-size:18px;font-weight:700;margin-bottom:6px;color:var(--ink)}
+  .modal .lede{font-size:12.5px;color:var(--ink-muted);margin-bottom:14px;line-height:1.5}
+  .list{display:flex;flex-direction:column;gap:8px;margin-bottom:14px}
+  .row{display:flex;align-items:center;gap:10px;background:var(--paper);border:1px solid var(--paper-edge);
+    border-radius:var(--r);padding:10px 12px}
+  .row .m{flex:1;font-size:13.5px;font-weight:500;line-height:1.4}
+  .row .m small{color:var(--ink-muted);font-weight:500}
+  .row .x{background:none;border:none;color:var(--ink-faint);cursor:pointer;font-size:18px;line-height:1;padding:6px 8px;border-radius:6px}
+  .row .x:active{color:var(--stamp-red)}
+  .modal .addgrid{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-bottom:12px}
+  .modal .addgrid .full{grid-column:1/-1}
+  .modal-actions{display:flex;flex-direction:column;gap:8px;margin-top:8px}
+  .modal-actions .btn{padding:13px;font-size:14px;flex:none;width:100%}
+  .btn.line{background:transparent;border-color:var(--ink);color:var(--ink)}
+  .btn.line:active{background:var(--gold-tint)}
+  .btn.line.danger{color:var(--stamp-red);border-color:var(--stamp-red)}
+  .btn.danger-solid{background:var(--stamp-red);border-color:var(--stamp-red);color:#fff}
+  .close-x{position:absolute;top:14px;left:14px;background:none;border:none;color:var(--ink-faint);
+    font-size:18px;cursor:pointer;line-height:1;padding:6px 10px;border-radius:6px}
+  .note-list{margin:4px 0 0;padding:0;list-style:none}
+  .modal .note-list li{position:relative;padding:6px 24px 6px 0;line-height:1.55;font-size:13.5px;color:var(--ink-body)}
+  .modal .note-list li::before{content:"";position:absolute;right:8px;top:13px;width:6px;height:6px;border-radius:50%;background:var(--cleared2)}
+  .modal h3.cf-danger{color:var(--stamp-red);display:flex;align-items:center;gap:8px}
+  .modal h3 .cf-warn{font-size:20px;line-height:1}
+  .cf-body{font-size:13.5px;color:var(--ink-body);line-height:1.55;margin-bottom:14px}
+  .cf-body .cf-lead{margin:0 0 10px}
+  .cf-body .cf-lead:last-child{margin-bottom:0}
+  .cf-body b{font-weight:700}
+  .cf-list{list-style:none;margin:0 0 12px;padding:10px 12px;
+    background:rgba(185,74,58,.07);border:1px solid rgba(185,74,58,.35);border-radius:var(--r);max-height:180px;overflow:auto}
+  .cf-list li{font-size:13.5px;font-weight:600;color:var(--ink-body);padding:4px 0;display:flex;align-items:center;gap:8px}
+  .cf-list li::before{content:"•";color:var(--stamp-red);font-weight:700}
+
+  /* ---------- Route editor ---------- */
+  .ms-label{font-size:12px;color:var(--ink-muted);font-weight:600;margin-bottom:8px}
+  .ms-rows{display:flex;flex-direction:column;gap:6px;margin-bottom:10px;
+    max-height:340px;overflow-y:auto;padding:8px;
+    border:1px solid var(--paper-edge);border-radius:var(--r);background:var(--paper)}
+  .ms-rows:empty{border:none;padding:0}
+  .ms-rows::-webkit-scrollbar{width:6px}
+  .ms-rows::-webkit-scrollbar-thumb{background:var(--gold-lite);border-radius:3px}
+  .ms-row{display:flex;gap:8px;align-items:center}
+  .ms-row .ms-name{flex:1;background:var(--paper-hi)}
+  .ms-btn{width:36px;height:36px;line-height:1;border-radius:var(--r);
+    border:1px solid var(--gold-lite);background:var(--paper-hi);cursor:pointer;padding:0;
+    display:flex;align-items:center;justify-content:center;font-size:15px;flex:0 0 auto;color:var(--ink-muted)}
+  .ms-del:active{color:var(--stamp-red);border-color:var(--stamp-red)}
+  .ms-insbar{display:flex;align-items:center;gap:10px;padding:0 2px;height:38px}
+  .ms-insbar-line{flex:1;height:1px;background:var(--paper-edge)}
+  .ms-insbar-btn{flex:0 0 auto;background:var(--paper-hi);border:1px dashed var(--gold-lite);
+    color:var(--ink-muted);border-radius:22px;font-size:13px;padding:9px 20px;cursor:pointer;white-space:nowrap;min-height:38px}
+  .ms-insbar-btn:active{background:var(--gold-tint);color:var(--ink)}
+  .ms-add-first{width:100%;padding:14px;border-radius:var(--r);border:1px dashed var(--gold-lite);
+    background:var(--paper-hi);color:var(--ink-muted);cursor:pointer;font-size:14px}
+  .dir-toggle{display:flex;gap:3px;padding:3px;margin-bottom:16px;border:1px solid var(--gold);border-radius:999px;background:var(--paper)}
+  .dir-opt{flex:1;cursor:pointer;position:relative}
+  .dir-opt input{position:absolute;opacity:0;min-height:0}
+  .dir-opt span{display:block;text-align:center;padding:11px;border-radius:999px;color:var(--ink-muted);font-size:14px;font-weight:600;transition:.15s}
+  .dir-opt input:checked + span{background:var(--ink);color:var(--paper)}
+
+  /* ---------- Route preview + inline ETD / ETA / endpoints ---------- */
+  .route-preview{
+    margin-top:10px;margin-bottom:10px;background:var(--paper);border:1px solid var(--paper-edge);border-radius:var(--r);
+    padding:12px 14px;min-height:56px;
+  }
+  .route-preview .rp-empty{color:var(--ink-muted);font-size:13px;font-weight:500}
+  .route-preview .rp-head{
+    font-size:12.5px;color:var(--ink-muted);font-weight:600;margin-bottom:8px;
+    padding-bottom:8px;border-bottom:1px dashed var(--gold-lite)
+  }
+  .route-preview .rp-head b{color:var(--ink);font-weight:700}
+  .route-preview .wp-line{position:relative}
+  .route-preview .wp-node{position:relative;display:flex;align-items:center;gap:12px;min-height:38px}
+  .route-preview .wp-node::before{content:"";position:absolute;z-index:1;width:2.5px;
+    right:5.25px;top:50%;bottom:-19px;background:var(--route-purple)}
+  .route-preview .wp-node.last::before{display:none}
+  .route-preview .wp-node.ln-green::before{background:var(--route-green)}
+  .route-preview .wp-node.ln-purple::before{background:var(--route-purple)}
+  .route-preview .wp-dot{position:relative;z-index:2;flex:0 0 13px;width:13px;height:13px;border-radius:50%;
+    background:var(--paper);border:3px solid var(--route-purple);box-sizing:border-box}
+  .route-preview .wp-node.dot-green .wp-dot{border-color:var(--route-green)}
+  .route-preview .wp-node.dot-purple .wp-dot{border-color:var(--route-purple)}
+  .route-preview .wp-node.first .wp-dot{background:var(--route-green);border-color:var(--route-green)}
+  .route-preview .wp-node.last .wp-dot{background:var(--route-purple);border-color:var(--route-purple)}
+  .route-preview .rv .wp-node.first.dot-purple .wp-dot{background:var(--route-purple);border-color:var(--route-purple)}
+  .route-preview .rv .wp-node.last.dot-green .wp-dot{background:var(--route-green);border-color:var(--route-green)}
+  .route-preview .wp-text{font-size:14px;font-weight:500;color:var(--ink-body)}
+  .route-preview .wp-node.first .wp-text,.route-preview .wp-node.last .wp-text{font-weight:700}
+  .wp-timeslot{margin-inline-start:auto;flex:0 0 auto}
+  .wp-timebox{display:flex;align-items:center;gap:6px;font-family:var(--font-mono);font-size:10px;letter-spacing:.08em;color:var(--amber-ink);font-weight:700}
+  .wp-timebox input[type=time]{width:104px;min-height:44px;padding:4px 6px;font-family:var(--font-mono);font-weight:700;font-size:15px;text-align:center;
+    background:var(--paper-hi);border:1.5px solid var(--ink);color:var(--ink)}
+  /* empty = "fill me": amber, tinted */
+  .wp-timebox input[type=time]:required:invalid{background:var(--gold-tint);border:1.5px solid var(--amber);color:var(--amber-ink)}
+  .wp-timebox input.field-missing{border-color:var(--stamp-red)}
+  .wp-ep{flex:1;min-width:0;background:var(--gold-tint);border:0;border-bottom:1.5px solid var(--amber);border-radius:var(--r) var(--r) 0 0;
+    padding:8px 6px;font-size:13px;font-weight:700;color:var(--ink);min-height:44px}
+  .wp-ep::placeholder{color:var(--amber-ink);opacity:1;font-weight:600}
+  .wp-ep:focus{border-bottom-color:var(--ink);box-shadow:none}
+  .wp-ep.field-missing{border-bottom-color:var(--stamp-red);background:rgba(185,74,58,.12)}
+  #timeHolder{display:none}
+
+  /* ---------- Toast ---------- */
+  .toast{position:fixed;bottom:84px;left:50%;background:var(--ink);color:var(--paper);
+    padding:11px 20px;border-radius:20px;font-weight:600;font-size:13.5px;z-index:60;max-width:90%;text-align:center;
+    box-shadow:0 8px 24px rgba(14,35,72,.35);transform:translate(-50%,120px);opacity:0;transition:.3s}
+  .toast.show{transform:translate(-50%,0);opacity:1}
+  .toast.err{background:var(--stamp-red)}
+
+
+  /* ---------- Splash (same pattern as AirATIS) ---------- */
+  #splash{position:fixed;top:0;left:0;right:0;margin:0 auto;width:100%;height:100vh;height:var(--app-h,100vh);z-index:500;
+    background:var(--paper);background-image:repeating-linear-gradient(0deg,transparent 0,transparent 27px,var(--paper-line) 27px,var(--paper-line) 28px);
+    display:flex;flex-direction:column;align-items:stretch;overflow:hidden;transition:opacity .3s ease}
+  @media(min-width:600px){#splash{max-width:430px}}
+  #splash.fade{opacity:0;pointer-events:none}
+  #splash.gone{display:none}
+  .sp-logo{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding-bottom:6vh}
+  .sp-icon{width:180px;height:180px;border-radius:40px;box-shadow:0 10px 30px rgba(28,61,110,.18);margin-bottom:22px}
+  .sp-title{font-size:30px;font-weight:700;color:var(--ink);letter-spacing:.02em;direction:ltr}
+  .sp-tag{font-family:var(--font-mono);font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:var(--gold-deep);margin-top:6px;margin-bottom:26px;padding-left:.3em;direction:ltr}
+  .sp-line1{font-size:19px;font-weight:600;color:var(--ink);min-height:28px;text-align:center;direction:ltr}
+  .sp-line2{font-family:var(--font-mono);font-size:13px;font-weight:700;letter-spacing:.14em;color:var(--ink-muted);margin-top:8px;min-height:20px;opacity:0;transition:opacity .4s ease;direction:ltr;text-align:center}
+  .sp-line2.show{opacity:1}
+  .sp-cursor{display:inline-block;width:2px;height:1em;background:var(--gold);margin-inline:2px;vertical-align:-2px;animation:spBlink .8s step-end infinite}
+  @keyframes spBlink{0%,100%{opacity:1}50%{opacity:0}}
+  #splash .app-footer{margin-top:auto}
+  @media (prefers-reduced-motion:reduce){#splash *{transition:none !important;animation:none !important}}
+
+  .app-footer{
+    flex:0 0 auto;display:flex;align-items:center;justify-content:space-between;gap:8px;direction:rtl;
+    padding:8px 12px calc(8px + env(safe-area-inset-bottom));border-top:1px solid var(--gold-lite);background:var(--paper-hi);
+    font-family:var(--font-mono);color:var(--ink-faint);font-size:9px;text-transform:uppercase;letter-spacing:.06em;
+  }
+  .app-footer .af-ver{flex:1;text-align:center;direction:ltr;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
+  .app-footer .af-side{flex:0 0 52px}
+  .app-footer .af-count{text-align:left;direction:ltr;font-size:9px;letter-spacing:.04em;white-space:nowrap}
+  .footer-refresh{flex:0 0 52px;text-align:right;background:none;border:0;padding:6px 0;font-family:var(--font-ui);font-size:11px;color:var(--ink-muted);text-decoration:underline;text-underline-offset:2px;opacity:.75;cursor:pointer;text-transform:none;letter-spacing:.02em}
+  .footer-refresh:active{opacity:.4}
+
+
+  /* ============ PDF TEMPLATE (rendered off-screen, snapshotted) ============ */
+  #pdfArea{position:fixed;left:-4000px;top:0}
+  .form-sheet{
+    width:1000px;min-height:1414px;background:#fff;color:#111;font-family:'Heebo',sans-serif;
+    padding:40px 44px;display:flex;flex-direction:column;
+  }
+  /* blue + bold filled-in values (point f) - slightly larger */
+  .form-sheet .v{color:#1350C4;font-weight:700;font-size:1.08em}
+  .fs-head{display:flex;justify-content:space-between;align-items:flex-start;font-size:16px;font-weight:700;margin-bottom:2px}
+  .fs-head .l{text-align:left}
+  .fs-title{text-align:center;font-size:22px;font-weight:800;margin:4px 0 4px}
+  .fs-sub{text-align:center;font-size:15px;font-weight:600;color:#333;margin-bottom:22px}
+  .fs-date{font-size:16px;font-weight:700;margin-bottom:12px}
+  /* shared body wrapper keeps every section the exact same width */
+  .fs-body{flex:1 1 auto;display:flex;flex-direction:column}
+  .fs-body table{width:100%;box-sizing:border-box;border-collapse:collapse;table-layout:fixed}
+  table.fs{font-size:13.5px}
+  table.fs th,table.fs td{border:1.4px solid #222;padding:9px 6px;text-align:center;vertical-align:middle;word-wrap:break-word}
+  table.fs th{background:#EDEDED;font-weight:700;font-size:12.5px;line-height:1.3}
+  table.fs td{height:46px;font-weight:600}
+  .fs-routebox{flex:1 1 auto;display:flex;flex-direction:column;min-height:620px}
+  .fs-routebox table{width:100%}
+  .fs-routebox tr.route-row td.detail{vertical-align:top}
+  .fs-routebox tr.route-row td{height:auto}
+  .fs-routebox tr.landing-row td{height:auto;padding:10px 12px}
+  /* spacer row fills the remaining page height BELOW the landing row */
+  .fs-routebox tr.fill-row td{border:1.4px solid #222;border-top:none;height:100%}
+  .fs-routebox th{background:#EDEDED;font-weight:700;font-size:12.5px;border:1.4px solid #222;padding:8px}
+  .fs-routebox td{border:1.4px solid #222;padding:12px;font-size:13.5px;font-weight:600;vertical-align:top}
+  .fs-routebox .detail{text-align:right;line-height:1.7}
+  .fs-routehdr{font-weight:800;font-size:14px;margin-bottom:12px;padding-bottom:8px;border-bottom:1px solid #bbb;white-space:normal}
+  /* authority inline route text (one wrapping line, waypoints joined by " > ") */
+  .fs-routehdr2{font-weight:800;font-size:13.5px;margin-bottom:10px;padding-bottom:7px;
+    border-bottom:1px solid #bbb;white-space:normal}
+  .fs-routebox .detail .rt-inline{font-size:15px;font-weight:700;line-height:2;
+    word-break:break-word;text-align:right;direction:rtl}
+  .rt-inline .rt-wp{white-space:nowrap}
+  .rt-inline .rt-sep{font-weight:800}
+  /* takeoff/landing times: label flush-right, value flush-left, two aligned rows */
+  .tw-times{display:inline-block;text-align:right}
+  .tw-row{display:flex;justify-content:space-between;align-items:baseline;gap:18px;line-height:1.9}
+  .tw-lbl{font-weight:600;color:#111;padding-left:4px}
+  .tw-val{white-space:nowrap}
+  /* serpentine / slalom route layout for PDF */
+  /* column-based vertical subway: columns flow RTL (first column at right).
+     ALL these rules are scoped under .wp-wrap so they never touch the UI preview. */
+  .wp-wrap{display:flex;flex-direction:row;align-items:flex-start;gap:44px;padding:10px 6px 6px}
+  .wp-col{display:flex;flex-direction:column;align-items:flex-start;flex:0 0 auto}
+  .wp-wrap .wp-node{display:flex;flex-direction:row;align-items:center;gap:11px;position:relative;
+    min-height:34px;padding:6px 0}
+  /* vertical connector through the marker centre (marker 22px wide -> centre 11px from
+     the start/right edge in RTL), joining downward to the node below */
+  .wp-wrap .wp-node::before{content:"";position:absolute;right:9.9px;top:50%;bottom:-6px;
+    width:2.5px;background:#1350C4;z-index:0}
+  /* continuation stub ABOVE a node: shown on the first node of a continued column
+     and hidden on the true first node of the whole route */
+  .wp-wrap .wp-node::after{content:"";position:absolute;right:9.9px;top:-6px;height:calc(50% + 6px);
+    width:2.5px;background:#1350C4;z-index:0;display:none}
+  .wp-wrap .wp-node.cont-top::after{display:block}      /* column that continues from previous */
+  .wp-wrap .wp-node.cont-bottom::before{bottom:-6px}     /* column that continues to next (line already drawn) */
+  .wp-wrap .wp-node.last-in-route::before{display:none}  /* true final node: no line down */
+  /* two-color route line: green arrives into בית קמה, purple leaves it southward */
+  .wp-wrap .wp-node.ln-green::before{background:#1F9D57}
+  .wp-wrap .wp-node.ln-purple::before{background:#7A3FB4}
+  .wp-wrap .wp-node.up-ln-green::after{background:#1F9D57}
+  .wp-wrap .wp-node.up-ln-purple::after{background:#7A3FB4}
+  .wp-wrap .wp-dot{position:relative;z-index:1;flex:0 0 22px;width:22px;height:22px;display:flex;
+    align-items:center;justify-content:center}
+  .wp-wrap .wp-dot::after{content:"";width:14px;height:14px;border-radius:50%;
+    background:#fff;border:3px solid #1350C4;box-sizing:border-box}
+  /* colored dot rings: green up to & incl בית קמה, purple after */
+  .wp-wrap .wp-node.dot-green .wp-dot::after{border-color:#1F9D57}
+  .wp-wrap .wp-node.dot-purple .wp-dot::after{border-color:#7A3FB4}
+  /* start: filled green dot — same diameter as the finish dot */
+  .wp-wrap .wp-node.first .wp-dot::after{width:22px;height:22px;
+    background:#1F9D57;border-color:#127A40}
+  /* finish: dot filled with black/white checkerboard (svg supplies it) */
+  .wp-wrap .wp-dot.wp-finish::after{display:none}
+  .wp-wrap .wp-dot.wp-finish svg{width:22px;height:22px}
+  .wp-wrap .wp-name{font-size:13.5px;font-weight:600;line-height:1.2;color:#111;
+    word-break:break-word;max-width:160px}
+  .wp-wrap .wp-node.first .wp-name,.wp-wrap .wp-node.last .wp-name{font-weight:700}
+  .fs-lines{margin-top:14px;font-size:13.5px}
+  .fs-lines .ln{display:flex;border-bottom:1px solid #999;padding:9px 2px;gap:8px;min-height:20px}
+  .fs-lines .ln b{font-weight:700;white-space:nowrap}
+  .fs-lines .ln span{font-weight:600;color:#222;padding-inline-start:6px}
+  .fs-sign{display:flex;justify-content:space-between;margin-top:40px;font-size:15px;font-weight:700}
+  .fs-sign .sig{display:flex;flex-direction:column;align-items:center;width:230px}
+  .fs-sign .sig-name{font-size:16px;min-height:22px;margin-bottom:3px}
+  .fs-sign .sig-line{width:100%;border-top:1.4px solid #222;height:0}
+  .fs-sign .sig-label{margin-top:6px;font-weight:700}
+  .fs-foot{display:flex;justify-content:space-between;margin-top:20px;font-size:12.5px;font-weight:600;color:#333;border-top:1px solid #bbb;padding-top:8px}
+</style>
+</head>
+<body>
+
+<div id="splash" class="gone" aria-hidden="true">
+  <div class="sp-logo">
+    <img class="sp-icon" id="spIcon" alt="">
+    <div class="sp-title">MERHAV_FPL</div>
+    <div class="sp-tag">Purple routes · AZAM</div>
+    <div class="sp-line1" id="spLine1"></div>
+    <div class="sp-line2" id="spLine2">TAP · PDF · EMAIL</div>
+  </div>
+  <div class="app-footer"><button type="button" class="footer-refresh" onclick="forceReload()">רענן</button><span class="af-ver">MERHAV_fpl · v1.01.094 · BUILT BY ELIGRT</span><span class="af-side"></span></div>
+</div>
+
+<div class="topbar">
+  <div class="rail">
+    <div class="glyph" aria-hidden="true"><img id="hdrIcon" alt=""></div>
+    <div class="title">
+      <h1>תוכנית טיסת מרחב</h1>
+      <p>נתיבי אז״ם ״סגולים״ - דרומה לבאר שבע<br>להגשה למודיעין טיס</p>
+    </div>
+    <button class="info-btn" onclick="showNotes()" title="מועדי הגשה" aria-label="מועדי הגשה">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 11v5" stroke-linecap="round"/><circle cx="12" cy="7.5" r="1.1" fill="currentColor" stroke="none"/></svg>
+    </button>
+  </div>
+</div>
+
+<div class="stepbar">
+  <div class="rail">
+    <button class="step" id="stepBtn1" onclick="goStep(1)"><span class="step-dot"><span>1</span></span><span class="step-lbl">טייס ומטוס</span></button>
+    <button class="step" id="stepBtn2" onclick="goStep(2)"><span class="step-dot"><span>2</span></span><span class="step-lbl">נתיב</span></button>
+    <button class="step" id="stepBtn3" onclick="goStep(3)"><span class="step-dot"><span>3</span></span><span class="step-lbl">פרטי טיסה</span></button>
+    <button class="step opt" id="stepBtn4" onclick="goStep(4)"><span class="step-dot"><span>4</span></span><span class="step-lbl">נוסף</span></button>
+  </div>
+</div>
+
+<main>
+
+  <!-- DATE BAR (standalone, outside the numbered steps) -->
+  <div class="datebar" id="dateBar">
+    <label for="fDate">תאריך הטיסה:</label>
+    <input type="date" id="fDate">
+  </div>
+
+  <!-- WHO -->
+  <section class="card" id="sec1">
+    <div class="head"><span class="idx" id="idx1">01</span><h2>טייס ומטוס</h2><span class="sub">נשמר להמראה הבאה</span></div>
+    <div class="stack">
+      <div class="field">
+        <label>טייס</label>
+        <div class="pick-row">
+          <select id="pilotSelect"></select>
+          <button class="pick-manage" onclick="openModal('pilot')" title="ניהול טייסים">＋</button>
+        </div>
+      </div>
+      <div class="field">
+        <label>אות קריאה / מטוס</label>
+        <div class="pick-row">
+          <select id="acSelect" dir="ltr" style="text-align:left"></select>
+          <button class="pick-manage" onclick="openModal('ac')" title="ניהול מטוסים">＋</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ROUTE (step 2): departure row, waypoints, landing row -->
+  <section class="card" id="sec2">
+    <div class="head"><span class="idx" id="idx2">02</span><h2>נתיב הטיסה</h2><span class="sub">בחר נתיב שמור או צור חדש</span></div>
+    <div class="route-savenote">נתיבים מותאמים אישית נשמרים על המכשיר לשימוש חוזר</div>
+    <select id="routeSelect" style="display:none"></select>
+    <div class="route-pills" id="routePills"></div>
+    <div class="route-actions">
+      <button class="inline-add" onclick="openRouteEditor(null)">＋ חדש</button>
+      <button class="inline-add" id="dupRouteBtn" onclick="duplicateSelectedRoute()">⧉ שכפל</button>
+      <button class="inline-add" id="editRouteBtn" onclick="editSelectedRoute()">✎ ערוך</button>
+      <button class="inline-add" id="revRouteBtn" onclick="reverseSelectedRoute()">⇄ הפוך</button>
+    </div>
+    <button class="route-reset" onclick="restoreDefaultRoutes()">↺ שחזר נתיבי ברירת מחדל</button>
+    <button class="route-reset" onclick="showImport()">⇩ ייבוא תוכנית משותפת</button>
+
+    <div class="route-preview" id="routePreview"></div>
+
+    <input type="hidden" id="fDepart">
+    <input type="hidden" id="fDest">
+    <!-- ETD/ETA inputs live here and are moved into the first/last waypoint rows on render -->
+    <div id="timeHolder"><input type="time" id="fEtd" aria-label="ETD" required><input type="time" id="fEta" aria-label="ETA" required></div>
+    <input type="hidden" id="fRoute">
+    <input type="hidden" id="fRouteDir">
+  </section>
+
+  <!-- FLIGHT DETAILS (step 3) -->
+  <section class="card" id="sec3">
+    <div class="head"><span class="idx" id="idx3">03</span><h2>פרטי הטיסה</h2></div>
+    <div class="grid">
+      <div class="field"><label>זמן דלק <span class="hint">(בשעות)</span></label><input type="text" id="fFuel" inputmode="decimal" placeholder="למשל 2.5"></div>
+      <div class="field"><label>מהירות בקשר <span class="hint">IAS</span></label><input type="text" id="fIas" inputmode="numeric" value="90"></div>
+      <div class="field"><label>מטרת הטיסה</label><input type="text" id="fPurpose" value="פנאי"></div>
+      <div class="field"><label>נפשות במטוס</label>
+        <div class="seg" id="soulsSeg"><button type="button" data-v="1" class="on" onclick="setSouls('1')">1</button><button type="button" data-v="2" onclick="setSouls('2')">2</button></div>
+        <input type="hidden" id="fSouls" value="1"></div>
+    </div>
+  </section>
+
+  <!-- ADVANCED -->
+  <section class="card" id="sec4">
+    <div class="head"><span class="idx idx-opt" id="idx4">04</span><h2>שדות נוספים</h2><span class="sub">אופציונלי</span></div>
+    <button class="adv-toggle" id="advToggle" onclick="toggleAdv()">
+      <svg class="car" width="12" height="12" viewBox="0 0 12 12" ><path d="M4 2l4 4-4 4z"/></svg>
+      ברירת מחדל: טיסה סטנדרטית ללא חריגות
+    </button>
+    <div class="adv-body" id="advBody">
+      <div class="grid" style="margin-bottom:12px">
+        <div class="field"><label>שדה משנה <span class="hint">אופציונלי</span></label>
+          <div class="pick-row"><select id="fAlt"></select><button class="pick-manage" onclick="openModal('field')" title="ניהול שדות">＋</button></div>
+        </div>
+        <div class="field"><label>שם החברה / מפעיל</label><input type="text" id="fOperator" placeholder="שם המועדון / בית ספר"></div>
+        <div class="field"><label>יש חריגה מהפמ״ת</label><select id="fDev"><option value="לא">לא</option><option value="כן">כן</option></select></div>
+        <div class="field"><label>יש אישור רת״א</label><select id="fRtaa"><option value="">-</option><option value="לא">לא</option><option value="כן">כן</option></select></div>
+        <div class="field"><label>עבודות אוויר</label><select id="fAirwork"><option value="לא">לא</option><option value="כן">כן</option></select></div>
+      </div>
+      <div class="grid">
+        <div class="field full"><label>כללי טיסה</label><input type="text" id="fRules" value="CVFR, טיסה בנתיבים עצמם - תעופה ספורטיבית (אז״מ)"></div>
+        <div class="field full"><label>אישורים מצורפים</label><input type="text" id="fApprovals" placeholder="-"></div>
+        <div class="field full"><label>תיאומים שבוצעו ע״י המפעיל/טייס</label><input type="text" id="fCoord" placeholder="-"></div>
+        <div class="field full"><label>הערות מודיעין טיס והגבלות</label><input type="text" id="fNotes" placeholder="-"></div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<div class="actionbar">
+  <div class="pdf-hint" id="pdfHint"></div>
+  <div class="rail">
+    <button class="btn primary" id="genBtn" onclick="generatePDF()">
+      <svg width="18" height="18" viewBox="0 0 20 20" ><path d="M10 2v9m0 0l-3.5-3.5M10 11l3.5-3.5M3 15v2a1 1 0 001 1h12a1 1 0 001-1v-2" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      הפק תוכנית לטיסת מרחב
+    </button>
+  </div>
+</div>
+
+<div class="app-footer"><button type="button" class="footer-refresh" onclick="forceReload()">רענן</button><span class="af-ver">MERHAV_fpl · v1.01.094 · BUILT BY ELIGRT</span><span id="pdfCounter" class="af-side af-count"></span></div>
+
+<!-- MODAL -->
+<div class="scrim" id="scrim" onclick="if(event.target===this)closeModal()">
+  <div class="modal" id="modal"></div>
+</div>
+
+<!-- carried from selected pilot profile -->
+<input type="hidden" id="fPhone">
+
+<!-- OFF-SCREEN PDF TEMPLATE -->
+<div id="pdfArea"><div class="form-sheet" id="formSheet"></div></div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+/* ---------------- storage ---------------- */
+const DB_KEY='azm_flightplan_v1';
+const DEFAULT_ROUTES=[
+  {label:'דיפולט צפוני',dir:'north',legs:[
+    {name:'מנחת ראשון',alt:''},
+    {name:'שורק',alt:''},
+    {name:'בית עובד',alt:''},
+    {name:'א״ת נס ציונה',alt:''},
+    {name:'נצר סירני',alt:''},
+    {name:'נשרים',alt:''},
+    {name:'איילון',alt:''},
+    {name:'לטרון',alt:''},
+    {name:'שער הגיא',alt:''},
+    {name:'אשתאול',alt:''},
+    {name:'בית שמש',alt:''},
+    {name:'זכריה',alt:''},
+    {name:'גפן',alt:''},
+    {name:'כפר מנחם',alt:''},
+    {name:'נחלה',alt:''},
+    {name:'מחלף קרית גת',alt:''},
+    {name:'מחלף מאחז',alt:''},
+    {name:'בית קמה',alt:''},
+    {name:'צומת להבים',alt:''},
+    {name:'צומת שוקת',alt:''},
+    {name:'מיתר',alt:''},
+    {name:'תל ערד',alt:''},
+    {name:'ערד',alt:''},
+    {name:'צומת חתרורים',alt:''},
+    {name:'נוה זוהר',alt:''},
+    {name:'צומת הערבה',alt:''},
+    {name:'חצבה',alt:''},
+    {name:'צופר',alt:''},
+    {name:'ביצוע 180 וחזרה באותו נתיב',alt:''},
+    {name:'',alt:''}
+  ]},
+  {label:'דיפולט דרומי',dir:'south',legs:[
+    {name:'מנחת ראשון',alt:''},
+    {name:'שורק',alt:''},
+    {name:'בית עובד',alt:''},
+    {name:'א״ת נס ציונה',alt:''},
+    {name:'נצר סירני',alt:''},
+    {name:'נשרים',alt:''},
+    {name:'איילון',alt:''},
+    {name:'לטרון',alt:''},
+    {name:'שער הגיא',alt:''},
+    {name:'אשתאול',alt:''},
+    {name:'בית שמש',alt:''},
+    {name:'זכריה',alt:''},
+    {name:'גפן',alt:''},
+    {name:'כפר מנחם',alt:''},
+    {name:'נחלה',alt:''},
+    {name:'מחלף קרית גת',alt:''},
+    {name:'מחלף מאחז',alt:''},
+    {name:'בית קמה',alt:''},
+    {name:'צומת להבים',alt:''},
+    {name:'צומת גורל',alt:''},
+    {name:'חטיבת הנגב',alt:''},
+    {name:'צומת שרה',alt:''},
+    {name:'אוהלים',alt:''},
+    {name:'רמת חובב',alt:''},
+    {name:'צומת הנגב',alt:''},
+    {name:'טללים',alt:''},
+    {name:'שדה בוקר',alt:''},
+    {name:'חורבות עבדת',alt:''},
+    {name:'כלא נפחא',alt:''},
+    {name:'צומת הרוחות',alt:''},
+    {name:'מעלה מישר',alt:''},
+    {name:'צומת ציחור',alt:''},
+    {name:'ביצוע 180 וחזרה באותו נתיב',alt:''},
+    {name:'',alt:''}
+  ]}
+];
+const seed={
+  aircraft:[],
+  pilots:[],
+  airfields:['באר שבע'],
+  routes:JSON.parse(JSON.stringify(DEFAULT_ROUTES)),
+  last:{}
+};
+function clone(o){return JSON.parse(JSON.stringify(o))}
+function setSouls(v){
+  document.getElementById('fSouls').value=v;
+  document.querySelectorAll('#soulsSeg button').forEach(b=>b.classList.toggle('on',b.dataset.v===String(v)));
+  if(typeof refreshGate==='function') refreshGate();
+}
+function tomorrowStr(){const t=new Date();t.setDate(t.getDate()+1);
+  return t.getFullYear()+'-'+String(t.getMonth()+1).padStart(2,'0')+'-'+String(t.getDate()).padStart(2,'0')}
+function migrate(d){
+  // legacy free-text routes -> single milestone; ensure pilot.phone exists
+  (d.routes||[]).forEach(r=>{
+    if(!r.legs){ r.legs = r.text ? [{name:r.text,alt:''}] : []; delete r.text; }
+    if(!r.dir) r.dir='south';
+  });
+  (d.pilots||[]).forEach(p=>{ if(p.phone===undefined) p.phone=''; });
+  // aircraft: new model uses call=3 letters, reg fixed "4X"
+  (d.aircraft||[]).forEach(a=>{
+    if(a.reg && a.reg!=='4X'){
+      // legacy reg like "4X - HYD" -> pull the letters into call, if call looks non-3-letter
+      const m=(a.reg.match(/([A-Za-z]{3})\s*$/)||[])[1];
+      if(m && (!a.call || a.call.length!==3 || /[^A-Za-z]/.test(a.call))) a.call=m.toUpperCase();
+    }
+    a.reg='4X';
+  });
+  // shared airfields list (point d)
+  if(!Array.isArray(d.airfields)) d.airfields=['באר שבע'];
+  // migrate old default routes to the new naming + content
+  const OLD_TO_NEW={'ברירת מחדל - צפוני':'דיפולט צפוני','ברירת מחדל - דרומי':'דיפולט דרומי'};
+  (d.routes||[]).forEach(r=>{
+    // typo fix first
+    (r.legs||[]).forEach(l=>{ if(l.name==='צ. עד') l.name='צ. ערד'; });
+    // was this a default route (old or new naming)?
+    const newLabel = OLD_TO_NEW[r.label] || r.label;
+    const def = DEFAULT_ROUTES.find(x=>x.label===newLabel);
+    if(def){
+      // it's a default: rename to new label
+      r.label = newLabel;
+      const wasOldPlaceholder = (r.legs||[]).length<=2 &&
+        (r.legs||[]).some(l=>['נקודת כניסה','המשך צפונה','המשך דרומה'].includes(l.name));
+      // refresh content if it was a stale placeholder OR is missing the return-180 waypoint
+      const hasReturn=(r.legs||[]).some(l=>l.name && l.name.indexOf('ביצוע 180')===0);
+      if(wasOldPlaceholder || !hasReturn){
+        r.legs=JSON.parse(JSON.stringify(def.legs));
+      }
+    }
+  });
+  // the 180 turn is a normal waypoint; the true last row is the landing airfield (blank until the pilot types it)
+  (d.routes||[]).forEach(r=>{
+    const L=r.legs||[];
+    if(L.length && L[L.length-1].name && L[L.length-1].name.indexOf('ביצוע 180')===0) L.push({name:'',alt:''});
+  });
+  // one-time cleanup: drop the retired TEST 30 route from existing installs
+  if(Array.isArray(d.routes)) d.routes = d.routes.filter(r=>r.label!=='TEST 30');
+  // ensure any NEW default routes (added in later versions) are present, matched by label
+  DEFAULT_ROUTES.forEach(def=>{
+    if(!(d.routes||[]).some(r=>r.label===def.label)){
+      (d.routes = d.routes||[]).push(JSON.parse(JSON.stringify(def)));
+    }
+  });
+  return d;
+}
+function loadDB(){try{const d=JSON.parse(localStorage.getItem(DB_KEY));return d?migrate(d):clone(seed)}catch(e){return clone(seed)}}
+function saveDB(){localStorage.setItem(DB_KEY,JSON.stringify(db))}
+let db=loadDB();
+
+/* ---------------- toast ---------------- */
+function toast(msg,err){const t=document.getElementById('toast');t.textContent=msg;t.className='toast show'+(err?' err':'');setTimeout(()=>t.className='toast',2600)}
+function showConfirm(title,message,onYes,opts){
+  opts=opts||{};
+  const danger=opts.danger;
+  const yesPrimary=opts.yesPrimary;
+  const yesLabel=opts.yesLabel||'אישור';
+  const noLabel=opts.noLabel||'ביטול';
+  const m=document.getElementById('modal');
+  const noClass = yesPrimary ? 'line' : 'primary';
+  const yesClass = danger ? 'danger-solid' : (yesPrimary ? 'primary' : 'line');
+  m.innerHTML=`<h3 class="${danger?'cf-danger':''}">${danger?'<span class="cf-warn">⚠</span> ':''}${title}</h3>
+    <div class="cf-body">${message}</div>
+    <div class="modal-actions">
+      <button class="btn ${noClass}" id="cfNo">${noLabel}</button>
+      <button class="btn ${yesClass}" id="cfYes">${yesLabel}</button>
+    </div>`;
+  document.getElementById('scrim').classList.add('show');
+  document.getElementById('cfNo').onclick=()=>closeModal();
+  document.getElementById('cfYes').onclick=()=>{closeModal();onYes();};
+}
+
+/* ---------------- populate selects ---------------- */
+function refreshSelects(){
+  const ac=document.getElementById('acSelect');
+  const pl=document.getElementById('pilotSelect');
+  ac.innerHTML = db.aircraft.length ? '' : '<option value="">- אין מטוסים, הוסף -</option>';
+  db.aircraft.forEach((a,i)=>ac.add(new Option(`4X - ${a.call}${a.type?' · '+a.type:''}`,i)));
+  pl.innerHTML = db.pilots.length ? '' : '<option value="">- אין טייסים, הוסף -</option>';
+  db.pilots.forEach((p,i)=>pl.add(new Option(`${p.name} · ${p.lic}`,i)));
+  if(db.last.ac!=null && db.aircraft[db.last.ac]) ac.value=db.last.ac;
+  if(db.last.pilot!=null && db.pilots[db.last.pilot]) pl.value=db.last.pilot;
+  ac.onchange=()=>{db.last.ac=ac.value;saveDB();refreshGate&&refreshGate()};
+  pl.onchange=()=>{db.last.pilot=pl.value;saveDB();syncPilotPhone();refreshGate&&refreshGate()};
+  syncPilotPhone();
+}
+function syncPilotPhone(){
+  const p=currentPilot();
+  document.getElementById('fPhone').value = p.phone || '';
+}
+function refreshAirfields(){
+  const list=db.airfields||[];
+  // fDepart & fDest start empty (placeholder); fAlt allows a blank "none" option
+  [['fAlt',true]].forEach(([id,allowBlank])=>{
+    const sel=document.getElementById(id); if(!sel)return;
+    const prev=sel.value;
+    sel.innerHTML = allowBlank
+      ? '<option value="">- ללא -</option>'
+      : '<option value="" disabled hidden selected>בחר שדה</option>';
+    list.forEach(name=>sel.add(new Option(name,name)));
+    // keep current pick if still valid within this session; otherwise start empty
+    if(prev && (allowBlank?['',...list]:list).includes(prev)) sel.value=prev;
+    else sel.value='';
+    sel.onchange=()=>{db.last[id]=sel.value;saveDB();refreshGate&&refreshGate()};
+  });
+}
+const DIR_LABEL={north:'נתיב צפוני',south:'נתיב דרומי'};
+// finish marker: a larger dot filled with a black/white checkerboard (finish-line motif).
+// start marker is a plain larger green dot handled purely in CSS (.wp-node.first .wp-dot).
+const FINISH_SVG=(function(){
+  // checkerboard clipped to a circle
+  const R=11,cx=11,cy=11,cell=R*2/4; let sq='';
+  for(let ry=0;ry<4;ry++)for(let cxi=0;cxi<4;cxi++){
+    if((ry+cxi)%2===0) sq+='<rect x="'+(cxi*cell)+'" y="'+(ry*cell)+'" width="'+cell+'" height="'+cell+'" fill="#111"/>';
+  }
+  return '<svg viewBox="0 0 22 22" width="22" height="22" aria-hidden="true">'+
+    '<defs><clipPath id="fclip"><circle cx="'+cx+'" cy="'+cy+'" r="'+R+'"/></clipPath></defs>'+
+    '<circle cx="'+cx+'" cy="'+cy+'" r="'+R+'" fill="#fff"/>'+
+    '<g clip-path="url(#fclip)">'+sq+'</g>'+
+    '<circle cx="'+cx+'" cy="'+cy+'" r="'+(R-0.75)+'" fill="none" stroke="#111" stroke-width="1.5"/></svg>';
+})();
+
+function restoreDefaultRoutes(){
+  const esc=s=>(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  const customRoutes = db.routes.filter(r=>!DEFAULT_ROUTES.some(dr=>dr.label===r.label));
+  const doReset=()=>{
+    db.routes = JSON.parse(JSON.stringify(DEFAULT_ROUTES));
+    db.last.route = '0';
+    saveDB();refreshRoutes();
+    toast('נתיבי ברירת המחדל שוחזרו');
+  };
+  if(!customRoutes.length){
+    // nothing custom to lose - light confirm
+    showConfirm('שחזור נתיבי ברירת מחדל',
+      '<p style="margin:0 0 8px">הנתיבים שמורים במכשיר זה בלבד.</p><p style="margin:0">הפעולה תחזיר את שני נתיבי ברירת המחדל (צפוני ודרומי) למצבם המקורי.</p>',
+      doReset,{yesLabel:'שחזר',yesPrimary:true,noLabel:'ביטול'});
+    return;
+  }
+  // there ARE custom routes -> strong danger warning, list them by name
+  const list = customRoutes.map(r=>`<li>${esc(r.label)}</li>`).join('');
+  const msg = `
+    <p class="cf-lead">פעולה זו תמחק לצמיתות את ${customRoutes.length} הנתיבים שיצרת ושמורים במכשיר זה:</p>
+    <ul class="cf-list">${list}</ul>
+    <p class="cf-lead">הם יוחלפו בשני נתיבי ברירת המחדל בלבד. <b>לא ניתן לשחזר את הנתיבים שנמחקו.</b></p>`;
+  showConfirm('מחיקת הנתיבים השמורים', msg, doReset,
+    {danger:true, yesLabel:`מחק ${customRoutes.length} נתיבים ושחזר`, noLabel:'ביטול — השאר כפי שהם'});
+}
+function refreshRoutes(){
+  const sel=document.getElementById('routeSelect');
+  sel.innerHTML = db.routes.length ? '<option value="" disabled hidden>בחר נתיב</option>' : '<option value="">- אין נתיבים, צור חדש -</option>';
+  db.routes.forEach((r,i)=>sel.add(new Option(`${r.label} · ${DIR_LABEL[r.dir]||''}`,i)));
+  if(db.last.route!=null && db.last.route!=='' && db.routes[db.last.route]) sel.value=db.last.route;
+  else sel.value='';
+  sel.onchange=()=>{db.last.route=sel.value;saveDB();clearLegTimes();renderRoutePreview();refreshGate();};
+  renderRoutePills();
+  const hasRoutes = db.routes.length ? '' : 'none';
+  document.getElementById('editRouteBtn').style.display = hasRoutes;
+  document.getElementById('dupRouteBtn').style.display = hasRoutes;
+  document.getElementById('revRouteBtn').style.display = hasRoutes;
+  renderRoutePreview();
+  if(typeof refreshGate==='function') refreshGate();
+}
+function renderRoutePills(){
+  const box=document.getElementById('routePills');
+  const sel=document.getElementById('routeSelect');
+  if(!db.routes.length){box.innerHTML='<div class="pills-empty">אין נתיבים שמורים - צור נתיב חדש</div>';return}
+  box.innerHTML='';
+  db.routes.forEach((r,i)=>{
+    const on = String(sel.value)===String(i);
+    const pill=document.createElement('button');
+    pill.className='route-pill'+(on?' on':'')+(r.dir==='north'?' north':' south');
+    pill.innerHTML=`<span class="rp-label">${r.label}</span>`;
+    pill.onclick=()=>{if(String(sel.value)!==String(i))clearLegTimes();sel.value=i;db.last.route=String(i);saveDB();renderRoutePills();renderRoutePreview();refreshGate();};
+    box.appendChild(pill);
+  });
+}
+
+// waypoint bullets, each "name (altitude)" on its own line
+function legsToText(legs){
+  return (legs||[]).map(m=>`• ${m.name}`).join('\n');
+}
+
+// ETD/ETA are per-flight values, never stored with a route: blank them on a route switch
+function clearLegTimes(){['fEtd','fEta'].forEach(id=>{const e=document.getElementById(id);if(e)e.value=''})}
+function currentRoute(){
+  const i=document.getElementById('routeSelect').value;
+  return (i!==''&&db.routes[i]) ? db.routes[i] : null;
+}
+
+function renderRoutePreview(){
+  const box=document.getElementById('routePreview');
+  const r=currentRoute();
+  if(!r){{const h=document.getElementById('timeHolder');h.appendChild(document.getElementById('fEtd'));h.appendChild(document.getElementById('fEta'));}
+    box.innerHTML='<div class="rp-empty">לא נבחר נתיב</div>';document.getElementById('fRoute').value='';document.getElementById('fRouteDir').value='';
+    const h=document.getElementById('timeHolder');h.appendChild(document.getElementById('fEtd'));h.appendChild(document.getElementById('fEta'));
+    document.getElementById('fDepart').value='';document.getElementById('fDest').value='';return}
+  const legs=r.legs||[];
+  // two-color split (matches PDF): green up to & into בית קמה, purple leaving it southward
+  const pivotIdx=legs.findIndex(m=>m.name && m.name.indexOf('בית קמה')===0);
+  const hasPivot=pivotIdx>=0;
+  const rev=!!r.rev;   // reversed order: purple (south) first, then green (north) from בית קמה on
+  const lineCol=i=>!hasPivot?'ln-purple':(rev?(i<pivotIdx?'ln-purple':'ln-green'):(i<pivotIdx?'ln-green':'ln-purple'));
+  const dotCol=i=>{
+    if(!hasPivot) return 'dot-purple';
+    return rev ? (i>=pivotIdx?'dot-green':'dot-purple') : (i<=pivotIdx?'dot-green':'dot-purple');
+  };
+  {const h=document.getElementById('timeHolder');h.appendChild(document.getElementById('fEtd'));h.appendChild(document.getElementById('fEta'));}
+  box.innerHTML=`<div class="rp-head">מבוסס על: <b>"${DIR_LABEL[r.dir]||''}"</b></div>`+
+    `<div class="wp-line${r.rev?' rv':''}">`+legs.map((m,i)=>{
+      const isFirst=i===0,isLast=i===legs.length-1;
+      const cls=[isFirst?'first':'',isLast?'last':'',lineCol(i),dotCol(i)].filter(Boolean).join(' ');
+      return `<div class="wp-node ${cls}">
+         <span class="wp-dot"></span>
+         ${(m.name||!(isFirst||isLast))?`<span class="wp-text">${m.name}</span>`:`<input class="wp-ep" data-ep="${i}" data-for="${isFirst?'fDepart':'fDest'}" placeholder="בחר ${isFirst?'שדה יציאה':'שדה נחיתה'}" autocomplete="off">`}
+         ${isFirst?'<label class="wp-timeslot wp-timebox" data-slot="fEtd"><span>המראה</span></label>':''}
+         ${isLast?'<label class="wp-timeslot wp-timebox" data-slot="fEta"><span>נחיתה</span></label>':''}
+       </div>`;}).join('')+`</div>`;
+  box.querySelectorAll('[data-slot]').forEach(sl=>sl.appendChild(document.getElementById(sl.dataset.slot)));
+  // a blank endpoint is filled in place and saved as that waypoint's name
+  box.querySelectorAll('.wp-ep').forEach(inp=>{
+    inp.onchange=()=>{
+      const v=inp.value.trim(); if(!v) return;
+      const ri=document.getElementById('routeSelect').value;
+      if(ri!=='' && db.routes[ri] && db.routes[ri].legs[+inp.dataset.ep]){
+        db.routes[ri].legs[+inp.dataset.ep].name=v; saveDB();
+        renderRoutePreview(); refreshGate();
+      }
+    };
+  });
+  // departure = first waypoint; destination = last waypoint
+  const first=legs.length?legs[0].name:'';
+  const lastN=legs.length?legs[legs.length-1].name:'';
+  document.getElementById('fDepart').value=first;
+  document.getElementById('fDest').value=lastN;
+  document.getElementById('fRoute').value=legsToText(r.legs);
+  document.getElementById('fRouteDir').value=DIR_LABEL[r.dir]||'';
+}
+
+/* ---------------- advanced toggle ---------------- */
+function toggleAdv(){
+  document.getElementById('advBody').classList.toggle('show');
+  document.getElementById('advToggle').classList.toggle('open');
+}
+
+/* ---------------- modal (manage lists) ---------------- */
+let modalKind=null;
+function openModal(kind){
+  modalKind=kind;
+  const m=document.getElementById('modal');
+  if(kind==='ac'){
+    m.innerHTML=`<h3>מטוסים</h3><p class="lede">נשמרים במכשיר זה. כל מטוס שתוסיף יופיע ברשימה למעלה - לחיצה על ״הוסף״ מרוקנת את השדות למטוס הבא.</p>
+      <div class="list" id="mList"></div>
+      <div class="addgrid">
+        <div class="reg-input full" dir="ltr">
+          <span class="reg-prefix">4X -</span>
+          <input id="in1" maxlength="3" placeholder="HHH" oninput="this.value=this.value.toUpperCase().replace(/[^A-Z]/g,'')" autocapitalize="characters" style="text-transform:uppercase">
+        </div>
+        <input id="in3" dir="ltr" class="full" placeholder="Aircraft type" style="text-align:left">
+      </div>
+      <div class="modal-actions">
+        <button class="btn line" onclick="addItem(false)">הוסף עוד מטוס</button>
+        <button class="btn primary" onclick="addItem(true)">הוסף וסגור</button>
+      </div>
+      <button class="close-x" onclick="closeModal()" title="סגור">✕</button>`;
+  }else if(kind==='pilot'){
+    m.innerHTML=`<h3>טייסים</h3><p class="lede">נשמרים במכשיר זה. הטלפון נשמר עם הטייס ומתמלא אוטומטית בטופס.</p>
+      <div class="list" id="mList"></div>
+      <div class="addgrid">
+        <input id="in1" placeholder="שם הטייס"><input id="in2" inputmode="numeric" placeholder="מס׳ רישיון">
+        <input id="in3" class="full" placeholder="טלפון נייד לבירורים" inputmode="tel">
+      </div>
+      <div class="modal-actions">
+        <button class="btn line" onclick="addItem(false)">הוסף עוד טייס</button>
+        <button class="btn primary" onclick="addItem(true)">הוסף וסגור</button>
+      </div>
+      <button class="close-x" onclick="closeModal()" title="סגור">✕</button>`;
+  }else if(kind==='field'){
+    m.innerHTML=`<h3>שדות תעופה</h3><p class="lede">רשימה משותפת לשדה יציאה, שדה יעד ושדה משנה. נשמרת במכשיר זה.</p>
+      <div class="list" id="mList"></div>
+      <div class="addgrid"><input id="in1" class="full" placeholder="שם השדה (למשל: הרצליה)"></div>
+      <div class="modal-actions">
+        <button class="btn line" onclick="addItem(false)">הוסף עוד</button>
+        <button class="btn primary" onclick="addItem(true)">הוסף וסגור</button>
+      </div>
+      <button class="close-x" onclick="closeModal()" title="סגור">✕</button>`;
+  }
+  renderModalList();
+  document.getElementById('scrim').classList.add('show');
+}
+let _msData=[];
+function readMsInputs(){
+  // capture what's currently typed so a re-render doesn't lose it
+  const names=[...document.querySelectorAll('#msRows .ms-name')].map(i=>i.value);
+  if(names.length) _msData=names.map(n=>({name:n,alt:''}));
+}
+function renderMsRows(focusIdx){
+  const wrap=document.getElementById('msRows');
+  wrap.innerHTML='';
+  const addBar=(pos)=>{
+    const bar=document.createElement('div');bar.className='ms-insbar';
+    bar.innerHTML='<span class="ms-insbar-line"></span>'+
+      '<button class="ms-insbar-btn" title="הוסף נקודת דיווח כאן">＋ הוסף נקודת דיווח</button>'+
+      '<span class="ms-insbar-line"></span>';
+    bar.querySelector('.ms-insbar-btn').onclick=()=>{ readMsInputs(); _msData.splice(pos,0,{name:'',alt:''}); renderMsRows(pos); };
+    wrap.appendChild(bar);
+  };
+  _msData.forEach((m,i)=>{
+    const row=document.createElement('div');row.className='ms-row';
+    row.innerHTML=`<button class="ms-btn ms-del" title="הסר נקודת דיווח">✕</button>
+      <input class="ms-name"${(i===0||i===_msData.length-1)?' placeholder="'+(i===0?'שדה יציאה':'שדה נחיתה')+'"':' placeholder="שם נקודת דיווח"'} value="${(m.name||'').replace(/"/g,'&quot;')}">`;
+    row.querySelector('.ms-del').onclick=()=>{ readMsInputs(); _msData.splice(i,1); renderMsRows(); };
+    wrap.appendChild(row);
+    if(i<_msData.length-1) addBar(i+1);   // insert-between bar on each divider
+  });
+  if(_msData.length){
+    const tail=document.createElement('div');tail.className='ms-insbar ms-insbar-tail';
+    tail.innerHTML='<span class="ms-insbar-line"></span>'+
+      '<button class="ms-insbar-btn" title="הוסף נקודת דיווח בסוף">＋ הוסף נקודת דיווח</button>'+
+      '<span class="ms-insbar-line"></span>';
+    tail.querySelector('.ms-insbar-btn').onclick=()=>{ readMsInputs(); _msData.push({name:'',alt:''}); renderMsRows(_msData.length-1); };
+    wrap.appendChild(tail);
+  } else {
+    const empty=document.createElement('button');empty.className='ms-add-first';
+    empty.innerHTML='＋ הוסף נקודת דיווח';
+    empty.onclick=()=>{ _msData.push({name:'',alt:''}); renderMsRows(0); };
+    wrap.appendChild(empty);
+  }
+  if(focusIdx!=null){
+    const inputs=wrap.querySelectorAll('.ms-name');
+    const n=inputs[focusIdx];
+    if(n){n.focus();if(n.scrollIntoView)n.scrollIntoView({block:'nearest'});}
+  }
+}
+function addMsRow(name,alt,focus){
+  // kept for compatibility: append one row
+  readMsInputs();
+  _msData.push({name:name||'',alt:''});
+  renderMsRows(focus?_msData.length-1:null);
+}
+function collectMs(){
+  const all=[...document.querySelectorAll('#msRows .ms-name')];
+  return all.map(i=>({name:i.value.trim(), alt:''}))
+    .filter((m,idx)=>m.name || idx===0 || idx===all.length-1);   // blank endpoints are kept
+}
+function renderModalList(){
+  const list=document.getElementById('mList');const arr=arrFor();
+  if(!arr.length){list.innerHTML='<div class="empty" style="color:var(--ink-muted);font-size:12.5px;padding:4px">עדיין ריק</div>';return}
+  list.innerHTML='';
+  arr.forEach((it,i)=>{
+    const row=document.createElement('div');row.className='row';
+    let txt = modalKind==='ac' ? `<span dir="ltr" style="text-align:left;display:block">4X - ${it.call}${it.type?' <small>· '+it.type+'</small>':''}</span>`
+           : modalKind==='field' ? `${it}`
+           : `${it.name} <small>· ${it.lic||'-'}${it.phone?' · '+it.phone:''}</small>`;
+    row.innerHTML=`<div class="m">${txt}</div><button class="x" title="מחק">✕</button>`;
+    row.querySelector('.x').onclick=()=>{arr.splice(i,1);saveDB();renderModalList();afterListChange()};
+    list.appendChild(row);
+  });
+}
+function arrFor(){return modalKind==='ac'?db.aircraft:modalKind==='field'?db.airfields:db.pilots}
+function addItem(closeAfter){
+  const v1=document.getElementById('in1').value.trim();
+  const v2=document.getElementById('in2')?.value.trim();
+  const v3=document.getElementById('in3')?.value.trim();
+  if(modalKind==='ac'){
+    if(!v1){toast('נא למלא אות קריאה',true);return}
+    if(v1.length!==3){toast('אות הקריאה חייבת 3 אותיות',true);return}
+    db.aircraft.push({call:v1,reg:'4X',type:v3||''});
+  }else if(modalKind==='field'){
+    if(!v1){toast('נא למלא שם שדה',true);return}
+    if(db.airfields.includes(v1)){toast('השדה כבר קיים',true);return}
+    db.airfields.push(v1);
+  }else{
+    if(!v1){toast('נא למלא שם טייס',true);return}
+    db.pilots.push({name:v1,lic:v2||'',phone:v3||''});
+  }
+  saveDB();afterListChange();
+  if(closeAfter){toast('נשמר');closeModal();return}
+  ['in1','in2','in3'].forEach(id=>{const e=document.getElementById(id);if(e)e.value=''});
+  renderModalList();
+  document.getElementById('in1').focus();
+  toast('נשמר · אפשר להוסיף עוד');
+}
+function afterListChange(){refreshSelects();refreshAirfields();refreshRoutes();}
+function closeModal(){document.getElementById('scrim').classList.remove('show');modalKind=null}
+
+/* ---------------- step bar: jump + scroll-spy ---------------- */
+function stepbarOffset(){
+  const tb=document.querySelector('.topbar'), sb=document.querySelector('.stepbar');
+}
+let _pulseT1=null,_pulseT2=null;
+function goStep(n){
+  const sec=document.getElementById('sec'+n);
+  if(!sec) return;
+  setActiveStep(n);
+  document.querySelectorAll('.card.pulse').forEach(c=>c.classList.remove('pulse'));
+  clearTimeout(_pulseT1);clearTimeout(_pulseT2);
+  _pulseT1=setTimeout(()=>{sec.classList.add('pulse');},350);
+  _pulseT2=setTimeout(()=>sec.classList.remove('pulse'),2600);
+  _lockStep=true;
+  if(_lockTimer) clearTimeout(_lockTimer);
+  _lockTimer=setTimeout(()=>{ _lockStep=false; },800);
+  const tb=document.querySelector('.topbar'), sb=document.querySelector('.stepbar');
+  const sc=document.querySelector('main');
+  const y=sec.getBoundingClientRect().top-sc.getBoundingClientRect().top+sc.scrollTop-10;
+  sc.scrollTo({top:Math.max(0,y),behavior:'smooth'});
+}
+function setActiveStep(n){
+  for(let i=1;i<=4;i++){
+    const b=document.getElementById('stepBtn'+i);
+    if(b) b.classList.toggle('active',i===n);
+  }
+}
+let _spy, _lockStep=false, _lockTimer=null;
+function computeActiveStep(){
+  const secs=[1,2,3,4].map(i=>document.getElementById('sec'+i)).filter(Boolean);
+  const tb=document.querySelector('.topbar'), sb=document.querySelector('.stepbar');
+  const sc=document.querySelector('main'), mt=sc.getBoundingClientRect().top, mh=sc.clientHeight;
+  const base=40; // reading line starts just under the top of the scroller
+  const max=Math.max(1,sc.scrollHeight-mh);
+  const p=Math.min(1,Math.max(0,sc.scrollTop/max));
+  const line=base+(mh-base)*p; // slides down as we scroll so short last sections still get their turn
+  let active=1;
+  secs.forEach(s=>{
+    const top=s.getBoundingClientRect().top-mt;
+    if(top-line<=0) active=+s.id.replace('sec','');
+  });
+  return active;
+}
+function onScrollSpy(){
+  if(_lockStep) return;
+  setActiveStep(computeActiveStep());
+}
+function initNoBounce(){
+  document.addEventListener('touchmove',e=>{
+    if(e.touches.length>1){e.preventDefault();return;}
+    const sc=e.target.closest&&e.target.closest('main,.modal,#modal,.scrim .sheet');
+    if(!sc) e.preventDefault();
+  },{passive:false});
+}
+function initStepSpy(){
+  initNoBounce();
+  stepbarOffset();
+  document.querySelector('main').addEventListener('scroll',onScrollSpy,{passive:true});
+  setActiveStep(1);
+}
+
+/* ---------------- deadline notes (shown on load + via info button) ---------------- */
+function showNotes(){
+  const m=document.getElementById('modal');
+  m.innerHTML=`
+    <h3 style="text-align:center;margin-bottom:2px">מועדי הגשה למודיעין טיס</h3>
+    <p class="lede" style="text-align:center;margin-bottom:16px">טיסות אז״ם (מרחב) דרומית לבאר-שבע</p>
+    <ul class="note-list">
+      <li>המראה עד 11:00 - יש להגיש עד 13:00 ביום הקודם.</li>
+      <li>המראה אחרי 11:00 - יש להגיש לפחות שעתיים לפני ההמראה.</li>
+    </ul>
+    <div class="modal-actions" style="margin-top:18px">
+      <button class="btn primary" style="flex:1" onclick="closeModal()">הבנתי</button>
+    </div>`;
+  modalKind='notes';
+  document.getElementById('scrim').classList.add('show');
+}
+
+/* ---------------- dedicated route editor ---------------- */
+let editingRouteIdx=null;
+function openRouteEditor(idx,prefill){
+  editingRouteIdx = idx;
+  const r = (idx!=null && db.routes[idx]) ? db.routes[idx] : (prefill || {label:'',dir:'south',legs:[]});
+  const m=document.getElementById('modal');
+  m.innerHTML=`<h3>${idx!=null?'עריכת נתיב':(prefill?'שכפול נתיב':'נתיב חדש')}</h3>
+    <p class="lede">${prefill?'הנתיב הועתק. ערוך ושמור כנתיב חדש.':'שם הנתיב הוא לזיהוי בלבד. הכיוון והנקודות יופיעו ב-PDF לבקר.'}</p>
+    <div class="addgrid"><input id="rName" class="full" placeholder="שם לזיהוי (למשל: באר שבע דרך להבים)" value="${(r.label||'').replace(/"/g,'&quot;')}"></div>
+    <div class="ms-label">כיוון הנתיב</div>
+    <div class="dir-toggle" id="dirToggle">
+      <label class="dir-opt"><input type="radio" name="rdir" value="north" ${r.dir==='north'?'checked':''}><span>נתיב צפוני</span></label>
+      <label class="dir-opt"><input type="radio" name="rdir" value="south" ${r.dir!=='north'?'checked':''}><span>נתיב דרומי</span></label>
+    </div>
+    <div class="ms-label">נקודות דיווח</div>
+    <div id="msRows" class="ms-rows"></div>
+    <div class="modal-actions">
+      ${idx!=null?'<button class="btn line danger" onclick="deleteRoute()">מחק נתיב</button>':''}
+      <button class="btn primary" onclick="saveRoute()">שמירה</button>
+    </div>
+    <button class="close-x" onclick="closeModal()" title="סגור">✕</button>`;
+  const rows=r.legs&&r.legs.length?r.legs:[{name:'',alt:''},{name:'',alt:''}];
+  _msData=rows.map(m=>({name:m.name||'',alt:''}));
+  renderMsRows();
+  document.getElementById('scrim').classList.add('show');
+}
+function editSelectedRoute(){
+  const i=document.getElementById('routeSelect').value;
+  if(i==='' ){toast('אין נתיב לעריכה',true);return}
+  openRouteEditor(+i);
+}
+function duplicateSelectedRoute(){
+  const i=document.getElementById('routeSelect').value;
+  if(i==='' || !db.routes[i]){toast('אין נתיב לשכפול',true);return}
+  const src=db.routes[i];
+  const copy={
+    label:`${src.label} (עותק)`,
+    dir:src.dir,
+    legs:JSON.parse(JSON.stringify(src.legs||[]))
+  };
+  if(src.rev) copy.rev=true;
+  openRouteEditor(null, copy);
+}
+// reversed leg order: new departure = old landing, new landing = old departure,
+// middle waypoints flip, and a 180-turn waypoint stays second-to-last
+function reverseLegs(legs){
+  const L=JSON.parse(JSON.stringify(legs||[])); const n=L.length;
+  if(n>=3 && L[n-2].name && L[n-2].name.indexOf('ביצוע 180')===0){
+    return [L[n-1]].concat(L.slice(1,n-2).reverse(),[L[n-2],L[0]]);
+  }
+  return L.reverse();
+}
+function reverseSelectedRoute(){
+  const i=document.getElementById('routeSelect').value;
+  if(i==='' || !db.routes[i]){toast('בחר נתיב להיפוך',true);return}
+  const src=db.routes[i];
+  const m=document.getElementById('modal');
+  m.innerHTML=`<h3>היפוך נתיב</h3>
+    <div class="cf-body"><p style="margin:0 0 8px">ייווצר נתיב חדש בסדר הפוך (שדה היציאה והנחיתה יתחלפו). הנתיב המקורי יישאר. אפשר למחוק את החדש בכל עת.</p>
+    <p style="margin:0"><b>שעות ההמראה והנחיתה (ETD / ETA) יאופסו.</b></p></div>
+    <div class="modal-actions" style="flex-direction:column">
+      <button class="btn primary" id="rvNew">צור נתיב הפוך</button>
+      <button class="btn line" id="rvNo">ביטול</button>
+    </div>`;
+  document.getElementById('scrim').classList.add('show');
+  document.getElementById('rvNo').onclick=()=>closeModal();
+  document.getElementById('rvNew').onclick=()=>applyReverse(+i);
+}
+// rev = the saved order runs south to north, so the colours mirror (purple south, green north)
+function applyReverse(i){
+  const src=db.routes[i]; if(!src) return;
+  const SUF=' (הפוך)';
+  let sel;
+  {
+    let label=src.label.endsWith(SUF)?src.label.slice(0,-SUF.length):src.label+SUF;
+    while(db.routes.some(r=>r.label===label)) label+=' 2';
+    const legs=reverseLegs(src.legs);
+    legs[0].name=''; legs[legs.length-1].name='';   // endpoints: pilot picks them
+    const rec={label,dir:src.dir,legs};
+    if(!src.rev) rec.rev=true;
+    db.routes.push(rec); sel=db.routes.length-1;
+  }
+  db.last.route=String(sel);
+  clearLegTimes();
+  saveDB(); closeModal(); refreshRoutes();
+}
+function saveRoute(){
+  const label=document.getElementById('rName').value.trim();
+  const dir=(document.querySelector('input[name="rdir"]:checked')||{}).value||'south';
+  const legs=collectMs();
+  if(!label){toast('נא למלא שם נתיב',true);return}
+  if(!legs.length){toast('נא להוסיף לפחות ציון דרך אחד',true);return}
+  const rec={label,dir,legs};
+  if(editingRouteIdx!=null && db.routes[editingRouteIdx] && db.routes[editingRouteIdx].rev) rec.rev=true;
+  if(editingRouteIdx!=null){db.routes[editingRouteIdx]=rec;}
+  else{db.routes.push(rec);db.last.route=String(db.routes.length-1);}
+  saveDB();closeModal();refreshRoutes();
+  if(editingRouteIdx==null){document.getElementById('routeSelect').value=db.last.route;renderRoutePills();renderRoutePreview();refreshGate();}
+  toast('הנתיב נשמר');
+}
+function deleteRoute(){
+  if(editingRouteIdx==null)return;
+  const idx=editingRouteIdx;
+  const r=db.routes[idx];
+  if(!r)return;
+  const esc=s=>(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  const isDefault=DEFAULT_ROUTES.some(dr=>dr.label===r.label);
+  const note=isDefault
+    ? '<p class="cf-lead" style="color:var(--ink-muted)">ניתן לשחזר נתיבי ברירת מחדל בהמשך דרך ״שחזר נתיבי ברירת מחדל״.</p>'
+    : '<p class="cf-lead"><b>לא ניתן לשחזר נתיב זה לאחר המחיקה.</b></p>';
+  const msg=`<p class="cf-lead">למחוק לצמיתות את הנתיב:</p>
+    <ul class="cf-list"><li>${esc(r.label)}</li></ul>${note}`;
+  showConfirm('מחיקת נתיב', msg, ()=>{
+    db.routes.splice(idx,1);
+    if(db.last.route!=null && +db.last.route>=db.routes.length) db.last.route = db.routes.length?String(db.routes.length-1):null;
+    editingRouteIdx=null;
+    saveDB();refreshRoutes();closeModal();toast('הנתיב נמחק');
+  }, {danger:true, yesLabel:'מחק נתיב', noLabel:'ביטול'});
+}
+
+/* ---------------- gather + build sheet ---------------- */
+function val(id){return document.getElementById(id).value.trim()}
+function currentAircraft(){const i=document.getElementById('acSelect').value;return db.aircraft[i]||{call:'',reg:'',type:''}}
+function currentPilot(){const i=document.getElementById('pilotSelect').value;return db.pilots[i]||{name:'',lic:''}}
+
+/* ---------------- PDF readiness gate ---------------- */
+let _missingIds=[];      // element ids of currently-missing required fields
+let _showMissing=false;  // whether to visually highlight them (after tap)
+function refreshGate(){
+  const val=id=>{const el=document.getElementById(id);return el?el.value.trim():''};
+  const hasAircraft = document.getElementById('acSelect').value!=='' && db.aircraft.length>0;
+  const hasPilot    = document.getElementById('pilotSelect').value!=='' && db.pilots.length>0;
+  const hasDate  = !!val('fDate');
+  const hasEtd   = !!val('fEtd');
+  const hasDep   = !!val('fDepart');
+  const hasDest  = !!val('fDest');
+  const hasEta   = !!val('fEta');
+  const hasFuel  = !!val('fFuel');
+  const hasIas   = !!val('fIas');
+  const hasPurpose = !!val('fPurpose');
+  const hasSouls = !!val('fSouls');
+  const hasRoute = currentRoute()!=null;
+
+  const s1 = hasAircraft && hasPilot;
+  const s2 = hasRoute && hasDep && hasEtd && hasDest && hasEta;
+  const s3 = hasFuel && hasIas && hasPurpose && hasSouls;
+  markStepDone(1,s1); markStepDone(2,s2); markStepDone(3,s3);
+
+  // map each requirement to the element id(s) to highlight
+  const req=[
+    [hasAircraft,'acSelect'],[hasPilot,'pilotSelect'],
+    [hasDate,'fDate'],[hasRoute,'routePills'],[hasDep,'fDepart'],[hasEtd,'fEtd'],
+    [hasDest,'fDest'],[hasEta,'fEta'],[hasFuel,'fFuel'],[hasIas,'fIas'],[hasPurpose,'fPurpose'],[hasSouls,'fSouls']
+  ];
+  _missingIds = req.filter(r=>!r[0]).map(r=>r[1]);
+
+  const btn=document.getElementById('genBtn');
+  const hint=document.getElementById('pdfHint');
+  if(_missingIds.length){
+    btn.classList.add('not-ready');
+    hint.textContent='חסר מידע להפקה - יש להשלים את השדות המסומנים';
+  }else{
+    btn.classList.remove('not-ready');
+    hint.textContent='';
+    _showMissing=false;
+  }
+  applyMissingHighlight();
+}
+function applyMissingHighlight(){
+  // clear all, then re-mark if in reveal mode
+  document.querySelectorAll('.field-missing').forEach(el=>el.classList.remove('field-missing'));
+  if(!_showMissing) return;
+  _missingIds.forEach(id=>{ let el=document.getElementById(id); if(el&&el.type==='hidden') el=document.querySelector('[data-for="'+id+'"]'); if(el) el.classList.add('field-missing'); });
+}
+function revealMissing(){
+  if(!_missingIds.length) return;
+  _showMissing=true;
+  applyMissingHighlight();
+  // scroll the first missing field into view
+  let first=document.getElementById(_missingIds[0]);
+  if(first&&first.type==='hidden') first=document.querySelector('[data-for="'+_missingIds[0]+'"]');
+  if(first){ const sc=document.querySelector('main'); const y=first.getBoundingClientRect().top-sc.getBoundingClientRect().top+sc.scrollTop-60; sc.scrollTo({top:Math.max(0,y),behavior:'smooth'}); }
+}
+function markStepDone(n,done){
+  const b=document.getElementById('stepBtn'+n);
+  if(b) b.classList.toggle('done',!!done);
+  const idx=document.getElementById('idx'+n);
+  if(idx) idx.classList.toggle('idx-done',!!done);
+  const sec=document.getElementById('sec'+n);
+  if(sec) sec.classList.toggle('sec-done',!!done);
+}
+
+function buildSheet(){
+  const a=currentAircraft(),p=currentPilot();
+  const d=val('fDate'); const dateHe = d ? d.split('-').reverse().join('/') : '';
+  const esc=s=>(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  // value wrapper: blue + bold; blank stays truly blank (point e + f)
+  const V=s=>{const t=esc(s);return t?`<span class="v">${t}</span>`:'';};
+  const r=currentRoute();
+  // Authority-required layout: the route is ONE inline text line (wrapping as needed),
+  // waypoints joined by " > ". Color split: names up to & INCLUDING בית קמה are green,
+  // and the "> " separator that FOLLOWS a green waypoint is green too; everything from the
+  // first waypoint after בית קמה onward is purple.
+  let routeHtml='';
+  if(r){
+    const legs=(r.legs||[]).filter(m=>m&&m.name);
+    const pivotIdx=legs.findIndex(m=>m.name && m.name.indexOf('בית קמה')===0);
+    const hasPivot=pivotIdx>=0;
+    const GREEN='#1F9D57', PURPLE='#7A3FB4';
+    const parts=legs.map((m,i)=>{
+      // a waypoint is green if it's at or before the pivot
+      const isGreen = hasPivot ? (r.rev ? i>=pivotIdx : i<=pivotIdx) : false;
+      const nameCol = isGreen ? GREEN : PURPLE;
+      const nameHtml=`<span class="rt-wp" style="color:${nameCol}">${esc(m.name)}</span>`;
+      if(i<legs.length-1){
+        // separator after this waypoint: green only if THIS waypoint is strictly before pivot
+        // (so the "> " leaving בית קמה is already purple)
+        const sepGreen = hasPivot ? (r.rev ? i>=pivotIdx : i<pivotIdx) : false;
+        const sepCol = sepGreen ? GREEN : PURPLE;
+        return nameHtml+`<span class="rt-sep" style="color:${sepCol}"> &gt; </span>`;
+      }
+      return nameHtml;
+    });
+    routeHtml=`<div class="fs-routehdr2">מבוסס על: <span class="v">"${esc(DIR_LABEL[r.dir]||'')}"</span></div>`+
+      `<div class="rt-inline">${parts.join('')}</div>`;
+  }
+  document.getElementById('formSheet').innerHTML=`
+    <div class="fs-head"><div>נספח ב'</div><div class="l">פמ"ת פנים ארצי</div></div>
+    <div class="fs-title">תוכנית לטיסת מרחב</div>
+    <div class="fs-sub">א' - 11</div>
+    <div class="fs-date">לתאריך: ${V(dateHe)}</div>
+    <div class="fs-body">
+    <table class="fs">
+      <tr>
+        <th>אות קריאה</th><th>רישום מטוס</th><th>סוג מטוס</th><th>שם הטייס</th>
+        <th>מס' הרישיון</th><th>שם החברה</th><th>מטרת הטיסה</th>
+      </tr>
+      <tr>
+        <td>${V(a.call)}</td><td>${V(a.reg)}</td><td>${V(a.type)}</td><td>${V(p.name)}</td>
+        <td>${V(p.lic)}</td><td>${V(val('fOperator'))}</td><td>${V(val('fPurpose'))}</td>
+      </tr>
+    </table>
+    <table class="fs" style="border-top:none">
+      <tr>
+        <th>זמן המראה משוער</th><th>זמן נחיתה סופית</th><th>שדה יעד סופי</th><th>שדה משנה</th>
+        <th>זמן דלק</th><th>מהירות בקשר IAS</th><th>מס' נפשות במטוס</th>
+        <th>יש חריגה מהפמ"ת</th><th>יש אישור רת"א</th><th>עבודות אוויר</th>
+      </tr>
+      <tr>
+        <td>${V(val('fEtd'))}</td><td>${V(val('fEta'))}</td><td>${V(val('fDest'))}</td><td>${V(val('fAlt'))}</td>
+        <td>${V(val('fFuel'))}</td><td>${V(val('fIas'))}</td><td>${V(val('fSouls'))}</td>
+        <td>${V(val('fDev'))}</td><td>${V(val('fRtaa'))}</td><td>${V(val('fAirwork'))}</td>
+      </tr>
+    </table>
+    <div class="fs-routebox">
+      <table style="border-top:none;height:100%">
+        <tr><th style="width:12%">שדה יציאה/אתר</th><th style="width:9%">זמן המראה</th><th style="width:9%">זמן נחיתה</th><th>פירוט הנתיבים (מיקום, גובה, נ.צ WGS-84, שעה משוערת)</th></tr>
+        <tr class="route-row">
+          <td style="text-align:center">${V(val('fDepart'))}</td>
+          <td style="text-align:center">${V(val('fEtd'))}</td>
+          <td style="text-align:center"></td>
+          <td class="detail" style="vertical-align:top">${routeHtml}</td>
+        </tr>
+        <tr class="landing-row">
+          <td style="text-align:center">${V(val('fDest'))}</td>
+          <td style="text-align:center"></td>
+          <td style="text-align:center">${V(val('fEta'))}</td>
+          <td class="detail" style="text-align:right;font-weight:800">נחיתה סופית</td>
+        </tr>
+        <tr class="fill-row"><td colspan="4"></td></tr>
+      </table>
+    </div>
+      </table>
+    </div>
+    </div>
+    <div class="fs-lines">
+      <div class="ln"><b>כללי טיסה:</b><span>${V(val('fRules'))}</span></div>
+      <div class="ln"><b>אישורים מצורפים:</b><span>${V(val('fApprovals'))}</span></div>
+      <div class="ln"><b>תיאומים שבוצעו ע"י המפעיל/טייס:</b><span>${V(val('fCoord'))}</span></div>
+      <div class="ln"><b>הערות מודיעין טיס והגבלות:</b><span>${V(val('fNotes'))}</span></div>
+      <div class="ln"><b>טלפון נייד לבירורים:</b><span>${V(val('fPhone'))}</span></div>
+    </div>
+    <div class="fs-sign">
+      <div class="sig"><span class="sig-name v">${esc(p.name||'')}</span><span class="sig-line"></span><span class="sig-label">חתימת הטייס</span></div>
+      <div class="sig"><span class="sig-name">&nbsp;</span><span class="sig-line"></span><span class="sig-label">חתימת התדריכן</span></div>
+    </div>
+    <div class="fs-foot"><div>עדכון 1/23</div><div>רשות התעופה האזרחית</div><div>18 מאי 2023</div></div>
+  `;
+}
+
+/* ---------------- generate PDF ---------------- */
+async function generatePDF(){
+  if(_missingIds && _missingIds.length){ revealMissing(); return; }
+  if(!db.aircraft.length||!db.pilots.length){toast('הוסף לפחות מטוס וטייס אחד',true);return}
+  if(!val('fDate')||!val('fEtd')){toast('נא למלא תאריך ושעת המראה',true);return}
+  const btn=document.getElementById('genBtn');btn.disabled=true;btn.textContent='מכין PDF…';
+  try{
+    buildSheet();
+    const sheet=document.getElementById('formSheet');
+    const canvas=await html2canvas(sheet,{scale:2,backgroundColor:'#fff',useCORS:true});
+    // JPEG (not PNG) keeps the file a few hundred KB instead of ~20MB, so it's emailable
+    const img=canvas.toDataURL('image/jpeg',0.85);
+    const {jsPDF}=window.jspdf;
+    const pdf=new jsPDF({orientation:'p',unit:'mm',format:'a4',compress:true});
+    const pw=210, ph=297, margin=6;
+    const iw=pw-margin*2;
+    const ih=canvas.height*iw/canvas.width;
+    pdf.addImage(img,'JPEG',margin,margin,iw,Math.min(ih,ph-margin*2));
+    // build the PDF blob, then show the submission popup (pilot opens the PDF from there)
+    const a=currentAircraft();const dstr=val('fDate');
+    const fname=`MERHAV_fpl_${(a.call||'flight')}_${dstr}.pdf`;
+    const blob=pdf.output('blob');
+    const url=URL.createObjectURL(blob);
+    _lastPdf={url,fname,blob};
+    showPdfReady();
+    setTimeout(()=>{ try{URL.revokeObjectURL(url);}catch(e){} },300000);
+    // remember last used
+    db.last.ac=document.getElementById('acSelect').value;
+    db.last.pilot=document.getElementById('pilotSelect').value;
+    saveDB();
+    trackPdf();
+  }catch(e){console.error(e);toast('שגיאה ביצירת ה-PDF',true)}
+  btn.disabled=false;btn.innerHTML=`<svg width="18" height="18" viewBox="0 0 20 20" ><path d="M10 2v9m0 0l-3.5-3.5M10 11l3.5-3.5M3 15v2a1 1 0 001 1h12a1 1 0 001-1v-2" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg> הפק תוכנית לטיסת מרחב`;
+}
+
+async function forceReload(){
+  try{
+    if('caches' in window){ const k=await caches.keys(); await Promise.all(k.map(x=>caches.delete(x))); }
+    if(navigator.serviceWorker){ const r=await navigator.serviceWorker.getRegistrations(); await Promise.all(r.map(x=>x.unregister())); }
+  }catch(e){}
+  const u=new URL(window.location.href); u.searchParams.set('r',Date.now()); window.location.replace(u.href);
+}
+
+
+/* ---------------- Share a flight plan as a link / code ---------------- */
+const SHARE_NAMES=["מנחת ראשון", "שורק", "בית עובד", "א״ת נס ציונה", "נצר סירני", "נשרים", "איילון", "לטרון", "שער הגיא", "אשתאול", "בית שמש", "זכריה", "גפן", "כפר מנחם", "נחלה", "מחלף קרית גת", "מחלף מאחז", "בית קמה", "צומת להבים", "צומת שוקת", "מיתר", "תל ערד", "ערד", "צומת חתרורים", "נוה זוהר", "צומת הערבה", "חצבה", "צופר", "ביצוע 180 וחזרה באותו נתיב", "צומת גורל", "חטיבת הנגב", "צומת שרה", "אוהלים", "רמת חובב", "צומת הנגב", "טללים", "שדה בוקר", "חורבות עבדת", "כלא נפחא", "צומת הרוחות", "מעלה מישר", "צומת ציחור"];   // append-only: an index in a shared link points here
+const SHARE_BASE='https://eligrt.github.io/MERHAV_fpl/PURPLE_Routes_AZAM.html';
+const b64u={
+  enc:u8=>{let b='';u8.forEach(c=>b+=String.fromCharCode(c));return btoa(b).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'')},
+  dec:t=>{t=t.replace(/-/g,'+').replace(/_/g,'/');while(t.length%4)t+='=';const b=atob(t);const u=new Uint8Array(b.length);for(let i=0;i<b.length;i++)u[i]=b.charCodeAt(i);return u}
+};
+function packLegs(legs){
+  const out=[];let run='';
+  const flush=()=>{if(run){out.push(run);run=''}};
+  legs.forEach(l=>{
+    const n=l.name||'',a=l.alt||'',i=SHARE_NAMES.indexOf(n);
+    if(n&&i>=0&&!a) run+=String.fromCharCode(48+i);
+    else{flush();out.push([i>=0&&n?i:n,a]);}
+  });
+  flush();return out;
+}
+function unpackLegs(g){
+  const out=[];
+  g.forEach(x=>{
+    if(typeof x==='string'){for(const ch of x) out.push([SHARE_NAMES[ch.charCodeAt(0)-48]||'','']);}
+    else out.push([typeof x[0]==='number'?(SHARE_NAMES[x[0]]||''):String(x[0]||''),String(x[1]||'')]);
+  });
+  return out;
+}
+async function packShare(o){
+  const u8=new TextEncoder().encode(JSON.stringify(o));
+  if(typeof CompressionStream!=='undefined'){
+    try{const cs=new CompressionStream('deflate-raw');const w=cs.writable.getWriter();w.write(u8);w.close();
+      const z=new Uint8Array(await new Response(cs.readable).arrayBuffer());return 'z'+b64u.enc(z);}catch(e){}
+  }
+  return 'j'+b64u.enc(u8);
+}
+async function unpackShare(code){
+  const k=code[0],u8=b64u.dec(code.slice(1));
+  if(k==='z'){const ds=new DecompressionStream('deflate-raw');const w=ds.writable.getWriter();w.write(u8);w.close();
+    return JSON.parse(new TextDecoder().decode(new Uint8Array(await new Response(ds.readable).arrayBuffer())));}
+  return JSON.parse(new TextDecoder().decode(u8));
+}
+function collectShare(){
+  const r=currentRoute(); if(!r) return null;
+  const v=id=>{const e=document.getElementById(id);return e?e.value.trim():''};
+  const o={v:2,r:{l:r.label,d:r.dir,g:packLegs(r.legs)}};
+  if(r.rev) o.r.rv=1;
+  const pl=db.pilots[document.getElementById('pilotSelect').value];
+  if(pl&&pl.name) o.n=String(pl.name).trim().split(/\s+/)[0];   // sender first name only
+  o.t=[v('fEtd'),v('fEta')]; o.f=v('fFuel'); o.i=v('fIas'); o.p=v('fPurpose'); o.s=v('fSouls');
+  return o;
+}
+async function shareText(){
+  const o=collectShare(); if(!o) return '';
+  return 'MERHAV_FPL - '+o.r.l+'\n'+SHARE_BASE+'#p='+await packShare(o);
+}
+async function copyShareLink(btn){
+  let txt=''; try{txt=await shareText();}catch(e){}
+  if(!txt){toast('אין תוכנית לשיתוף',true);return}
+  let ok=false;
+  try{await navigator.clipboard.writeText(txt);ok=true;}catch(e){
+    const ta=document.createElement('textarea');ta.value=txt;ta.style.cssText='position:fixed;opacity:0';document.body.appendChild(ta);ta.select();
+    try{ok=document.execCommand('copy');}catch(_){} ta.remove();
+  }
+  if(ok&&btn){const sp=btn.querySelector('.act-t span')||btn;const t=sp.textContent;sp.textContent='הקישור הועתק ✓';setTimeout(()=>{sp.textContent=t},2200);}
+  else if(!ok) toast('ההעתקה נכשלה',true);
+}
+function extractShareCode(txt){
+  const m=(txt||'').match(/[#&?]p=([zj][A-Za-z0-9_-]+)/)||(txt||'').trim().match(/^([zj][A-Za-z0-9_-]{8,})$/);
+  return m?m[1]:null;
+}
+function showImport(){
+  const m=document.getElementById('modal');
+  m.innerHTML=`<h3>ייבוא תוכנית משותפת</h3>
+    <p class="lede">הדבק כאן את הקישור שקיבלת.</p>
+    <button class="btn line" id="impPaste" style="width:100%;margin-bottom:10px">הדבק מהלוח</button>
+    <textarea class="share-ta" id="impTa" placeholder="https://...#p=..." autocapitalize="off" autocorrect="off" spellcheck="false"></textarea>
+    <div class="modal-actions">
+      <button class="btn line" id="impNo">ביטול</button>
+      <button class="btn primary" id="impGo">טען</button>
+    </div>`;
+  modalKind='import';
+  document.getElementById('scrim').classList.add('show');
+  document.getElementById('impNo').onclick=closeModal;
+  document.getElementById('impPaste').onclick=async()=>{
+    try{const t=await navigator.clipboard.readText();document.getElementById('impTa').value=t;
+      const code=extractShareCode(t); if(code) await confirmShared(code); else toast('לא נמצא קישור בלוח',true);}
+    catch(e){toast('אפשר להדביק ידנית בתיבה',true);}
+  };
+  document.getElementById('impGo').onclick=async()=>{
+    const code=extractShareCode(document.getElementById('impTa').value);
+    if(!code){toast('הקישור לא תקין',true);return}
+    await confirmShared(code);
+  };
+}
+async function confirmShared(code){
+  let o; try{o=await unpackShare(code); if(!o||!o.r||!Array.isArray(o.r.g)) throw 0; if(o.v>=2) o.r.g=unpackLegs(o.r.g);}catch(e){closeModal();toast('הקישור לא תקין',true);return}
+  const esc=t=>String(t==null?'':t).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  const g=o.r.g, ft=(o.t&&o.t[0])?` · ETD ${esc(o.t[0])}`:'', fe=(o.t&&o.t[1])?` · ETA ${esc(o.t[1])}`:'';
+  const msg=`<div class="share-sum"><b>${esc(o.r.l)}</b><br>${esc((g[0]||[])[0]||'?')} - ${esc((g[g.length-1]||[])[0]||'?')}<br>${g.length} נקודות${ft}${fe}</div>
+    <p class="cf-lead">לטעון את התוכנית לטופס? הטייס והמטוס שלך לא ישתנו.</p>`;
+  const standalone=(window.navigator.standalone===true)||(window.matchMedia&&matchMedia('(display-mode: standalone)').matches);
+  const hint=standalone?'':`<p class="cf-lead" style="color:var(--ink-muted);font-size:12px">נפתח בדפדפן ולא באפליקציה שבמסך הבית. לטעינה באפליקציה: <a href="#" id="cpForApp" style="color:var(--ink)">העתק קישור</a>, פתח את האפליקציה ובחר ״ייבוא תוכנית משותפת״ ← ״הדבק מהלוח״.</p>`;
+  showConfirm('תוכנית משותפת',msg+hint,()=>applyShared(o),{yesPrimary:true,yesLabel:'טען כאן',noLabel:'ביטול'});
+  const cp=document.getElementById('cpForApp');
+  if(cp) cp.onclick=async e=>{e.preventDefault();try{await navigator.clipboard.writeText(SHARE_BASE+'#p='+code);toast('הקישור הועתק');}catch(_){toast('ההעתקה נכשלה',true);}};
+}
+function applyShared(o){
+  const legs=o.r.g.map(a=>({name:String(a[0]||''),alt:String(a[1]||'')}));
+  const baseL=String(o.r.l||'').replace(/ \(שיתוף[^)]*\)$/,'');
+  const same=r=>(r.label===o.r.l||r.label===baseL+' (שיתוף'+(o.n?' - '+String(o.n).slice(0,20):'')+')')&&JSON.stringify(r.legs)===JSON.stringify(legs);
+  let idx=db.routes.findIndex(same);
+  if(idx<0){
+    let label=String(o.r.l||'נתיב משותף').replace(/ \(שיתוף[^)]*\)$/,'')+' (שיתוף'+(o.n?' - '+String(o.n).slice(0,20):'')+')';
+    while(db.routes.some(r=>r.label===label)) label+=' 2';
+    const rec={label,dir:o.r.d==='north'?'north':'south',legs}; if(o.r.rv) rec.rev=true;
+    db.routes.push(rec); idx=db.routes.length-1;
+  }
+  db.last.route=String(idx); saveDB();
+  refreshRoutes(); clearLegTimes();
+  const set=(id,v)=>{const e=document.getElementById(id);if(e&&v!=null&&v!=='')e.value=v};
+  set('fEtd',o.t&&o.t[0]); set('fEta',o.t&&o.t[1]); set('fFuel',o.f); set('fIas',o.i); set('fPurpose',o.p);
+  if(o.s) setSouls(String(o.s));
+  renderRoutePreview(); refreshGate();
+  toast('התוכנית נטענה');
+  goStep(2);
+}
+async function checkIncomingShare(){
+  const code=extractShareCode(location.hash);
+  if(!code) return false;
+  try{history.replaceState(null,'',location.pathname+location.search);}catch(e){}
+  await confirmShared(code);
+  return true;
+}
+
+/* ---------------- PDF counter (global, via dedicated worker) ---------------- */
+const PDF_COUNTER_BASE='https://merhav-counter.eligrt.workers.dev';
+const PDF_COUNTER_KEY='merhav_fpl';
+function renderPdfCount(n){
+  const el=document.getElementById('pdfCounter');
+  if(el && n!=null && n!==undefined) el.textContent=`${n} PDF`;
+}
+let _lastPdf=null;
+function showPdfReady(){
+  const m=document.getElementById('modal');
+  const r=currentRoute();
+  const v=id=>{const e=document.getElementById(id);return e?e.value.trim():''};
+  const esc=t=>String(t==null?'':t).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  const times=(v('fEtd')&&v('fEta'))?` · ETD ${esc(v('fEtd'))} · ETA ${esc(v('fEta'))}`:'';
+  const ic={
+    mail:'<svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>',
+    dl:'<svg viewBox="0 0 24 24"><path d="M12 3v12m0 0-4-4m4 4 4-4M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2"/></svg>',
+    share:'<svg viewBox="0 0 24 24"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="m8.6 13.5 6.8 4M15.4 6.5l-6.8 4"/></svg>',
+    ch:'<svg class="act-ch" viewBox="0 0 24 24"><path d="m15 6-6 6 6 6"/></svg>',
+    copy:'<svg class="ic-copy" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg><svg class="ic-check" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path d="M20 6 9 17l-5-5" stroke-linecap="round" stroke-linejoin="round"/></svg>'
+  };
+  m.innerHTML=`
+    <div class="ready-tick">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#2d8a52" stroke-width="2.4"><path d="M20 6 9 17l-5-5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </div>
+    <h3 style="text-align:center">תוכנית המרחב מוכנה</h3>
+    <p class="act-sub">${r?'<b>'+esc(r.label)+'</b>':''}${times}</p>
+    <button class="act-chip" id="mailCopy" onclick="copyMail()">אל: <code>fpl@iaa.gov.il</code>${ic.copy}</button>
+    <div class="act-list">
+      <button class="act-row main" onclick="sharePdf()"><span class="act-ic">${ic.mail}</span><span class="act-t"><b>שלח למודיעין טיס</b><span>קובץ ה PDF יצורף לגוף המייל</span></span>${ic.ch}</button>
+      <button class="act-row" onclick="openLastPdf()"><span class="act-ic">${ic.dl}</span><span class="act-t"><b>שמור PDF</b><span>הורדה למכשיר</span></span>${ic.ch}</button>
+      <button class="act-row" id="shareLinkBtn" onclick="copyShareLink(this)"><span class="act-ic">${ic.share}</span><span class="act-t"><b>שתף תוכנית</b><span>יצירת קישור לשיתוף עם משתמש אחר</span></span>${ic.ch}</button>
+    </div>
+    <button class="act-close" onclick="closeModal()">סגור</button>`;
+  modalKind='pdfready';
+  document.getElementById('scrim').classList.add('show');
+}
+function openLastPdf(){
+  if(!_lastPdf){closeModal();return}
+  // download with the real filename so the viewer/tab shows MERHAV_fpl_… not a UUID
+  const link=document.createElement('a');
+  link.href=_lastPdf.url; link.download=_lastPdf.fname;
+  link.rel='noopener'; link.target='_blank';
+  document.body.appendChild(link); link.click(); link.remove();
+}
+const MAIL_TO='fpl@iaa.gov.il';
+async function sharePdf(){
+  if(!_lastPdf){closeModal();return}
+  const a=currentAircraft();
+  const call = a && a.call ? `4X-${a.call}` : '4X-___';
+  const d=val('fDate');                                   // yyyy-mm-dd
+  const dateHe = d ? d.split('-').reverse().join('/') : '';// dd/mm/yyyy
+  const subject=`הגשת תוכנית לטיסת אז"ם דרומית לבאר שבע (${call} | ${dateHe})`;
+  const body=[
+    'שלום רב,',
+    '',
+    'מצורפת תוכנית לטיסת מרחב בנתיב אז"ם דרומית לבאר שבע באמצ"ש (נתיב תעופה ספורטיבית - "סגול")',
+    '',
+    'אודה לאישורה'
+  ].join('\n');
+  // preferred path: native share sheet with the PDF file attached
+  try{
+    const file=new File([_lastPdf.blob], _lastPdf.fname, {type:'application/pdf'});
+    if(navigator.canShare && navigator.canShare({files:[file]})){
+      await navigator.share({ files:[file], title:subject, text:body });
+      return;
+    }
+  }catch(e){ if(e && e.name==='AbortError') return; /* user cancelled */ }
+  // fallback: no file-share support -> open a prefilled mail draft + trigger the download,
+  // so the pilot attaches the just-downloaded file manually
+  try{
+    const link=document.createElement('a');
+    link.href=_lastPdf.url; link.download=_lastPdf.fname;
+    document.body.appendChild(link); link.click(); link.remove();
+  }catch(e){}
+  const mailto=`mailto:${MAIL_TO}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+  window.location.href=mailto;
+  toast('צריך לצרף את הקובץ שהורד להודעה');
+}
+function copyMail(){
+  const addr='fpl@iaa.gov.il';
+  const done=()=>{ const b=document.getElementById('mailCopy'); if(b){ b.classList.add('copied'); toast('הכתובת הועתקה'); setTimeout(()=>b.classList.remove('copied'),1500); } };
+  if(navigator.clipboard && navigator.clipboard.writeText){
+    navigator.clipboard.writeText(addr).then(done).catch(()=>fallbackCopyMail(addr,done));
+  } else { fallbackCopyMail(addr,done); }
+}
+function fallbackCopyMail(text,cb){
+  try{ const ta=document.createElement('textarea'); ta.value=text; ta.style.position='fixed'; ta.style.opacity='0'; document.body.appendChild(ta); ta.select(); document.execCommand('copy'); document.body.removeChild(ta); cb&&cb(); }
+  catch(e){ toast('לא ניתן להעתיק',true); }
+}
+async function trackPdf(){
+  try{
+    const r=await fetch(`${PDF_COUNTER_BASE}/increment?ac=${PDF_COUNTER_KEY}`);
+    const d=await r.json();
+    if(d && d.value!==undefined){ renderPdfCount(d.value); try{localStorage.setItem('merhav_pdf_count',String(d.value));}catch(e){} }
+  }catch(e){ /* silent - offline or worker down */ }
+}
+async function fetchPdfCount(){
+  try{
+    const r=await fetch(`${PDF_COUNTER_BASE}/get?ac=${PDF_COUNTER_KEY}`);
+    const d=await r.json();
+    if(d && d.value!==undefined){ renderPdfCount(d.value); try{localStorage.setItem('merhav_pdf_count',String(d.value));}catch(e){} }
+  }catch(e){ /* silent */ }
+}
+
+/* ---------------- no zoom gestures (CSS touch-action handles double-tap; these block the rest) ---------------- */
+document.addEventListener('dblclick',e=>e.preventDefault(),{passive:false});
+document.addEventListener('gesturestart',e=>e.preventDefault(),{passive:false});
+
+/* ---------------- init ---------------- */
+// Full-height fix: on an iPhone home-screen app, 100vh and innerHeight come out shorter than the real screen
+// and leave an empty strip under the footer. Use the screen height there (same as AirATIS / AirCheck).
+function setAppHeight(){
+  const iosApp=window.navigator.standalone===true;
+  const h=iosApp?Math.max(window.innerHeight,screen.height):window.innerHeight;
+  document.documentElement.style.setProperty('--app-h',h+'px');
+}
+setAppHeight();
+window.addEventListener('resize',setAppHeight);
+window.addEventListener('orientationchange',()=>setTimeout(setAppHeight,300));
+function refitAppHeight(){setAppHeight();setTimeout(setAppHeight,250);setTimeout(setAppHeight,800)}
+window.addEventListener('pageshow',refitAppHeight);
+window.addEventListener('focus',refitAppHeight);
+document.addEventListener('visibilitychange',()=>{if(!document.hidden)refitAppHeight()});
+
+// Splash: plays on every open (tap to skip), then the deadline notes show as before.
+function runSplash(){
+  const sp=document.getElementById('splash');
+  document.getElementById('spIcon').src=document.querySelector('link[rel="apple-touch-icon"]').href;
+  sp.classList.remove('gone');sp.setAttribute('aria-hidden','false');
+  let done=false;
+  const l1=document.getElementById('spLine1'),l2=document.getElementById('spLine2');
+  const text='Paperwork, minus the work.';
+  const finish=()=>{
+    if(done)return;done=true;
+    checkIncomingShare().then(had=>{ if(!had) showNotes(); });   // popup sits under the fading splash, so splash -> popup is one smooth crossfade
+    sp.classList.add('fade');sp.setAttribute('aria-hidden','true');
+    setTimeout(()=>{sp.classList.add('gone');sp.classList.remove('fade');},300);
+  };
+  sp.addEventListener('click',finish);
+  let i=0;
+  setTimeout(function tick(){
+    if(done)return;
+    i++;
+    l1.innerHTML=text.slice(0,i)+'<span class="sp-cursor"></span>';
+    if(i<text.length)setTimeout(tick,55);
+    else{l1.textContent=text;l2.classList.add('show');setTimeout(finish,1100);}
+  },250);
+}
+
+(function init(){
+  document.getElementById('hdrIcon').src=document.querySelector('link[rel="apple-touch-icon"]').href;
+  document.getElementById('fDate').value=tomorrowStr();
+  db.last.route='';   // route selection starts clean each flight (pilot/aircraft persist)
+    refreshSelects();refreshAirfields();refreshRoutes();
+  try{const c=localStorage.getItem('merhav_pdf_count');if(c)renderPdfCount(c);}catch(e){}
+  fetchPdfCount();
+  // step bar + gate
+  initStepSpy();
+  setSouls('1');
+  refreshGate();
+  // recompute gate on any relevant input
+  ['fDate','fEtd','fDepart','fDest','fEta','fFuel','fIas','fPurpose','fSouls','acSelect','pilotSelect','fRoute'].forEach(id=>{
+    const el=document.getElementById(id);
+    if(el){ el.addEventListener('change',refreshGate); el.addEventListener('input',refreshGate); }
+  });
+  window.addEventListener('resize',stepbarOffset);
+  // splash first; the deadline notes show right after it
+  runSplash();
+})();
+</script>
+</body>
+</html>
