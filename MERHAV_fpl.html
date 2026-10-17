@@ -526,7 +526,7 @@ button.lsa-foot-slot{cursor:pointer;padding:8px 0;}
 .hdr-clock>.hdr-clock-lbl,.strip-clock>.strip-clock-lbl{order:2;font-size:9px!important;line-height:1;letter-spacing:.22em;margin:0!important;}
 .hdr-clock>:not(.hdr-clock-lbl),.strip-clock>:not(.strip-clock-lbl){order:1;}
 .hdr-clock-row{display:flex;flex-direction:column-reverse!important;align-items:center!important;gap:3px!important;}
-.hdr-fam .hdr-clock-lbl{font-size:9px;letter-spacing:.22em}
+.lsa-hdr.hdr-fam .hdr-clock-lbl{font-size:9px;letter-spacing:.22em;opacity:.75}
 /* LSA-ALIGN v1 END */
 
 /* LSA header family v2: icon+name LEFT, optional middle, UTC RIGHT */
@@ -558,7 +558,7 @@ button.lsa-foot-slot{cursor:pointer;padding:8px 0;}
     <div class="sp-line2" id="spLine2">TAP · PDF · EMAIL</div>
   </div>
   <div class="sp-skip lsa-skip">tap to skip</div>
-  <div class="lsa-foot" dir="ltr"><span class="lsa-foot-slot"></span><span class="lsa-foot-ver">MERHAV_fpl · v1.01.106 · built by eligrt</span><button type="button" class="lsa-foot-reload" onclick="event.stopPropagation();forceReload()">טען מחדש</button></div>
+  <div class="lsa-foot" dir="ltr"><span class="lsa-foot-slot"></span><span class="lsa-foot-ver">MERHAV_fpl · v1.01.107 · built by eligrt</span><button type="button" class="lsa-foot-reload" onclick="event.stopPropagation();forceReload()">טען מחדש</button></div>
 </div>
 
 <div class="topbar lsa-hdr hdr-fam">
@@ -686,7 +686,7 @@ button.lsa-foot-slot{cursor:pointer;padding:8px 0;}
   </div>
 </div>
 
-<div class="lsa-foot" dir="ltr"><span class="lsa-foot-slot" id="pdfCounter"></span><span class="lsa-foot-ver">MERHAV_fpl · v1.01.106 · built by eligrt</span><button type="button" class="lsa-foot-reload" onclick="lsaReload()">טען מחדש</button></div>
+<div class="lsa-foot" dir="ltr"><span class="lsa-foot-slot" id="pdfCounter"></span><span class="lsa-foot-ver">MERHAV_fpl · v1.01.107 · built by eligrt</span><button type="button" class="lsa-foot-reload" onclick="lsaReload()">טען מחדש</button></div>
 
 <!-- MODAL -->
 <div class="scrim" id="scrim" onclick="if(event.target===this)closeModal()">
@@ -1900,7 +1900,7 @@ function runSplash(){
 <script>
 /* ANONYMOUS USAGE STATS (Firebase REST, fire and forget): merhav/devices/{random id} - counters only, no flight or pilot details */
 (function(){
-  var DB='https://aircheck-80530-default-rtdb.europe-west1.firebasedatabase.app',SV={'.sv':'timestamp'},INC={'.sv':{increment:1}},QK='mhst_q',VER='v1.01.106';
+  var DB='https://aircheck-80530-default-rtdb.europe-west1.firebasedatabase.app',SV={'.sv':'timestamp'},INC={'.sv':{increment:1}},QK='mhst_q',VER='v1.01.107';
   function rand(){var s='';try{var a=new Uint8Array(12);crypto.getRandomValues(a);a.forEach(function(b){s+=(b%36).toString(36);});}catch(e){while(s.length<12)s+=Math.floor(Math.random()*36).toString(36);}return s;}
   function devId(){try{var id=localStorage.getItem('mhst_id');if(!id||!/^[a-z0-9]{8,32}$/.test(id)){id=rand();localStorage.setItem('mhst_id',id);}return id;}catch(e){return window.__mhTmp||(window.__mhTmp=rand());}}
   function osName(){var u=navigator.userAgent||'';if(/android/i.test(u))return 'Android';if(/iphone|ipad|ipod/i.test(u))return 'iOS';if(/macintosh/i.test(u)&&(navigator.maxTouchPoints||0)>1)return 'iOS';return 'Desktop';}
