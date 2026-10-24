@@ -547,7 +547,7 @@ button.lsa-foot-slot{cursor:pointer;padding:8px 0;}
 .lsa-foot-reload{font-family:'IBM Plex Sans Hebrew',sans-serif}
 .lsa-hdr.hdr-fam .hdr-clock-lbl{font-size:9px;letter-spacing:.22em;opacity:.75}
 /* LSA-ALIGN v1 END */
-/* v1.01.108: while the cream splash is up, html/body are cream so the iPhone status bar fade is cream, not navy (navy again as the splash starts fading) */
+/* v1.01.109: while the cream splash is up, html/body are cream so the iPhone status bar fade is cream, not navy (navy again as the splash starts fading) */
 html:has(#splash:not(.gone):not(.fade)),body:has(#splash:not(.gone):not(.fade)){background:var(--paper);}
 
 /* LSA header family v2: icon+name LEFT, optional middle, UTC RIGHT */
@@ -579,7 +579,7 @@ html:has(#splash:not(.gone):not(.fade)),body:has(#splash:not(.gone):not(.fade)){
     <div class="sp-line2" id="spLine2">TAP · PDF · EMAIL</div>
   </div>
   <div class="sp-skip lsa-skip">tap to skip</div>
-  <div class="lsa-foot" dir="ltr"><span class="lsa-foot-slot"></span><span class="lsa-foot-ver">MERHAV_fpl · v1.01.108 · built by eligrt</span><button type="button" class="lsa-foot-reload" onclick="event.stopPropagation();forceReload()">טען מחדש</button></div>
+  <div class="lsa-foot" dir="ltr"><span class="lsa-foot-slot"></span><span class="lsa-foot-ver">MERHAV_fpl · v1.01.109 · built by eligrt</span><button type="button" class="lsa-foot-reload" onclick="event.stopPropagation();forceReload()">טען מחדש</button></div>
 </div>
 
 <div class="topbar lsa-hdr hdr-fam">
@@ -707,7 +707,7 @@ html:has(#splash:not(.gone):not(.fade)),body:has(#splash:not(.gone):not(.fade)){
   </div>
 </div>
 
-<div class="lsa-foot" dir="ltr"><span class="lsa-foot-slot" id="pdfCounter"></span><span class="lsa-foot-ver">MERHAV_fpl · v1.01.108 · built by eligrt</span><button type="button" class="lsa-foot-reload" onclick="lsaReload()">טען מחדש</button></div>
+<div class="lsa-foot" dir="ltr"><span class="lsa-foot-slot" id="pdfCounter"></span><span class="lsa-foot-ver">MERHAV_fpl · v1.01.109 · built by eligrt</span><button type="button" class="lsa-foot-reload" onclick="lsaReload()">טען מחדש</button></div>
 
 <!-- MODAL -->
 <div class="scrim" id="scrim" onclick="if(event.target===this)closeModal()">
@@ -1863,14 +1863,18 @@ function setAppHeight(){
   const iosApp=window.navigator.standalone===true;
   const h=iosApp?Math.max(window.innerHeight,screen.height):window.innerHeight;
   document.documentElement.style.setProperty('--app-h',h+'px');
+  // iOS can restore the app with the page scrolled / offset (page sits too low, footer off-screen): pin it back to the top
+  try{window.scrollTo(0,0);document.documentElement.scrollTop=0;document.body.scrollTop=0;}catch(e){}
 }
 setAppHeight();
 window.addEventListener('resize',setAppHeight);
 window.addEventListener('orientationchange',()=>setTimeout(setAppHeight,300));
-function refitAppHeight(){setAppHeight();setTimeout(setAppHeight,250);setTimeout(setAppHeight,800)}
+function refitAppHeight(){setAppHeight();setTimeout(setAppHeight,250);setTimeout(setAppHeight,800);setTimeout(setAppHeight,1600)}
 window.addEventListener('pageshow',refitAppHeight);
 window.addEventListener('focus',refitAppHeight);
 document.addEventListener('visibilitychange',()=>{if(!document.hidden)refitAppHeight()});
+window.addEventListener('load',refitAppHeight);
+if(window.visualViewport){window.visualViewport.addEventListener('resize',setAppHeight);window.visualViewport.addEventListener('scroll',()=>{if(window.visualViewport.offsetTop!==0)setAppHeight()});}
 
 // Splash: plays on every open (tap to skip), then the deadline notes show as before.
 function runSplash(){
@@ -1921,7 +1925,7 @@ function runSplash(){
 <script>
 /* ANONYMOUS USAGE STATS (Firebase REST, fire and forget): merhav/devices/{random id} - counters only, no flight or pilot details */
 (function(){
-  var DB='https://aircheck-80530-default-rtdb.europe-west1.firebasedatabase.app',SV={'.sv':'timestamp'},INC={'.sv':{increment:1}},QK='mhst_q',VER='v1.01.108';
+  var DB='https://aircheck-80530-default-rtdb.europe-west1.firebasedatabase.app',SV={'.sv':'timestamp'},INC={'.sv':{increment:1}},QK='mhst_q',VER='v1.01.109';
   function rand(){var s='';try{var a=new Uint8Array(12);crypto.getRandomValues(a);a.forEach(function(b){s+=(b%36).toString(36);});}catch(e){while(s.length<12)s+=Math.floor(Math.random()*36).toString(36);}return s;}
   function devId(){try{var id=localStorage.getItem('mhst_id');if(!id||!/^[a-z0-9]{8,32}$/.test(id)){id=rand();localStorage.setItem('mhst_id',id);}return id;}catch(e){return window.__mhTmp||(window.__mhTmp=rand());}}
   function osName(){var u=navigator.userAgent||'';if(/android/i.test(u))return 'Android';if(/iphone|ipad|ipod/i.test(u))return 'iOS';if(/macintosh/i.test(u)&&(navigator.maxTouchPoints||0)>1)return 'iOS';return 'Desktop';}
