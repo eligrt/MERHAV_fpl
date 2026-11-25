@@ -550,7 +550,7 @@ button.lsa-foot-slot{cursor:pointer;padding:8px 0;}
 .lsa-foot-reload{font-family:'IBM Plex Sans Hebrew',sans-serif}
 .lsa-hdr.hdr-fam .hdr-clock-lbl{font-size:9px;letter-spacing:.22em;opacity:.75}
 /* LSA-ALIGN v1 END */
-/* v1.01.113: while the cream splash is up, html/body are cream so the iPhone status bar fade is cream, not navy (navy again as the splash starts fading) */
+/* v1.01.114: while the cream splash is up, html/body are cream so the iPhone status bar fade is cream, not navy (navy again as the splash starts fading) */
 html:has(#splash:not(.gone):not(.fade)),body:has(#splash:not(.gone):not(.fade)){background:var(--paper);}
 
 /* LSA header family v2: icon+name LEFT, optional middle, UTC RIGHT */
@@ -582,7 +582,7 @@ html:has(#splash:not(.gone):not(.fade)),body:has(#splash:not(.gone):not(.fade)){
     <div class="sp-line2" id="spLine2">TAP · PDF · EMAIL</div>
   </div>
   <div class="sp-skip lsa-skip">tap to skip</div>
-  <div class="lsa-foot" dir="ltr"><span class="lsa-foot-slot"></span><span class="lsa-foot-ver">MERHAV_fpl · v1.01.113 · built by eligrt</span><button type="button" class="lsa-foot-reload" onclick="event.stopPropagation();forceReload()">טען מחדש</button></div>
+  <div class="lsa-foot" dir="ltr"><span class="lsa-foot-slot"></span><span class="lsa-foot-ver">MERHAV_fpl · v1.01.114 · built by eligrt</span><button type="button" class="lsa-foot-reload" onclick="event.stopPropagation();forceReload()">טען מחדש</button></div>
 </div>
 
 <div class="topbar lsa-hdr hdr-fam">
@@ -710,7 +710,7 @@ html:has(#splash:not(.gone):not(.fade)),body:has(#splash:not(.gone):not(.fade)){
   </div>
 </div>
 
-<div class="lsa-foot" dir="ltr"><span class="lsa-foot-slot" id="pdfCounter"></span><span class="lsa-foot-ver">MERHAV_fpl · v1.01.113 · built by eligrt</span><button type="button" class="lsa-foot-reload" onclick="forceReload()">טען מחדש</button></div>
+<div class="lsa-foot" dir="ltr"><span class="lsa-foot-slot" id="pdfCounter"></span><span class="lsa-foot-ver">MERHAV_fpl · v1.01.114 · built by eligrt</span><button type="button" class="lsa-foot-reload" onclick="forceReload()">טען מחדש</button></div>
 
 <!-- MODAL -->
 <div class="scrim" id="scrim" onclick="if(event.target===this)closeModal()">
@@ -1663,7 +1663,7 @@ function collectShare(){
   const o={v:2,r:{l:r.label,d:r.dir,g:packLegs(r.legs)}};
   if(r.rev) o.r.rv=1;
   const pl=db.pilots[document.getElementById('pilotSelect').value];
-  if(pl&&pl.name) o.n=String(pl.name).trim().split(/\s+/)[0];   // sender first name only
+  if(pl&&pl.name) o.n=String(pl.name).trim().slice(0,40);   // sender name (shown to the friend)
   o.t=[v('fEtd'),v('fEta')]; o.f=v('fFuel'); o.i=v('fIas'); o.p=v('fPurpose'); o.s=v('fSouls');
   return o;
 }
@@ -1714,21 +1714,17 @@ async function confirmShared(code){
   let o; try{o=await unpackShare(code); if(!o||!o.r||!Array.isArray(o.r.g)) throw 0; if(o.v>=2) o.r.g=unpackLegs(o.r.g);}catch(e){closeModal();toast('הקישור לא תקין',true);return}
   const esc=t=>String(t==null?'':t).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
   const g=o.r.g, ft=(o.t&&o.t[0])?` · ETD ${esc(o.t[0])}`:'', fe=(o.t&&o.t[1])?` · ETA ${esc(o.t[1])}`:'';
-  const msg=`<div class="share-sum"><b>${esc(o.r.l)}</b><br>${esc((g[0]||[])[0]||'?')} - ${esc((g[g.length-1]||[])[0]||'?')}<br>${g.length} נקודות${ft}${fe}</div>
-    <p class="cf-lead">לטעון את התוכנית לטופס? הטייס והמטוס שלך לא ישתנו.</p>`;
-  const standalone=(window.navigator.standalone===true)||(window.matchMedia&&matchMedia('(display-mode: standalone)').matches);
-  const hint=standalone?'':`<p class="cf-lead" style="color:var(--ink-muted);font-size:12px">נפתח בדפדפן ולא באפליקציה שבמסך הבית. לטעינה באפליקציה: <a href="#" id="cpForApp" style="color:var(--ink)">העתק קישור</a>, פתח את האפליקציה ובחר ״ייבוא תוכנית משותפת״ ← ״הדבק מהלוח״.</p>`;
-  showConfirm('תוכנית משותפת',msg+hint,()=>applyShared(o),{yesPrimary:true,yesLabel:'טען כאן',noLabel:'ביטול'});
-  const cp=document.getElementById('cpForApp');
-  if(cp) cp.onclick=async e=>{e.preventDefault();try{await navigator.clipboard.writeText(SHARE_BASE+'#p='+code);toast('הקישור הועתק');}catch(_){toast('ההעתקה נכשלה',true);}};
+  const msg=`<div class="share-sum"><b>${esc(o.r.l)}</b><br>${esc((g[0]||[])[0]||'?')} - ${esc((g[g.length-1]||[])[0]||'?')}<br>${g.length} נקודות${ft}${fe}</div>`;
+  const who=o.n?esc(o.n):'';
+  showConfirm(who?`${who} שיתף איתך תוכנית טיסה`:'שיתפו איתך תוכנית טיסה',msg,()=>applyShared(o),{yesPrimary:true,yesLabel:'טען והצג את תוכנית הטיסה',noLabel:'ביטול'});
 }
 function applyShared(o){
   const legs=o.r.g.map(a=>({name:String(a[0]||''),alt:String(a[1]||'')}));
   const baseL=String(o.r.l||'').replace(/ \(שיתוף[^)]*\)$/,'');
-  const same=r=>(r.label===o.r.l||r.label===baseL+' (שיתוף'+(o.n?' - '+String(o.n).slice(0,20):'')+')')&&JSON.stringify(r.legs)===JSON.stringify(legs);
+  const same=r=>(r.label===o.r.l||r.label===baseL+' (שיתוף'+(o.n?' - '+String(o.n).trim().split(/\s+/)[0].slice(0,20):'')+')')&&JSON.stringify(r.legs)===JSON.stringify(legs);
   let idx=db.routes.findIndex(same);
   if(idx<0){
-    let label=String(o.r.l||'נתיב משותף').replace(/ \(שיתוף[^)]*\)$/,'')+' (שיתוף'+(o.n?' - '+String(o.n).slice(0,20):'')+')';
+    let label=String(o.r.l||'נתיב משותף').replace(/ \(שיתוף[^)]*\)$/,'')+' (שיתוף'+(o.n?' - '+String(o.n).trim().split(/\s+/)[0].slice(0,20):'')+')';
     while(db.routes.some(r=>r.label===label)) label+=' 2';
     const rec={label,dir:o.r.d==='north'?'north':'south',legs}; if(o.r.rv) rec.rev=true;
     db.routes.push(rec); idx=db.routes.length-1;
@@ -1947,7 +1943,7 @@ function runSplash(){
 <script>
 /* ANONYMOUS USAGE STATS (Firebase REST, fire and forget): merhav/devices/{random id} - counters only, no flight or pilot details */
 (function(){
-  var DB='https://aircheck-80530-default-rtdb.europe-west1.firebasedatabase.app',SV={'.sv':'timestamp'},INC={'.sv':{increment:1}},QK='mhst_q',VER='v1.01.113';
+  var DB='https://aircheck-80530-default-rtdb.europe-west1.firebasedatabase.app',SV={'.sv':'timestamp'},INC={'.sv':{increment:1}},QK='mhst_q',VER='v1.01.114';
   function rand(){var s='';try{var a=new Uint8Array(12);crypto.getRandomValues(a);a.forEach(function(b){s+=(b%36).toString(36);});}catch(e){while(s.length<12)s+=Math.floor(Math.random()*36).toString(36);}return s;}
   function devId(){try{var id=localStorage.getItem('mhst_id');if(!id||!/^[a-z0-9]{8,32}$/.test(id)){id=rand();localStorage.setItem('mhst_id',id);}return id;}catch(e){return window.__mhTmp||(window.__mhTmp=rand());}}
   function osName(){var u=navigator.userAgent||'';if(/android/i.test(u))return 'Android';if(/iphone|ipad|ipod/i.test(u))return 'iOS';if(/macintosh/i.test(u)&&(navigator.maxTouchPoints||0)>1)return 'iOS';return 'Desktop';}
