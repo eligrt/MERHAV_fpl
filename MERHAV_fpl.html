@@ -120,6 +120,21 @@
   .card > .head .idx.idx-opt{color:var(--ink-faint)}
   .card > .head .idx.idx-done{color:var(--cleared)}
   .card > .head .sub{font-size:11.5px;color:var(--ink-muted);margin-inline-start:auto;font-weight:500}
+  .pf-hint{background:#fdf0d3;border:1px solid #f59e0b;border-radius:8px;padding:9px 12px;font-size:13px;color:#8a4b08;margin-bottom:12px;line-height:1.5}
+  .pf-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px 10px}
+  .pf-grid .full{grid-column:1/-1}
+  .pf-grid label{display:block;font-size:12.5px;font-weight:600;color:var(--ink-muted);margin-bottom:5px}
+  .pf-grid input{width:100%;min-height:48px;font:inherit;font-size:16px;padding:8px 12px;border:1.5px solid var(--gold-lite);border-radius:8px;background:var(--paper);color:var(--ink-body)}
+  .pf-grid input.need{background:#fdf0d3;border-color:#f59e0b}
+  .pf-grid input.ltr{direction:ltr;text-align:left}
+  .pf-sec{font-size:11px;letter-spacing:.08em;color:var(--gold-deep);font-weight:700;grid-column:1/-1;border-bottom:1px dashed var(--gold-lite);padding-bottom:4px;margin-top:4px}
+  .pf-save{width:100%;margin-top:14px;min-height:48px}
+  .pf-line{display:flex;align-items:center;gap:12px;padding:6px 4px}
+  .pf-line .ic{width:34px;height:34px;border-radius:50%;background:rgba(31,111,63,.12);border:1.5px solid var(--cleared2);display:flex;align-items:center;justify-content:center;color:var(--cleared);flex:0 0 34px}
+  .pf-line .t{flex:1;min-width:0}.pf-line .t b{display:block;font-size:15px;color:var(--ink)}.pf-line .t span{font-size:12.5px;color:var(--ink-muted);direction:ltr;display:inline-block}
+  .pf-line button{background:none;border:0;color:var(--ink);text-decoration:underline;text-underline-offset:3px;font:inherit;font-size:14px;padding:12px 10px;min-height:44px}
+  #sec3.sec-need{border-color:#f59e0b}
+  #sec3.collapsed > .head{border-bottom:0;margin-bottom:0;padding-bottom:0}
   #sec4{border-style:dashed}
 
   /* ---------- Fields ---------- */
@@ -550,7 +565,7 @@ button.lsa-foot-slot{cursor:pointer;padding:8px 0;}
 .lsa-foot-reload{font-family:'IBM Plex Sans Hebrew',sans-serif}
 .lsa-hdr.hdr-fam .hdr-clock-lbl{font-size:9px;letter-spacing:.22em;opacity:.75}
 /* LSA-ALIGN v1 END */
-/* v1.01.114: while the cream splash is up, html/body are cream so the iPhone status bar fade is cream, not navy (navy again as the splash starts fading) */
+/* v1.01.115: while the cream splash is up, html/body are cream so the iPhone status bar fade is cream, not navy (navy again as the splash starts fading) */
 html:has(#splash:not(.gone):not(.fade)),body:has(#splash:not(.gone):not(.fade)){background:var(--paper);}
 
 /* LSA header family v2: icon+name LEFT, optional middle, UTC RIGHT */
@@ -582,7 +597,7 @@ html:has(#splash:not(.gone):not(.fade)),body:has(#splash:not(.gone):not(.fade)){
     <div class="sp-line2" id="spLine2">TAP · PDF · EMAIL</div>
   </div>
   <div class="sp-skip lsa-skip">tap to skip</div>
-  <div class="lsa-foot" dir="ltr"><span class="lsa-foot-slot"></span><span class="lsa-foot-ver">MERHAV_fpl · v1.01.114 · built by eligrt</span><button type="button" class="lsa-foot-reload" onclick="event.stopPropagation();forceReload()">טען מחדש</button></div>
+  <div class="lsa-foot" dir="ltr"><span class="lsa-foot-slot"></span><span class="lsa-foot-ver">MERHAV_fpl · v1.01.115 · built by eligrt</span><button type="button" class="lsa-foot-reload" onclick="event.stopPropagation();forceReload()">טען מחדש</button></div>
 </div>
 
 <div class="topbar lsa-hdr hdr-fam">
@@ -598,9 +613,9 @@ html:has(#splash:not(.gone):not(.fade)),body:has(#splash:not(.gone):not(.fade)){
 
 <div class="stepbar">
   <div class="rail">
-    <button class="step" id="stepBtn1" onclick="goStep(1)"><span class="step-dot"><span>1</span></span><span class="step-lbl">טייס ומטוס</span></button>
-    <button class="step" id="stepBtn2" onclick="goStep(2)"><span class="step-dot"><span>2</span></span><span class="step-lbl">נתיב</span></button>
-    <button class="step" id="stepBtn3" onclick="goStep(3)"><span class="step-dot"><span>3</span></span><span class="step-lbl">פרטי טיסה</span></button>
+    <button class="step" id="stepBtn1" onclick="goStep(1)"><span class="step-dot"><span>1</span></span><span class="step-lbl">נתיב</span></button>
+    <button class="step" id="stepBtn2" onclick="goStep(2)"><span class="step-dot"><span>2</span></span><span class="step-lbl">פרטי טיסה</span></button>
+    <button class="step" id="stepBtn3" onclick="goStep(3)"><span class="step-dot"><span>3</span></span><span class="step-lbl">טייס ומטוס</span></button>
     <button class="step opt" id="stepBtn4" onclick="goStep(4)"><span class="step-dot"><span>4</span></span><span class="step-lbl">נוסף</span></button>
   </div>
 </div>
@@ -613,30 +628,9 @@ html:has(#splash:not(.gone):not(.fade)),body:has(#splash:not(.gone):not(.fade)){
     <input type="date" id="fDate">
   </div>
 
-  <!-- WHO -->
-  <section class="card" id="sec1">
-    <div class="head"><span class="idx" id="idx1">01</span><h2>טייס ומטוס</h2><span class="sub">נשמר להמראה הבאה</span></div>
-    <div class="stack">
-      <div class="field">
-        <label>טייס</label>
-        <div class="pick-row">
-          <select id="pilotSelect"></select>
-          <button class="pick-manage" onclick="openModal('pilot')" title="ניהול טייסים">＋</button>
-        </div>
-      </div>
-      <div class="field">
-        <label>אות קריאה / מטוס</label>
-        <div class="pick-row">
-          <select id="acSelect" dir="ltr" style="text-align:left"></select>
-          <button class="pick-manage" onclick="openModal('ac')" title="ניהול מטוסים">＋</button>
-        </div>
-      </div>
-    </div>
-  </section>
-
   <!-- ROUTE (step 2): departure row, waypoints, landing row -->
-  <section class="card" id="sec2">
-    <div class="head"><span class="idx" id="idx2">02</span><h2>נתיב הטיסה</h2><span class="sub">בחר נתיב שמור או צור חדש</span></div>
+  <section class="card" id="sec1">
+    <div class="head"><span class="idx" id="idx1">01</span><h2>נתיב הטיסה</h2><span class="sub">בחר נתיב שמור או צור חדש</span></div>
     <div class="route-savenote">נתיבים מותאמים אישית נשמרים על המכשיר לשימוש חוזר</div>
     <select id="routeSelect" style="display:none"></select>
     <div class="route-pills" id="routePills"></div>
@@ -660,8 +654,8 @@ html:has(#splash:not(.gone):not(.fade)),body:has(#splash:not(.gone):not(.fade)){
   </section>
 
   <!-- FLIGHT DETAILS (step 3) -->
-  <section class="card" id="sec3">
-    <div class="head"><span class="idx" id="idx3">03</span><h2>פרטי הטיסה</h2></div>
+  <section class="card" id="sec2">
+    <div class="head"><span class="idx" id="idx2">02</span><h2>פרטי הטיסה</h2></div>
     <div class="grid">
       <div class="field"><label>זמן דלק <span class="hint">(בשעות)</span></label><input type="text" id="fFuel" inputmode="decimal" placeholder="למשל 2.5"></div>
       <div class="field"><label>מהירות בקשר <span class="hint">IAS</span></label><input type="text" id="fIas" inputmode="numeric" value="90"></div>
@@ -669,6 +663,29 @@ html:has(#splash:not(.gone):not(.fade)),body:has(#splash:not(.gone):not(.fade)){
       <div class="field"><label>נפשות במטוס</label>
         <div class="seg" id="soulsSeg"><button type="button" data-v="1" class="on" onclick="setSouls('1')">1</button><button type="button" data-v="2" onclick="setSouls('2')">2</button></div>
         <input type="hidden" id="fSouls" value="1"></div>
+    </div>
+  </section>
+
+  <!-- PROFILE (step 3): one pilot, one aircraft, saved on this device -->
+  <section class="card" id="sec3">
+    <div class="head"><span class="idx" id="idx3">03</span><h2>טייס ומטוס</h2><span class="sub">נשמר במכשיר</span></div>
+    <div id="pfLine" class="pf-line" style="display:none">
+      <div class="ic"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path d="M20 6 9 17l-5-5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      <div class="t"><b id="pfLineName"></b><span id="pfLineAc"></span></div>
+      <button type="button" onclick="pfEdit()">עריכה</button>
+    </div>
+    <div id="pfForm">
+      <div class="pf-hint" id="pfHint">כדי להפיק את התוכנית, מלא את הפרטים שלך. זה נשמר במכשיר ולא יידרש שוב.</div>
+      <div class="pf-grid">
+        <div class="pf-sec">הטייס</div>
+        <div class="full"><label for="pfName">שם הטייס</label><input id="pfName" placeholder="שם מלא" autocomplete="off"></div>
+        <div><label for="pfLic">מספר רישיון</label><input id="pfLic" class="ltr" inputmode="numeric" autocomplete="off"></div>
+        <div><label for="pfPhone">טלפון</label><input id="pfPhone" class="ltr" inputmode="tel" autocomplete="off"></div>
+        <div class="pf-sec">המטוס</div>
+        <div><label for="pfCall">אות קריאה (זנב)</label><input id="pfCall" class="ltr" placeholder="4X-___" autocapitalize="characters" autocomplete="off"></div>
+        <div><label for="pfType">סוג המטוס</label><input id="pfType" class="ltr" placeholder="Texan 570" autocomplete="off"></div>
+      </div>
+      <button type="button" class="btn primary pf-save" id="pfSave" onclick="pfDone()">שמור</button>
     </div>
   </section>
 
@@ -710,7 +727,7 @@ html:has(#splash:not(.gone):not(.fade)),body:has(#splash:not(.gone):not(.fade)){
   </div>
 </div>
 
-<div class="lsa-foot" dir="ltr"><span class="lsa-foot-slot" id="pdfCounter"></span><span class="lsa-foot-ver">MERHAV_fpl · v1.01.114 · built by eligrt</span><button type="button" class="lsa-foot-reload" onclick="forceReload()">טען מחדש</button></div>
+<div class="lsa-foot" dir="ltr"><span class="lsa-foot-slot" id="pdfCounter"></span><span class="lsa-foot-ver">MERHAV_fpl · v1.01.115 · built by eligrt</span><button type="button" class="lsa-foot-reload" onclick="forceReload()">טען מחדש</button></div>
 
 <!-- MODAL -->
 <div class="scrim" id="scrim" onclick="if(event.target===this)closeModal()">
@@ -893,18 +910,60 @@ function showConfirm(title,message,onYes,opts){
 }
 
 /* ---------------- populate selects ---------------- */
-function refreshSelects(){
-  const ac=document.getElementById('acSelect');
-  const pl=document.getElementById('pilotSelect');
-  ac.innerHTML = db.aircraft.length ? '' : '<option value="">- אין מטוסים, הוסף -</option>';
-  db.aircraft.forEach((a,i)=>ac.add(new Option(`4X - ${a.call}${a.type?' · '+a.type:''}`,i)));
-  pl.innerHTML = db.pilots.length ? '' : '<option value="">- אין טייסים, הוסף -</option>';
-  db.pilots.forEach((p,i)=>pl.add(new Option(`${p.name} · ${p.lic}`,i)));
-  if(db.last.ac!=null && db.aircraft[db.last.ac]) ac.value=db.last.ac;
-  if(db.last.pilot!=null && db.pilots[db.last.pilot]) pl.value=db.last.pilot;
-  ac.onchange=()=>{db.last.ac=ac.value;saveDB();refreshGate&&refreshGate()};
-  pl.onchange=()=>{db.last.pilot=pl.value;saveDB();syncPilotPhone();refreshGate&&refreshGate()};
-  syncPilotPhone();
+function refreshSelects(){ renderProfile(); syncPilotPhone(); }
+/* ---------------- profile: one pilot + one aircraft ---------------- */
+let pfEditing=false;
+function pfData(){
+  const p=db.pilots[0]||{}, a=db.aircraft[0]||{};
+  return {name:p.name||'',lic:p.lic||'',phone:p.phone||'',call:a.call||'',type:a.type||''};
+}
+function pfComplete(){const d=pfData();return !!(d.name&&d.lic&&d.call&&d.call.length===3)}
+function pfNormCall(v){
+  let t=String(v||'').toUpperCase().replace(/\s/g,'').replace(/^4X-?/,'').replace(/[^A-Z]/g,'');
+  return t.slice(0,3);
+}
+function pfSaveField(){
+  const g=id=>document.getElementById(id).value.trim();
+  const call=pfNormCall(g('pfCall'));
+  const pl={name:g('pfName'),lic:g('pfLic'),phone:g('pfPhone')};
+  const ac={call:call,reg:'4X',type:g('pfType')};
+  db.pilots[0]=Object.assign(db.pilots[0]||{},pl);
+  db.aircraft[0]=Object.assign(db.aircraft[0]||{},ac);
+  saveDB(); syncPilotPhone(); pfMarkNeed(); refreshGate();
+}
+function pfMarkNeed(){
+  const need=(id,bad)=>document.getElementById(id).classList.toggle('need',bad);
+  const d=pfData(), none=!(d.name||d.lic||d.phone||d.call||d.type);
+  need('pfName',!d.name); need('pfLic',!d.lic); need('pfCall',!(d.call&&d.call.length===3));
+  need('pfPhone',none); need('pfType',none);
+  document.getElementById('pfHint').style.display=pfComplete()?'none':'';
+}
+function renderProfile(){
+  const d=pfData(), ok=pfComplete(), sec=document.getElementById('sec3');
+  const set=(id,v)=>{const e=document.getElementById(id); if(e&&document.activeElement!==e) e.value=v};
+  set('pfName',d.name); set('pfLic',d.lic); set('pfPhone',d.phone);
+  set('pfCall',d.call?'4X-'+d.call:''); set('pfType',d.type);
+  const collapsed=ok&&!pfEditing;
+  document.getElementById('pfForm').style.display=collapsed?'none':'';
+  document.getElementById('pfLine').style.display=collapsed?'':'none';
+  document.getElementById('pfLineName').textContent=d.name;
+  document.getElementById('pfLineAc').textContent=(d.call?'4X-'+d.call:'')+(d.type?' · '+d.type:'');
+  sec.classList.toggle('collapsed',collapsed);
+  sec.classList.toggle('sec-need',!ok);
+  pfMarkNeed();
+}
+function pfEdit(){pfEditing=true;renderProfile();setTimeout(()=>document.getElementById('pfName').focus(),50)}
+function pfDone(){
+  if(!pfComplete()){toast('נא למלא שם, מספר רישיון ואות קריאה (3 אותיות)',true);return}
+  document.activeElement&&document.activeElement.blur&&document.activeElement.blur();
+  pfEditing=false;renderProfile();refreshGate();toast('נשמר');
+}
+function pfInit(){
+  ['pfName','pfLic','pfPhone','pfCall','pfType'].forEach(id=>{
+    const e=document.getElementById(id);
+    e.addEventListener('input',()=>{ if(id==='pfCall') e.value=e.value.toUpperCase(); pfSaveField(); });
+    e.addEventListener('blur',()=>{ if(id==='pfCall'){const c=pfNormCall(e.value); e.value=c?'4X-'+c:''; } });
+  });
 }
 function syncPilotPhone(){
   const p=currentPilot();
@@ -1405,16 +1464,17 @@ function deleteRoute(){
 
 /* ---------------- gather + build sheet ---------------- */
 function val(id){return document.getElementById(id).value.trim()}
-function currentAircraft(){const i=document.getElementById('acSelect').value;return db.aircraft[i]||{call:'',reg:'',type:''}}
-function currentPilot(){const i=document.getElementById('pilotSelect').value;return db.pilots[i]||{name:'',lic:''}}
+function currentAircraft(){return db.aircraft[0]||{call:'',reg:'',type:''}}
+function currentPilot(){return db.pilots[0]||{name:'',lic:''}}
 
 /* ---------------- PDF readiness gate ---------------- */
 let _missingIds=[];      // element ids of currently-missing required fields
 let _showMissing=false;  // whether to visually highlight them (after tap)
 function refreshGate(){
   const val=id=>{const el=document.getElementById(id);return el?el.value.trim():''};
-  const hasAircraft = document.getElementById('acSelect').value!=='' && db.aircraft.length>0;
-  const hasPilot    = document.getElementById('pilotSelect').value!=='' && db.pilots.length>0;
+  const pfd=pfData();
+  const hasName=!!pfd.name, hasLic=!!pfd.lic, hasCall=!!(pfd.call&&pfd.call.length===3);
+  const hasAircraft=hasCall, hasPilot=hasName&&hasLic;
   const hasDate  = !!val('fDate');
   const hasEtd   = !!val('fEtd');
   const hasDep   = !!val('fDepart');
@@ -1429,11 +1489,11 @@ function refreshGate(){
   const s1 = hasAircraft && hasPilot;
   const s2 = hasRoute && hasDep && hasEtd && hasDest && hasEta;
   const s3 = hasFuel && hasIas && hasPurpose && hasSouls;
-  markStepDone(1,s1); markStepDone(2,s2); markStepDone(3,s3);
+  markStepDone(1,s2); markStepDone(2,s3); markStepDone(3,s1);
 
   // map each requirement to the element id(s) to highlight
   const req=[
-    [hasAircraft,'acSelect'],[hasPilot,'pilotSelect'],
+    [hasName,'pfName'],[hasLic,'pfLic'],[hasCall,'pfCall'],
     [hasDate,'fDate'],[hasRoute,'routePills'],[hasDep,'fDepart'],[hasEtd,'fEtd'],
     [hasDest,'fDest'],[hasEta,'fEta'],[hasFuel,'fFuel'],[hasIas,'fIas'],[hasPurpose,'fPurpose'],[hasSouls,'fSouls']
   ];
@@ -1576,7 +1636,7 @@ function buildSheet(){
 /* ---------------- generate PDF ---------------- */
 async function generatePDF(){
   if(_missingIds && _missingIds.length){ revealMissing(); return; }
-  if(!db.aircraft.length||!db.pilots.length){toast('הוסף לפחות מטוס וטייס אחד',true);return}
+  if(!pfComplete()){pfEditing=true;renderProfile();goStep(3);return}
   if(!val('fDate')||!val('fEtd')){toast('נא למלא תאריך ושעת המראה',true);return}
   const btn=document.getElementById('genBtn');btn.disabled=true;btn.textContent='מכין PDF…';
   try{
@@ -1600,8 +1660,6 @@ async function generatePDF(){
     showPdfReady();
     setTimeout(()=>{ try{URL.revokeObjectURL(url);}catch(e){} },300000);
     // remember last used
-    db.last.ac=document.getElementById('acSelect').value;
-    db.last.pilot=document.getElementById('pilotSelect').value;
     saveDB();
     trackPdf();
     try{mhStat('plan');}catch(e){}
@@ -1662,7 +1720,7 @@ function collectShare(){
   const v=id=>{const e=document.getElementById(id);return e?e.value.trim():''};
   const o={v:2,r:{l:r.label,d:r.dir,g:packLegs(r.legs)}};
   if(r.rev) o.r.rv=1;
-  const pl=db.pilots[document.getElementById('pilotSelect').value];
+  const pl=db.pilots[0];
   if(pl&&pl.name) o.n=String(pl.name).trim().slice(0,40);   // sender name (shown to the friend)
   o.t=[v('fEtd'),v('fEta')]; o.f=v('fFuel'); o.i=v('fIas'); o.p=v('fPurpose'); o.s=v('fSouls');
   return o;
@@ -1736,7 +1794,7 @@ function applyShared(o){
   if(o.s) setSouls(String(o.s));
   renderRoutePreview(); refreshGate();
   toast('התוכנית נטענה');
-  goStep(2);
+  goStep(1);
 }
 async function checkIncomingShare(){
   const code=extractShareCode(location.hash);
@@ -1923,7 +1981,7 @@ function runSplash(){
   document.getElementById('hdrIcon').src=document.querySelector('link[rel="apple-touch-icon"]').href;
   document.getElementById('fDate').value=tomorrowStr();
   db.last.route='';   // route selection starts clean each flight (pilot/aircraft persist)
-    refreshSelects();refreshAirfields();refreshRoutes();
+    pfInit();refreshSelects();refreshAirfields();refreshRoutes();
   try{const c=localStorage.getItem('merhav_pdf_count');if(c)renderPdfCount(c);}catch(e){}
   fetchPdfCount();
   // step bar + gate
@@ -1931,7 +1989,7 @@ function runSplash(){
   setSouls('1');
   refreshGate();
   // recompute gate on any relevant input
-  ['fDate','fEtd','fDepart','fDest','fEta','fFuel','fIas','fPurpose','fSouls','acSelect','pilotSelect','fRoute'].forEach(id=>{
+  ['fDate','fEtd','fDepart','fDest','fEta','fFuel','fIas','fPurpose','fSouls','fRoute'].forEach(id=>{
     const el=document.getElementById(id);
     if(el){ el.addEventListener('change',refreshGate); el.addEventListener('input',refreshGate); }
   });
@@ -1943,7 +2001,7 @@ function runSplash(){
 <script>
 /* ANONYMOUS USAGE STATS (Firebase REST, fire and forget): merhav/devices/{random id} - counters only, no flight or pilot details */
 (function(){
-  var DB='https://aircheck-80530-default-rtdb.europe-west1.firebasedatabase.app',SV={'.sv':'timestamp'},INC={'.sv':{increment:1}},QK='mhst_q',VER='v1.01.114';
+  var DB='https://aircheck-80530-default-rtdb.europe-west1.firebasedatabase.app',SV={'.sv':'timestamp'},INC={'.sv':{increment:1}},QK='mhst_q',VER='v1.01.115';
   function rand(){var s='';try{var a=new Uint8Array(12);crypto.getRandomValues(a);a.forEach(function(b){s+=(b%36).toString(36);});}catch(e){while(s.length<12)s+=Math.floor(Math.random()*36).toString(36);}return s;}
   function devId(){try{var id=localStorage.getItem('mhst_id');if(!id||!/^[a-z0-9]{8,32}$/.test(id)){id=rand();localStorage.setItem('mhst_id',id);}return id;}catch(e){return window.__mhTmp||(window.__mhTmp=rand());}}
   function osName(){var u=navigator.userAgent||'';if(/android/i.test(u))return 'Android';if(/iphone|ipad|ipod/i.test(u))return 'iOS';if(/macintosh/i.test(u)&&(navigator.maxTouchPoints||0)>1)return 'iOS';return 'Desktop';}
